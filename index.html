@@ -3,294 +3,412 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Guide travaux — Cuisine IKEA, PAX, placo & LED</title>
+<title>Guide travaux</title>
 <style>
   :root{
     --bg:#ffffff; --fg:#1c2024; --muted:#5b636b; --line:#e6e8eb;
     --accent:#0f7a6c; --accent-soft:#e6f4f1; --card:#f7f9fa;
     --warn-bg:#fff4e5; --warn-line:#f0b429; --tip-bg:#e9f6ee; --tip-line:#2f9e5f;
-    --star:#0f7a6c;
-    --maxw:820px;
+    --side:#f4f6f7; --sidew:290px;
   }
   @media (prefers-color-scheme: dark){
     :root{
       --bg:#14171a; --fg:#e7eaed; --muted:#9aa4ad; --line:#2a2f35;
       --accent:#39c0ad; --accent-soft:#12332e; --card:#1b1f23;
       --warn-bg:#2e2410; --warn-line:#c99a1e; --tip-bg:#122a1c; --tip-line:#2f9e5f;
-      --star:#39c0ad;
+      --side:#101316;
     }
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{
-    margin:0; background:var(--bg); color:var(--fg);
-    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:var(--maxw); margin:0 auto; padding:32px 20px 80px}
-  header.hero{
-    border-bottom:2px solid var(--accent); padding-bottom:20px; margin-bottom:8px;
-  }
-  header.hero h1{font-size:1.9rem; line-height:1.2; margin:0 0 6px}
-  header.hero p{color:var(--muted); margin:4px 0 0}
-  .badge{display:inline-block; background:var(--accent-soft); color:var(--accent);
-    font-size:.75rem; font-weight:600; padding:3px 9px; border-radius:999px; margin-top:10px}
-  nav.toc{
-    background:var(--card); border:1px solid var(--line); border-radius:12px;
-    padding:16px 20px; margin:24px 0 8px;
-  }
-  nav.toc h2{font-size:.8rem; text-transform:uppercase; letter-spacing:.06em;
-    color:var(--muted); margin:0 0 10px}
-  nav.toc ol{margin:0; padding-left:20px}
-  nav.toc li{margin:5px 0}
-  nav.toc a{color:var(--fg); text-decoration:none}
-  nav.toc a:hover{color:var(--accent); text-decoration:underline}
-  section{margin-top:40px; scroll-margin-top:20px}
-  h2.sec{font-size:1.35rem; border-left:4px solid var(--accent); padding-left:12px; margin:0 0 14px}
-  h3{font-size:1.05rem; margin:22px 0 8px}
-  p{margin:10px 0}
-  ul,ol{padding-left:22px}
-  li{margin:5px 0}
-  code{background:var(--card); border:1px solid var(--line); border-radius:5px;
-    padding:1px 5px; font-size:.9em}
-  table{border-collapse:collapse; width:100%; margin:14px 0; font-size:.95rem}
-  th,td{border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top}
-  th{background:var(--card); font-weight:600}
-  .callout{border-radius:10px; padding:12px 16px; margin:16px 0; border:1px solid}
+  body{margin:0; background:var(--bg); color:var(--fg);
+    font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;}
+  a{color:var(--accent)}
+
+  /* ---- layout ---- */
+  .layout{display:flex; min-height:100vh}
+  .sidebar{flex:0 0 var(--sidew); width:var(--sidew); background:var(--side);
+    border-right:1px solid var(--line); position:sticky; top:0; align-self:flex-start;
+    height:100vh; overflow-y:auto; padding:20px 16px 40px}
+  .brand{display:flex; align-items:center; gap:8px; font-weight:700; font-size:1.15rem;
+    text-decoration:none; color:var(--fg); padding:4px 8px 16px; border-bottom:1px solid var(--line); margin-bottom:12px}
+  .group{margin:14px 0}
+  .group-title{font-size:.72rem; text-transform:uppercase; letter-spacing:.07em;
+    color:var(--muted); font-weight:700; padding:4px 8px; display:flex; gap:6px}
+  .nav a{display:block; text-decoration:none; color:var(--fg); padding:7px 10px;
+    border-radius:8px; font-size:.94rem; margin:2px 0}
+  .nav a:hover{background:var(--accent-soft)}
+  .nav a.active{background:var(--accent); color:#fff; font-weight:600}
+
+  .content{flex:1; min-width:0; display:flex; justify-content:center}
+  .inner{width:100%; max-width:800px; padding:34px 24px 90px}
+
+  /* ---- topbar (mobile) ---- */
+  .topbar{display:none; position:sticky; top:0; z-index:20; background:var(--bg);
+    border-bottom:1px solid var(--line); padding:10px 14px; align-items:center; gap:12px}
+  .burger{font-size:1.4rem; background:none; border:1px solid var(--line); color:var(--fg);
+    border-radius:8px; padding:2px 10px; cursor:pointer}
+  .scrim{display:none}
+
+  /* ---- fiche ---- */
+  .fiche h1{font-size:1.7rem; line-height:1.2; margin:0 0 18px; padding-bottom:12px;
+    border-bottom:2px solid var(--accent)}
+  .lead{color:var(--muted); font-size:1.02rem}
+  .block{margin:22px 0}
+  .block h2{font-size:1.05rem; margin:0 0 8px}
+  .block ul,.block ol{margin:6px 0; padding-left:22px}
+  .block li{margin:6px 0}
+  .bref{display:flex; flex-wrap:wrap; gap:10px; margin:16px 0}
+  .bref span{background:var(--card); border:1px solid var(--line); border-radius:10px;
+    padding:8px 14px; font-size:.9rem; min-width:120px}
+  .bref b{display:block; font-size:.7rem; text-transform:uppercase; letter-spacing:.05em;
+    color:var(--muted); margin-bottom:2px}
+  .callout{border-radius:10px; padding:14px 18px; border:1px solid}
+  .callout h2{margin-top:0}
   .warn{background:var(--warn-bg); border-color:var(--warn-line)}
   .tip{background:var(--tip-bg); border-color:var(--tip-line)}
-  .callout strong{display:block; margin-bottom:2px}
-  .star{color:var(--star); font-weight:700}
-  .check{list-style:none; padding-left:4px}
-  .check li{position:relative; padding-left:28px; margin:7px 0}
-  .check li::before{content:"☐"; position:absolute; left:0; top:-1px; font-size:1.15em; color:var(--accent)}
-  .lead{font-size:1.05rem; color:var(--muted)}
-  footer{margin-top:56px; padding-top:18px; border-top:1px solid var(--line);
-    color:var(--muted); font-size:.85rem}
-  a{color:var(--accent)}
+
+  .home-list{list-style:none; padding-left:0}
+  .home-list li{display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px dashed var(--line)}
+  .home-list a{font-weight:600; text-decoration:none}
+  .home-list a:hover{text-decoration:underline}
+  .tag{font-size:.72rem; background:var(--accent-soft); color:var(--accent);
+    padding:2px 8px; border-radius:999px; white-space:nowrap}
+  footer{margin-top:50px; padding-top:16px; border-top:1px solid var(--line);
+    color:var(--muted); font-size:.82rem}
+
+  @media (max-width:820px){
+    .sidebar{position:fixed; z-index:30; transform:translateX(-100%);
+      transition:transform .22s ease; box-shadow:0 0 40px rgba(0,0,0,.25)}
+    body.nav-open .sidebar{transform:none}
+    body.nav-open .scrim{display:block; position:fixed; inset:0; z-index:25; background:rgba(0,0,0,.4)}
+    .topbar{display:flex}
+    .inner{padding:22px 18px 80px}
+  }
   @media print{
-    nav.toc{break-inside:avoid}
-    section{break-inside:avoid-page}
-    .callout,table{break-inside:avoid}
-    body{font-size:12px}
-    a{color:inherit; text-decoration:none}
+    .sidebar,.topbar{display:none!important}
+    .content{display:block}
+    .inner{max-width:none; padding:0}
+    .callout,.block,.bref span{break-inside:avoid}
+    a{color:inherit}
   }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-<header class="hero">
-  <h1>🛠️ Guide travaux</h1>
-  <p>Cuisine IKEA · Rail dans le placo · Étagères PAX anti-affaissement · LED encastrées</p>
-  <span class="badge">Mémo perso — à imprimer ou garder sous la main</span>
-</header>
-
-<nav class="toc">
-  <h2>Sommaire</h2>
-  <ol>
-    <li><a href="#cuisine">Monter une cuisine IKEA proprement</a></li>
-    <li><a href="#placo">Fixer le rail de suspension dans du placo</a></li>
-    <li><a href="#pax">Étagères PAX / KOMPLEMENT : anti-affaissement</a></li>
-    <li><a href="#led">LED encastrées &amp; câbles cachés (défonceuse)</a></li>
-    <li><a href="#outillage">Checklist outillage — acheter vs louer</a></li>
-  </ol>
-</nav>
-
-<!-- 1 -->
-<section id="cuisine">
-  <h2 class="sec">1. Monter une cuisine IKEA (METOD) proprement &amp; alignée</h2>
-  <p class="lead">L'enjeu n°1 : le <strong>niveau et l'alignement</strong> (rail de suspension pour les meubles hauts, pieds réglables pour les bas).</p>
-
-  <h3>Niveau &amp; alignement <span class="star">★ le plus important</span></h3>
-  <table>
-    <tr><th>Outil</th><th>Pourquoi</th></tr>
-    <tr><td><strong>Niveau laser à lignes croisées</strong> (auto-nivelant)</td><td>Trace une ligne horizontale parfaite tout autour de la pièce pour le rail et le haut des meubles bas. Le garant de l'alignement.</td></tr>
-    <tr><td><strong>Niveau à bulle</strong> (long 60–120 cm + torpedo)</td><td>Vérifier chaque meuble, l'aplomb, les petits espaces.</td></tr>
-    <tr><td><strong>Détecteur montants / métaux / câbles</strong></td><td>Trouver les montants et éviter câbles/tuyaux avant de percer.</td></tr>
-    <tr><td><strong>Mètre ruban + équerre de combinaison</strong></td><td>Mesures et angles droits.</td></tr>
-  </table>
-
-  <h3>Perçage / vissage / fixation</h3>
-  <ul>
-    <li><strong>Perceuse-visseuse sans fil</strong> (bon couple) — indispensable.</li>
-    <li><strong>Perforateur (SDS)</strong> si murs béton/brique. Placo → pas nécessaire.</li>
-    <li><strong>Forets</strong> bois + béton, au bon diamètre.</li>
-    <li><strong>Chevilles adaptées au mur</strong> (souvent à upgrader vs celles d'IKEA).</li>
-    <li><strong>Embouts Pozidriv + hex/Allen</strong> (IKEA = Pozidriv + clé Allen). Visseuse à chocs = option confort.</li>
-  </ul>
-
-  <h3>Assemblage aligné — le secret du « propre »</h3>
-  <ul>
-    <li><strong>Serre-joints</strong> <span class="star">★</span> : on clampe deux caissons <em>bord à bord, à fleur</em>, <strong>avant</strong> de les visser ensemble.</li>
-    <li><strong>Cales / shims plastique</strong> : rattraper un mur ou sol pas droit.</li>
-  </ul>
-
-  <h3>Découpe propre (plan de travail, plinthes, joues)</h3>
-  <ul>
-    <li><strong>Scie sauteuse</strong> + lame anti-éclat / coupe inversée (down-cut).</li>
-    <li><strong>Scie circulaire + rail de guidage</strong> (ou plongeante) — plus propre pour les coupes droites du plan de travail.</li>
-    <li><strong>Scie cloche</strong> — trous robinet/tuyaux.</li>
-    <li><strong>Défonceuse + gabarit</strong> — joint pro (onglet maçonné) — avancé.</li>
-    <li><strong>Ruban de masquage</strong> sur la ligne de coupe → zéro éclat sur le stratifié.</li>
-  </ul>
-
-  <h3>Finitions &amp; sécurité</h3>
-  <ul>
-    <li>Pistolet à mastic/silicone + lisseur de joint + ruban de masquage.</li>
-    <li>Lunettes, masque anti-poussière, <strong>genouillères</strong>, gants, aspirateur.</li>
-  </ul>
-
-  <div class="callout tip">
-    <strong>🎯 Si tu ne prends que 3 choses</strong>
-    Niveau laser + serre-joints + bonne perceuse-visseuse.
-  </div>
-
-  <div class="callout tip">
-    <strong>4 réflexes « propre &amp; aligné »</strong>
-    <ol style="margin:6px 0 0">
-      <li>Pars du <strong>point le plus haut du sol</strong> pour régler les pieds des meubles bas.</li>
-      <li><strong>Cale le rail de suspension au laser</strong> → les meubles hauts s'alignent seuls.</li>
-      <li><strong>Clampe à fleur AVANT</strong> de solidariser les caissons.</li>
-      <li><strong>Masque + coupe</strong> le stratifié du bon côté pour un chant net.</li>
-    </ol>
-  </div>
-</section>
-
-<!-- 2 -->
-<section id="placo">
-  <h2 class="sec">2. Fixer le rail de suspension dans du placo</h2>
-
-  <div class="callout tip">
-    <strong>Le point clé qui rassure</strong>
-    Le rail est <strong>horizontal</strong> ; les montants du placo sont <strong>verticaux et pleine hauteur</strong>. Donc à <em>n'importe quelle hauteur</em>, le rail <strong>croise les montants</strong>. Monter haut ne te fait pas perdre la structure.
-  </div>
-
-  <h3>Étape 1 — Identifier le mur</h3>
-  <table>
-    <tr><th>Type</th><th>Fixation</th></tr>
-    <tr><td><strong>Cloison creuse</strong> (placo + ossature métal + vide)</td><td>Vis dans les <strong>montants</strong> + chevilles Molly entre.</td></tr>
-    <tr><td><strong>Doublage collé</strong> (placo collé sur maçonnerie)</td><td>Vis longues traversant jusqu'à la <strong>maçonnerie</strong> = très solide.</td></tr>
-  </table>
-  <p>Pour savoir : <strong>taper le mur</strong> (creux/plein), détecteur, ou petit trou test.</p>
-
-  <h3>Étape 2 — Les montants</h3>
-  <ul>
-    <li><strong>Entraxe : 60 cm</strong> standard, <strong>40 cm</strong> si renforcé.</li>
-    <li>Sur 3 m : ~5–6 montants (60 cm) ou ~7–8 (40 cm).</li>
-    <li><strong>Doublés</strong> aux angles et autour des portes ; rails horizontaux en haut/bas.</li>
-    <li>Largeur d'un montant ≈ <strong>48 mm</strong>, tôle fine (~0,6 mm) → viser le <strong>centre</strong>.</li>
-  </ul>
-
-  <h3>Les repérer</h3>
-  <ol>
-    <li><strong>Détecteur</strong> (mode métal).</li>
-    <li><strong>Astuce aimant</strong> 🧲 : un aimant puissant accroche les vis du placo, alignées verticalement <em>sur les montants</em>.</li>
-    <li>Regarder les <strong>lignes de vis</strong> du placo.</li>
-  </ol>
-
-  <h3>La méthode</h3>
-  <ul>
-    <li><strong>Cloison creuse :</strong> vis dans <strong>chaque montant croisé</strong> (vis à métaux) + <strong>Molly métal</strong> entre les montants + multiplier les points.</li>
-    <li><strong>Doublage collé :</strong> vis longues + chevilles atteignant la maçonnerie derrière.</li>
-  </ul>
-
-  <div class="callout warn">
-    <strong>⚠️ Pourquoi c'est sérieux</strong>
-    Un meuble haut plein de vaisselle <strong>tire vers l'extérieur en haut</strong> (arrachement) — le pire cas pour du placo. Toujours <strong>taper dans les montants</strong> ; jamais des chevilles plastique basiques seules.
-  </div>
-</section>
-
-<!-- 3 -->
-<section id="pax">
-  <h2 class="sec">3. Étagères PAX / KOMPLEMENT : anti-affaissement</h2>
-
-  <h3>Pourquoi ça s'affaisse</h3>
-  <p>Tablettes en <strong>aggloméré mélaminé</strong> qui <strong>flue</strong> (déformation permanente) sous charge constante. Pire avec : largeur <strong>100 cm</strong> (vs 50), charge lourde, humidité.</p>
-
-  <h3>Prévention</h3>
-  <ul>
-    <li><strong>Caissons 50 cm</strong> plutôt que 100.</li>
-    <li><strong>Le lourd dans les tiroirs</strong>, pas sur tablettes ouvertes.</li>
-    <li>Plus de tablettes rapprochées ; respecter la charge max ; bien clipser ; ancrer au mur.</li>
-  </ul>
-
-  <h3>Renforcer — rendu INVISIBLE</h3>
-  <table>
-    <tr><th>Solution</th><th>Détail</th></tr>
-    <tr><td><strong>Barre acier encastrée à fleur</strong> <span class="star">★</span></td><td>Rainure à la défonceuse sous la tablette + méplat/tube acier collé époxy, affleurant. Invisible &amp; très rigide.</td></tr>
-    <tr><td><strong>Renfort bord arrière</strong></td><td>Tasseau/cornière sous l'arrière, caché de face (moins fort mais discret).</td></tr>
-    <tr><td><strong>Tablette « lookalike » plus rigide</strong></td><td>Contreplaqué épais / bois massif / caisson-torsion peint blanc.</td></tr>
-    <tr><td><strong>Support central caché</strong></td><td>Entretoise verticale au fond-milieu → coupe la portée.</td></tr>
-  </table>
-
-  <h3>Solutions communauté (visibles mais éprouvées)</h3>
-  <ul>
-    <li><strong>Croisillons OBSERVATÖR</strong> (IKEA) → rigidifient le cadre, empêchent l'écartement.</li>
-    <li><strong>Taquets métal</strong> en remplacement des plastiques (qui sautent quand le cadre s'écarte).</li>
-    <li><strong>Tasseau</strong> (1,5–2 cm) ou <strong>cornière alu</strong> sous le bord.</li>
-  </ul>
-</section>
-
-<!-- 4 -->
-<section id="led">
-  <h2 class="sec">4. LED encastrées &amp; câbles cachés (défonceuse)</h2>
-
-  <h3>Le principe</h3>
-  <ol>
-    <li>Choisir le <strong>profilé alu encastrable + diffuseur</strong> AVANT de rainurer → rainure <strong>aux cotes exactes</strong> pour affleurer. Le diffuseur dépoli <strong>masque les points LED</strong>.</li>
-    <li>Rainurer la LED sous le bord avant d'une tablette ou dans un montant.</li>
-    <li><strong>Câbles :</strong> 2ᵉ rainure peu profonde + <strong>trou de passage</strong> discret ; remonter les fils dans un angle au fond.</li>
-    <li><strong>Driver 12/24 V</strong> caché sur le dessus du meuble ; interrupteur ou détecteur de mouvement.</li>
-  </ol>
-
-  <div class="callout warn">
-    <strong>⚠️ Attention</strong>
-    Vérifier l'<strong>épaisseur</strong> : ne pas traverser une tablette fine → rainurer plutôt un élément épais. <strong>Test à blanc</strong> du profilé + <strong>ébavurer</strong>.
-  </div>
-
-  <div class="callout tip">
-    <strong>💡 Bonus malin</strong>
-    Une seule passe de défonceuse peut loger <strong>la barre acier anti-affaissement ET le profilé LED</strong> — deux problèmes réglés d'un coup.
-  </div>
-</section>
-
-<!-- 5 -->
-<section id="outillage">
-  <h2 class="sec">5. Checklist outillage — acheter vs louer</h2>
-
-  <h3>À acheter</h3>
-  <ul class="check">
-    <li>Perceuse-visseuse sans fil</li>
-    <li>Niveau à bulle (long + torpedo)</li>
-    <li>Mètre ruban + équerre de combinaison</li>
-    <li>Détecteur montants / câbles</li>
-    <li>Serre-joints (×2 minimum)</li>
-    <li>Embouts Pozidriv + jeu hex/Allen</li>
-    <li>Chevilles Molly métal + pince à expansion</li>
-    <li>Forets bois + béton + métal</li>
-    <li>Pistolet à mastic + lisseur</li>
-    <li>EPI : lunettes, masque, genouillères, gants</li>
-  </ul>
-
-  <h3>À louer (cher / usage ponctuel)</h3>
-  <ul class="check">
-    <li>Niveau laser à lignes croisées</li>
-    <li>Scie circulaire + rail de guidage (ou plongeante)</li>
-    <li>Perforateur SDS (si murs durs)</li>
-    <li>Défonceuse (si pas déjà possédée)</li>
-  </ul>
-
-  <div class="callout tip">
-    <strong>Le trio décisif</strong>
-    Niveau laser · serre-joints · perceuse-visseuse. Le reste s'adapte au chantier.
-  </div>
-</section>
-
-<footer>
-  <p>Guide perso — récapitulatif de travaux. Vérifie toujours le type de mur et les charges avant de percer. Les fixations doivent être dimensionnées pour le poids réel (vaisselle comprise).</p>
-</footer>
-
+<div class="topbar">
+  <button class="burger" id="burger" aria-label="Menu">☰</button>
+  <strong>🛠️ Guide travaux</strong>
 </div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a href="#" class="brand">🛠️ Guide travaux</a>
+    <div class="nav" id="nav"></div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <main class="content">
+    <div class="inner" id="content"></div>
+  </main>
+</div>
+
+<script>
+const DATA = [
+  { titre:"Sol — dépose / pose", icone:"🪵", fiches:[
+
+    { id:"depose-sol", titre:"Dépose de l'ancien revêtement", icone:"🧹",
+      objectif:"Retirer l'ancien revêtement (parquet stratifié flottant et/ou carrelage) pour repartir sur un support propre et plan.",
+      bref:{diff:"Facile (flottant) → Difficile (carrelage)", duree:"½ à 2 j", budget:"Location perfo ~40-60 €/j + sacs gravats"},
+      securite:[
+        "**Poussière ++** : masque FFP2, lunettes, gants, casque anti-bruit au burineur, aérer et bâcher.",
+        "**Amiante** : colle/carrelage posés **avant 1997** = risque amiante → **diagnostic obligatoire avant de burineur**.",
+        "Repérer **gaines et tuyaux** noyés dans la chape avant de taper."
+      ],
+      outillage:[
+        "Flottant : barre à démonter / petit pied-de-biche, cutter.",
+        "Carrelage : **perforateur SDS + burin large**, massette + burin à main, meuleuse si besoin.",
+        "Aspirateur de chantier."
+      ],
+      materiel:["Sacs à gravats renforcés","Bâche de protection, ruban","EPI (masque, lunettes, gants, genouillères)"],
+      etapes:[
+        "Vider la pièce, **déposer les plinthes** (délicatement si réutilisées).",
+        "**Stratifié flottant** : déclipser lame par lame depuis un mur (non collé → rapide), retirer la sous-couche.",
+        "**Carrelage** : casser un carreau au centre pour amorcer, puis burineur **à plat sous les carreaux** pour décoller carreau + colle jusqu'à la chape.",
+        "Éliminer les résidus de colle / ancien ragréage pour un support plan.",
+        "Évacuer les gravats (carrelage = lourd → déchetterie)."
+      ],
+      astuces:[
+        "Viser l'**interface colle/chape** avec le burin à plat = beaucoup plus efficace.",
+        "Après dépose, **contrôler la planéité** à la règle de 2 m (tu ragréeras si besoin avant la pose).",
+        "⚠️ Doute amiante (avant 1997) → **stop**, fais diagnostiquer."
+      ],
+      pro:"DIY possible. Le carrelage collé sur dalle est **très physique**. Amiante suspecté → **professionnel / diagnostic obligatoire**." },
+
+    { id:"pose-parquet", titre:"Pose parquet stratifié flottant", icone:"📐",
+      objectif:"Poser un parquet stratifié flottant clipsable sur le support préparé, avec les joints de dilatation nécessaires.",
+      bref:{diff:"Moyen", duree:"~1 j pour 20-25 m²", budget:"Strat ~10-40 €/m² + sous-couche ~3-6 €/m²"},
+      securite:["Cutter / scie → gants + lunettes.","Genouillères indispensables."],
+      outillage:["Scie sauteuse (lame anti-éclat) ou scie à onglet / circulaire","Mètre, équerre, crayon, règle","**Cales de dilatation** (~8 mm)","**Tire-lame + cale de frappe + maillet blanc**","Cutter"],
+      materiel:["Lames stratifiées **+10 %** (chutes)","Sous-couche (isolante ; **pare-vapeur si dalle/RDC**)","Barres de seuil","Plinthes ou quart-de-rond","Film polyane si pose sur dalle béton"],
+      etapes:[
+        "**Acclimater** les lames 48 h dans la pièce (emballées, à plat).",
+        "Vérifier le support : **propre, sec, plan** (règle 2 m, tolérance ~2-3 mm) → ragréer si besoin.",
+        "Poser le **pare-vapeur** (si dalle) puis la **sous-couche**.",
+        "Sens de pose : lames **parallèles à la lumière** (perpendiculaire à la fenêtre) en général.",
+        "Poser rang par rang avec **cales ~8 mm en périphérie** ; **décaler les joints** de ≥30 cm (démarrer avec la chute du rang précédent).",
+        "Clipser (à l'angle puis à plat), frapper au **tire-lame**.",
+        "Dernier rang recoupé en largeur ; découpes autour des tuyaux ; **scier le bas des huisseries** pour glisser les lames dessous.",
+        "Retirer les cales, poser les **plinthes (fixées au MUR, jamais au sol)** + barres de seuil aux jonctions/portes."
+      ],
+      astuces:[
+        "⚠️ **Toujours un joint de dilatation périphérique** : le flottant « travaille ». Plinthe/quart-de-rond ne doivent **pas bloquer** le parquet.",
+        "Grande longueur (>8 m) → prévoir un **joint de dilatation intermédiaire** (barre).",
+        "Commencer le long d'un **mur droit** ; vérifier le sens de clipsage avant de foncer."
+      ],
+      pro:"**DIY accessible** et gratifiant, même pour un débutant soigneux." }
+  ]},
+
+  { titre:"Cuisine", icone:"🍳", fiches:[
+
+    { id:"prises-cuisine", titre:"Déplacement des prises (cuisine)", icone:"🔌",
+      objectif:"Déplacer / ajouter les prises pour la nouvelle implantation de cuisine (plan de travail, électroménager) en respectant la norme.",
+      bref:{diff:"Moyen (électricité)", duree:"½ à 1 j", budget:"Faible (câble, boîtes, prises, rebouchage)"},
+      securite:[
+        "⚠️ **COUPER le disjoncteur** du circuit + **vérifier l'absence de tension (VAT)** avant TOUT. Jamais sous tension.",
+        "Respect **NF C 15-100** : circuits cuisine **dédiés** (plaque 32 A / 6 mm², prises plan de travail sur circuit **20 A / 2,5 mm²**).",
+        "**Terre obligatoire** ; pas de prise au-dessus de l'évier ni des plaques."
+      ],
+      outillage:["**VAT / multimètre**","Tournevis électricien isolés","Pince à dénuder, pince coupante","Perforateur + **scie cloche** (boîtes d'encastrement)","Rainureuse ou burineur (saignées), détecteur"],
+      materiel:["Câble **H07V-U** (2,5 mm² prises / 6 mm² plaque)","**Gaine ICTA**","Boîtes d'encastrement + prises","Bornes **Wago**","Plâtre / MAP (rebouchage) ou moulures"],
+      etapes:[
+        "**Couper** le circuit au tableau + **VAT**.",
+        "Repérer les nouveaux emplacements (prises plan de travail **~10-12 cm au-dessus du plan**).",
+        "Tracer, faire les **saignées** (ou poser moulures) + sceller les **boîtes d'encastrement**.",
+        "**Tirer le câble** sous gaine ICTA depuis la boîte de dérivation / le circuit dédié.",
+        "Raccorder les prises (phase / neutre / **terre**), reboucher.",
+        "**Remettre sous tension** et tester chaque prise."
+      ],
+      astuces:[
+        "⚠️ La cuisine exige des **circuits dédiés** — ne pas repiquer n'importe où.",
+        "Prévois la position **avant** de monter les meubles (accès aux boîtes derrière l'électroménager).",
+        "Photographie/note le repérage au tableau."
+      ],
+      pro:"Déplacer une prise sur circuit existant = **DIY si tu es à l'aise et conforme**. **Ajout de ligne / modif du tableau / doute → électricien** (conformité + assurance)." },
+
+    { id:"montage-cuisine", titre:"Montage de la cuisine (METOD)", icone:"🧱",
+      objectif:"Monter et poser la cuisine IKEA METOD de façon **propre et parfaitement alignée**.",
+      bref:{diff:"Moyen", duree:"1 à 3 j selon taille", budget:"Outillage + accessoires + silicone"},
+      securite:["EPI + genouillères.","Couper eau/élec pour les raccordements.","**Fixation murale sérieuse** (meubles hauts chargés) — cf mémo placo."],
+      outillage:["**Niveau laser** + niveau à bulle","Perceuse-visseuse (+ perforateur si mur dur)","**Serre-joints** ★","Détecteur montants/câbles","Scie sauteuse / **circulaire + rail**, scie cloche","Embouts Pozidriv + hex","Pistolet à mastic"],
+      materiel:["Caissons METOD, **rail de suspension**, pieds réglables","**Chevilles adaptées** (Molly si placo)","Plan de travail, plinthes, joues de finition","Silicone sanitaire"],
+      etapes:[
+        "Relevé + implantation ; **repérer les réseaux** (eau / élec / évacuation).",
+        "**Ligne de niveau au laser** ; poser le **rail de suspension** (vissé dans les montants + Molly — cf mémo placo).",
+        "Meubles **hauts** sur le rail : alignés, **clampés à fleur**, solidarisés entre eux.",
+        "Meubles **bas** : régler les pieds (**partir du point le plus haut du sol**), aligner, clamper, solidariser.",
+        "**Plan de travail** : mesure, découpe (rail + lame fine + ruban de masquage), découpes évier/plaque (scie cloche/sauteuse), joints.",
+        "Raccords évier / plaque / électroménager (cf fiches concernées).",
+        "Façades, plinthes, joues, **silicone** de finition."
+      ],
+      astuces:[
+        "**Les 4 réflexes** : point haut du sol → rail au laser → clamper à fleur AVANT de solidariser → masquer + couper du bon côté.",
+        "Si tu ne prends que 3 outils : **laser + serre-joints + visseuse**."
+      ],
+      pro:"Montage **DIY**. Les raccordements **eau / élec / gaz** selon ton aisance (sinon plombier/électricien)." }
+  ]},
+
+  { titre:"Dressing", icone:"👕", fiches:[
+
+    { id:"montage-dressing", titre:"Montage du dressing (PAX)", icone:"🚪",
+      objectif:"Monter le dressing PAX de niveau, fixé au mur, et **anticiper l'affaissement des tablettes**.",
+      bref:{diff:"Facile → Moyen", duree:"½ à 1 j", budget:"Caissons + accessoires (+ renforts éventuels)"},
+      securite:["⚠️ **Fixation anti-bascule au mur OBLIGATOIRE**.","EPI, surface propre pour assembler."],
+      outillage:["Perceuse-visseuse","Niveau à bulle, mètre","Détecteur montants","Serre-joints (si plusieurs caissons)","Clé Allen / embout hex","(Défonceuse si renfort/LED)"],
+      materiel:["Caissons PAX + KOMPLEMENT (tablettes / **tiroirs**)","Fixation murale + **chevilles adaptées** (Molly en placo)","Renforts éventuels (barre acier / tasseau)","Profilé LED (option)"],
+      etapes:[
+        "Assembler les caissons **au sol** sur surface propre.",
+        "Redresser, mettre **de niveau** (pieds/cales), aligner, **clamper à fleur** si plusieurs caissons.",
+        "**Fixer au mur** (anti-bascule) — dans les montants / Molly.",
+        "Poser tablettes et tiroirs ; **mettre le lourd dans les tiroirs**.",
+        "(Option) renfort anti-affaissement invisible + **LED encastrées** — cf mémos."
+      ],
+      astuces:[
+        "**Anti-affaissement** : caissons **50 cm** > 100 cm, **lourd dans les tiroirs**, renfort du bord avant (ou barre acier encastrée invisible).",
+        "**Bien clipser** les tablettes et **ancrer au mur** : ça limite l'écartement du cadre (ce qui fait sauter les taquets)."
+      ],
+      pro:"**DIY** intégral." }
+  ]},
+
+  { titre:"Plomberie & Chauffage", icone:"🚿", fiches:[
+
+    { id:"wc-lave-linge", titre:"WC à l'emplacement du lave-linge", icone:"🚽",
+      objectif:"Installer un WC là où se trouve l'emplacement du lave-linge (arrivée d'eau + évacuation existantes).",
+      bref:{diff:"Moyen → Difficile (évacuation)", duree:"~1 j (broyeur)", budget:"WC ~100-300 € ou **WC broyeur ~300-500 €**"},
+      securite:["Couper l'eau (robinet d'arrêt / général) et vidanger.","Soigner l'**étanchéité** (fuites = dégâts).","Prévoir la **ventilation** de l'évacuation."],
+      outillage:["Clés plates / à molette, pince multiprise","Niveau, mètre","Perceuse + forets (fixation cuvette)","Scie, cutter","Cartouche silicone sanitaire, téflon/filasse"],
+      materiel:["WC classique **ou WC à broyeur (Sanibroyeur)**","Pipe/manchon d'évacuation, robinet d'arrêt, flexible","Joints, silicone sanitaire, chevilles adaptées au sol"],
+      etapes:[
+        "Couper l'eau, déposer le lave-linge, **repérer arrivée d'eau + évacuation** existantes.",
+        "**Vérifier l'évacuation** (LE point clé) : possible en **Ø100 avec pente** vers la chute ? Sinon → **WC broyeur** (se raccorde sur **Ø40/32**).",
+        "Positionner le WC, tracer, percer, cheviller.",
+        "Raccorder l'**évacuation** (pente ~1-3 cm/m pour un classique ; sortie broyeur vers l'évac lave-linge).",
+        "Raccorder l'**alimentation** (robinet d'arrêt + flexible + réservoir), **téflon/filasse** sur les filetages.",
+        "Fixer la cuvette, **joint silicone au sol**, tester la chasse + l'étanchéité sur plusieurs cycles."
+      ],
+      astuces:[
+        "⚠️ **Le diamètre/pente d'évacuation est LE point critique** : un WC classique veut du **Ø100**, un emplacement lave-linge n'a souvent que du **Ø40** → d'où l'intérêt du **broyeur**.",
+        "Vérifier la **distance de refoulement** max d'un broyeur jusqu'à la chute.",
+        "WC = **eau froide** uniquement."
+      ],
+      pro:"**WC broyeur sur évacuation existante = DIY accessible.** Création d'une **évacuation Ø100** / reprise de la chute → **plombier**." },
+
+    { id:"deplacement-radiateur", titre:"Déplacement d'un radiateur", icone:"♨️",
+      objectif:"Déplacer un radiateur à un nouvel emplacement — **électrique** (simple) ou **à eau / chauffage central** (plus technique).",
+      bref:{diff:"Facile (élec) → Moyen-difficile (eau)", duree:"½ à 1 j", budget:"Faible (élec) → Moyen (tubes/raccords)"},
+      securite:[
+        "**Électrique** : couper au tableau + **VAT**.",
+        "**À eau** : couper la chaudière/circulateur, **fermer les vannes**, **vidanger** — risque de fuite."
+      ],
+      outillage:["Élec : VAT, tournevis isolés, outillage saignée/moulure","Eau : clés, pince multiprise, **coupe-tube**, **sertisseuse** (multicouche) ou raccords à visser, clé à purgeur, seau"],
+      materiel:["Élec : câble, boîte, support radiateur","Eau : tubes **multicouche/PER** + raccords, **robinet thermostatique + coude de réglage**, té de piquage, téflon/filasse, supports muraux"],
+      etapes:[
+        "**Électrique** : débrancher, déposer, déplacer/créer la ligne d'alimentation, refixer, rebrancher.",
+        "**À eau** — 1. Couper chaudière, fermer les vannes, **vidanger** le radiateur.",
+        "2. Déposer radiateur + supports.",
+        "3. **Piquage** (té) sur le réseau et tirer les tubes vers le nouvel emplacement.",
+        "4. Poser les supports (hauteur ~10-12 cm du sol, idéalement **sous une fenêtre**).",
+        "5. Raccorder robinet + coude, remonter le radiateur.",
+        "6. **Remettre en eau, PURGER l'air**, vérifier l'étanchéité et la pression."
+      ],
+      astuces:[
+        "⚠️ **Bien purger** sinon le radiateur ne chauffe pas ; contrôler la **pression** (~1-1,5 bar au manomètre).",
+        "Emplacement **sous fenêtre** = meilleure diffusion.",
+        "Élec : respecter la **ligne dédiée** du radiateur."
+      ],
+      pro:"**Électrique = DIY accessible.** **Eau / chauffage central** (reprise de réseau, soudure, chaudière sous garantie) → souvent **chauffagiste/plombier**." }
+  ]},
+
+  { titre:"Mémos techniques", icone:"📌", fiches:[
+
+    { id:"memo-placo", titre:"Fixer dans le placo (rail, meubles hauts)", icone:"🔩",
+      objectif:"Fixer solidement un rail / meuble lourd dans une cloison placo, en s'appuyant sur la structure.",
+      bref:{diff:"Moyen", duree:"—", budget:"Chevilles Molly + pince"},
+      securite:["⚠️ Charge lourde = **arrachement en haut** : le pire cas pour le placo → toujours **taper dans les montants**.","Éviter câbles/tuyaux (détecteur)."],
+      outillage:["**Détecteur de montants (métal)**","Aimant puissant (repérage vis)","Perceuse, **pince à Molly**","Forets métal (+ béton si doublage)"],
+      materiel:["**Chevilles Molly métal**","Vis à métaux (montants)","Vis + chevilles longues si **doublage collé** (atteindre la maçonnerie)"],
+      etapes:[
+        "Identifier le mur : **cloison creuse** (montants + vide) ou **doublage collé** (maçonnerie derrière).",
+        "Le rail étant **horizontal**, il croise les **montants verticaux** (entraxe **40 ou 60 cm**) à **n'importe quelle hauteur**.",
+        "Repérer les montants (**détecteur** ou **aimant** sur les vis du placo, alignées verticalement).",
+        "**Cloison creuse** : visser dans **chaque montant croisé** + **Molly** entre les montants + multiplier les points.",
+        "**Doublage collé** : vis longues traversant jusqu'à la **maçonnerie**."
+      ],
+      astuces:["Montant ≈ **48 mm** de large, tôle fine → viser le **centre**.","Ne jamais se contenter de chevilles plastique basiques pour du lourd."],
+      pro:"DIY. En cas de doute sur la tenue / mur sans structure exploitable → renfort ou avis pro." },
+
+    { id:"memo-affaissement", titre:"Anti-affaissement des tablettes", icone:"📚",
+      objectif:"Empêcher les tablettes mélaminées (PAX/KOMPLEMENT) de fléchir dans le temps, si possible **sans que ça se voie**.",
+      bref:{diff:"Facile → Moyen", duree:"—", budget:"Faible (renforts)"},
+      securite:["Défonceuse = lunettes + aspiration."],
+      outillage:["Défonceuse (barre encastrée)","Serre-joints, colle époxy","Scie (support central / lookalike)"],
+      materiel:["Méplat/tube **acier** fin","Tasseau ou **cornière alu**","Contreplaqué/bois massif (tablette de remplacement)","Croisillons **OBSERVATÖR** + **taquets métal**"],
+      etapes:[
+        "**Prévention** : caissons **50 cm** > 100, **lourd dans les tiroirs**, tablettes rapprochées, meuble **ancré au mur**.",
+        "**Invisible ★** : rainure sous la tablette + **barre acier collée à fleur**.",
+        "Alternative discrète : renfort **bord arrière** (caché de face).",
+        "Ou **tablette lookalike** plus rigide (CP/bois massif peint), ou **support central** au fond.",
+        "Solutions communauté : **OBSERVATÖR** (rigidifie le cadre) + **taquets métal**."
+      ],
+      astuces:["Le point faible d'une tablette = la **flexion du bord avant** → c'est là que le renfort paie le plus.","Ancrer le meuble limite l'écartement du cadre (taquets qui sautent)."],
+      pro:"DIY." },
+
+    { id:"memo-led", titre:"LED encastrées & câbles cachés", icone:"💡",
+      objectif:"Intégrer un ruban LED et cacher les câbles à la défonceuse pour un rendu propre et invisible.",
+      bref:{diff:"Moyen", duree:"—", budget:"Profilé alu + ruban + driver"},
+      securite:["Basse tension 12/24 V.","Défonceuse : lunettes + aspiration ; ne pas traverser une tablette fine."],
+      outillage:["**Défonceuse**","Mètre, réglet","Perceuse (trou de passage)"],
+      materiel:["**Profilé alu encastrable + diffuseur**","Ruban LED 12/24 V (blanc chaud/froid)","Driver + interrupteur / détecteur"],
+      etapes:[
+        "Choisir le **profilé + diffuseur AVANT** → rainure **aux cotes exactes** pour affleurer (le diffuseur **masque les points LED**).",
+        "Rainurer la LED sous le bord avant d'une tablette ou dans un montant.",
+        "**Câbles** : 2ᵉ rainure peu profonde + **trou de passage** discret ; remonter les fils dans un angle.",
+        "**Driver** caché sur le dessus du meuble ; interrupteur / détecteur de mouvement."
+      ],
+      astuces:["**Test à blanc** du profilé + **ébavurer**.","💡 Une même passe de défonceuse peut loger **barre acier anti-flexion ET profilé LED**."],
+      pro:"DIY ; branchement 230 V du driver → électricien si besoin." }
+  ]}
+];
+
+/* ---------- rendu ---------- */
+function fmt(s){
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>");
+}
+function list(items, ordered){
+  const t = ordered ? "ol" : "ul";
+  return "<"+t+">"+items.map(function(i){return "<li>"+fmt(i)+"</li>";}).join("")+"</"+t+">";
+}
+function renderFiche(f){
+  return ""
+   + "<article class='fiche'>"
+   + "<h1>"+(f.icone||"")+" "+fmt(f.titre)+"</h1>"
+   + "<div class='block'><h2>🎯 Objectif</h2><p class='lead'>"+fmt(f.objectif)+"</p></div>"
+   + "<div class='bref'>"
+     + "<span><b>Difficulté</b>"+fmt(f.bref.diff)+"</span>"
+     + "<span><b>Durée</b>"+fmt(f.bref.duree)+"</span>"
+     + "<span><b>Budget</b>"+fmt(f.bref.budget)+"</span>"
+   + "</div>"
+   + "<div class='block callout warn'><h2>⚠️ Sécurité &amp; vigilance</h2>"+list(f.securite)+"</div>"
+   + "<div class='block'><h2>🧰 Outillage</h2>"+list(f.outillage)+"</div>"
+   + "<div class='block'><h2>📦 Matériel / fournitures</h2>"+list(f.materiel)+"</div>"
+   + "<div class='block'><h2>🔧 Étapes</h2>"+list(f.etapes,true)+"</div>"
+   + "<div class='block callout tip'><h2>💡 Astuces &amp; pièges</h2>"+list(f.astuces)+"</div>"
+   + "<div class='block'><h2>👷 Pro ou DIY ?</h2><p>"+fmt(f.pro)+"</p></div>"
+   + "</article>";
+}
+function renderHome(){
+  var h = "<article class='fiche'><h1>🛠️ Mes travaux</h1>"
+    + "<p class='lead'>Choisis une fiche dans le menu. <strong>Toutes les fiches suivent la même trame</strong> : "
+    + "Objectif · En bref · Sécurité · Outillage · Matériel · Étapes · Astuces · Pro ou DIY.</p>";
+  DATA.forEach(function(r){
+    h += "<div class='block'><h2>"+(r.icone||"")+" "+fmt(r.titre)+"</h2><ul class='home-list'>";
+    r.fiches.forEach(function(f){
+      h += "<li><a href='#"+f.id+"'>"+(f.icone||"")+" "+fmt(f.titre)+"</a><span class='tag'>"+fmt(f.bref.diff)+"</span></li>";
+    });
+    h += "</ul></div>";
+  });
+  h += "<footer>Mémo perso — vérifie toujours le type de mur, les charges et les réseaux (eau/élec/gaz) avant d'intervenir. En cas de doute sur l'électricité, la plomberie sous pression ou le gaz : fais appel à un pro.</footer>";
+  h += "</article>";
+  return h;
+}
+function buildNav(){
+  var nav = document.getElementById("nav");
+  nav.innerHTML = DATA.map(function(r){
+    return "<div class='group'><div class='group-title'>"+(r.icone||"")+" "+fmt(r.titre)+"</div>"
+      + r.fiches.map(function(f){ return "<a href='#"+f.id+"'>"+fmt(f.titre)+"</a>"; }).join("")
+      + "</div>";
+  }).join("");
+}
+function route(){
+  var id = location.hash.replace(/^#/,"");
+  var fiche = null;
+  DATA.forEach(function(r){ r.fiches.forEach(function(f){ if(f.id===id) fiche=f; }); });
+  document.getElementById("content").innerHTML = fiche ? renderFiche(fiche) : renderHome();
+  Array.prototype.forEach.call(document.querySelectorAll(".nav a"), function(a){
+    a.classList.toggle("active", a.getAttribute("href") === "#"+id);
+  });
+  document.body.classList.remove("nav-open");
+  window.scrollTo(0,0);
+}
+buildNav();
+window.addEventListener("hashchange", route);
+route();
+
+/* mobile */
+document.getElementById("burger").addEventListener("click", function(){ document.body.classList.toggle("nav-open"); });
+document.getElementById("scrim").addEventListener("click", function(){ document.body.classList.remove("nav-open"); });
+</script>
 </body>
 </html>
