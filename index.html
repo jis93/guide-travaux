@@ -26,7 +26,6 @@
     -webkit-font-smoothing:antialiased;}
   a{color:var(--accent)}
 
-  /* ---- layout ---- */
   .layout{display:flex; min-height:100vh}
   .sidebar{flex:0 0 var(--sidew); width:var(--sidew); background:var(--side);
     border-right:1px solid var(--line); position:sticky; top:0; align-self:flex-start;
@@ -44,14 +43,12 @@
   .content{flex:1; min-width:0; display:flex; justify-content:center}
   .inner{width:100%; max-width:800px; padding:34px 24px 90px}
 
-  /* ---- topbar (mobile) ---- */
   .topbar{display:none; position:sticky; top:0; z-index:20; background:var(--bg);
     border-bottom:1px solid var(--line); padding:10px 14px; align-items:center; gap:12px}
   .burger{font-size:1.4rem; background:none; border:1px solid var(--line); color:var(--fg);
     border-radius:8px; padding:2px 10px; cursor:pointer}
   .scrim{display:none}
 
-  /* ---- fiche ---- */
   .fiche h1{font-size:1.7rem; line-height:1.2; margin:0 0 18px; padding-bottom:12px;
     border-bottom:2px solid var(--accent)}
   .lead{color:var(--muted); font-size:1.02rem}
@@ -116,7 +113,8 @@
 
 <script>
 const DATA = [
-  { titre:"Sol — dépose / pose", icone:"🪵", fiches:[
+
+  { titre:"1 · Dépose", icone:"🧹", fiches:[
 
     { id:"depose-sol", titre:"Dépose de l'ancien revêtement", icone:"🧹",
       objectif:"Retirer l'ancien revêtement (parquet stratifié flottant et/ou carrelage) pour repartir sur un support propre et plan.",
@@ -144,33 +142,10 @@ const DATA = [
         "Après dépose, **contrôler la planéité** à la règle de 2 m (tu ragréeras si besoin avant la pose).",
         "⚠️ Doute amiante (avant 1997) → **stop**, fais diagnostiquer."
       ],
-      pro:"DIY possible. Le carrelage collé sur dalle est **très physique**. Amiante suspecté → **professionnel / diagnostic obligatoire**." },
-
-    { id:"pose-parquet", titre:"Pose parquet stratifié flottant", icone:"📐",
-      objectif:"Poser un parquet stratifié flottant clipsable sur le support préparé, avec les joints de dilatation nécessaires.",
-      bref:{diff:"Moyen", duree:"~1 j pour 20-25 m²", budget:"Strat ~10-40 €/m² + sous-couche ~3-6 €/m²"},
-      securite:["Cutter / scie → gants + lunettes.","Genouillères indispensables."],
-      outillage:["Scie sauteuse (lame anti-éclat) ou scie à onglet / circulaire","Mètre, équerre, crayon, règle","**Cales de dilatation** (~8 mm)","**Tire-lame + cale de frappe + maillet blanc**","Cutter"],
-      materiel:["Lames stratifiées **+10 %** (chutes)","Sous-couche (isolante ; **pare-vapeur si dalle/RDC**)","Barres de seuil","Plinthes ou quart-de-rond","Film polyane si pose sur dalle béton"],
-      etapes:[
-        "**Acclimater** les lames 48 h dans la pièce (emballées, à plat).",
-        "Vérifier le support : **propre, sec, plan** (règle 2 m, tolérance ~2-3 mm) → ragréer si besoin.",
-        "Poser le **pare-vapeur** (si dalle) puis la **sous-couche**.",
-        "Sens de pose : lames **parallèles à la lumière** (perpendiculaire à la fenêtre) en général.",
-        "Poser rang par rang avec **cales ~8 mm en périphérie** ; **décaler les joints** de ≥30 cm (démarrer avec la chute du rang précédent).",
-        "Clipser (à l'angle puis à plat), frapper au **tire-lame**.",
-        "Dernier rang recoupé en largeur ; découpes autour des tuyaux ; **scier le bas des huisseries** pour glisser les lames dessous.",
-        "Retirer les cales, poser les **plinthes (fixées au MUR, jamais au sol)** + barres de seuil aux jonctions/portes."
-      ],
-      astuces:[
-        "⚠️ **Toujours un joint de dilatation périphérique** : le flottant « travaille ». Plinthe/quart-de-rond ne doivent **pas bloquer** le parquet.",
-        "Grande longueur (>8 m) → prévoir un **joint de dilatation intermédiaire** (barre).",
-        "Commencer le long d'un **mur droit** ; vérifier le sens de clipsage avant de foncer."
-      ],
-      pro:"**DIY accessible** et gratifiant, même pour un débutant soigneux." }
+      pro:"DIY possible. Le carrelage collé sur dalle est **très physique**. Amiante suspecté → **professionnel / diagnostic obligatoire**." }
   ]},
 
-  { titre:"Cuisine", icone:"🍳", fiches:[
+  { titre:"2 · Réseaux — élec · plomberie · chauffage", icone:"🔌", fiches:[
 
     { id:"prises-cuisine", titre:"Déplacement des prises (cuisine)", icone:"🔌",
       objectif:"Déplacer / ajouter les prises pour la nouvelle implantation de cuisine (plan de travail, électroménager) en respectant la norme.",
@@ -192,56 +167,10 @@ const DATA = [
       ],
       astuces:[
         "⚠️ La cuisine exige des **circuits dédiés** — ne pas repiquer n'importe où.",
-        "Prévois la position **avant** de monter les meubles (accès aux boîtes derrière l'électroménager).",
+        "Fais ces saignées/passages **avant la pose du sol** et **avant les meubles** (accès aux boîtes derrière l'électroménager).",
         "Photographie/note le repérage au tableau."
       ],
       pro:"Déplacer une prise sur circuit existant = **DIY si tu es à l'aise et conforme**. **Ajout de ligne / modif du tableau / doute → électricien** (conformité + assurance)." },
-
-    { id:"montage-cuisine", titre:"Montage de la cuisine (METOD)", icone:"🧱",
-      objectif:"Monter et poser la cuisine IKEA METOD de façon **propre et parfaitement alignée**.",
-      bref:{diff:"Moyen", duree:"1 à 3 j selon taille", budget:"Outillage + accessoires + silicone"},
-      securite:["EPI + genouillères.","Couper eau/élec pour les raccordements.","**Fixation murale sérieuse** (meubles hauts chargés) — cf mémo placo."],
-      outillage:["**Niveau laser** + niveau à bulle","Perceuse-visseuse (+ perforateur si mur dur)","**Serre-joints** ★","Détecteur montants/câbles","Scie sauteuse / **circulaire + rail**, scie cloche","Embouts Pozidriv + hex","Pistolet à mastic"],
-      materiel:["Caissons METOD, **rail de suspension**, pieds réglables","**Chevilles adaptées** (Molly si placo)","Plan de travail, plinthes, joues de finition","Silicone sanitaire"],
-      etapes:[
-        "Relevé + implantation ; **repérer les réseaux** (eau / élec / évacuation).",
-        "**Ligne de niveau au laser** ; poser le **rail de suspension** (vissé dans les montants + Molly — cf mémo placo).",
-        "Meubles **hauts** sur le rail : alignés, **clampés à fleur**, solidarisés entre eux.",
-        "Meubles **bas** : régler les pieds (**partir du point le plus haut du sol**), aligner, clamper, solidariser.",
-        "**Plan de travail** : mesure, découpe (rail + lame fine + ruban de masquage), découpes évier/plaque (scie cloche/sauteuse), joints.",
-        "Raccords évier / plaque / électroménager (cf fiches concernées).",
-        "Façades, plinthes, joues, **silicone** de finition."
-      ],
-      astuces:[
-        "**Les 4 réflexes** : point haut du sol → rail au laser → clamper à fleur AVANT de solidariser → masquer + couper du bon côté.",
-        "Si tu ne prends que 3 outils : **laser + serre-joints + visseuse**."
-      ],
-      pro:"Montage **DIY**. Les raccordements **eau / élec / gaz** selon ton aisance (sinon plombier/électricien)." }
-  ]},
-
-  { titre:"Dressing", icone:"👕", fiches:[
-
-    { id:"montage-dressing", titre:"Montage du dressing (PAX)", icone:"🚪",
-      objectif:"Monter le dressing PAX de niveau, fixé au mur, et **anticiper l'affaissement des tablettes**.",
-      bref:{diff:"Facile → Moyen", duree:"½ à 1 j", budget:"Caissons + accessoires (+ renforts éventuels)"},
-      securite:["⚠️ **Fixation anti-bascule au mur OBLIGATOIRE**.","EPI, surface propre pour assembler."],
-      outillage:["Perceuse-visseuse","Niveau à bulle, mètre","Détecteur montants","Serre-joints (si plusieurs caissons)","Clé Allen / embout hex","(Défonceuse si renfort/LED)"],
-      materiel:["Caissons PAX + KOMPLEMENT (tablettes / **tiroirs**)","Fixation murale + **chevilles adaptées** (Molly en placo)","Renforts éventuels (barre acier / tasseau)","Profilé LED (option)"],
-      etapes:[
-        "Assembler les caissons **au sol** sur surface propre.",
-        "Redresser, mettre **de niveau** (pieds/cales), aligner, **clamper à fleur** si plusieurs caissons.",
-        "**Fixer au mur** (anti-bascule) — dans les montants / Molly.",
-        "Poser tablettes et tiroirs ; **mettre le lourd dans les tiroirs**.",
-        "(Option) renfort anti-affaissement invisible + **LED encastrées** — cf mémos."
-      ],
-      astuces:[
-        "**Anti-affaissement** : caissons **50 cm** > 100 cm, **lourd dans les tiroirs**, renfort du bord avant (ou barre acier encastrée invisible).",
-        "**Bien clipser** les tablettes et **ancrer au mur** : ça limite l'écartement du cadre (ce qui fait sauter les taquets)."
-      ],
-      pro:"**DIY** intégral." }
-  ]},
-
-  { titre:"Plomberie & Chauffage", icone:"🚿", fiches:[
 
     { id:"wc-lave-linge", titre:"WC à l'emplacement du lave-linge", icone:"🚽",
       objectif:"Installer un WC là où se trouve l'emplacement du lave-linge (arrivée d'eau + évacuation existantes).",
@@ -259,8 +188,8 @@ const DATA = [
       ],
       astuces:[
         "⚠️ **Le diamètre/pente d'évacuation est LE point critique** : un WC classique veut du **Ø100**, un emplacement lave-linge n'a souvent que du **Ø40** → d'où l'intérêt du **broyeur**.",
-        "Vérifier la **distance de refoulement** max d'un broyeur jusqu'à la chute.",
-        "WC = **eau froide** uniquement."
+        "Fais le **rough-in** (arrivée/évac) avant la pose du sol ; la pose finale de la cuvette peut venir après.",
+        "Vérifier la **distance de refoulement** max d'un broyeur ; WC = **eau froide** uniquement."
       ],
       pro:"**WC broyeur sur évacuation existante = DIY accessible.** Création d'une **évacuation Ø100** / reprise de la chute → **plombier**." },
 
@@ -277,7 +206,7 @@ const DATA = [
         "**Électrique** : débrancher, déposer, déplacer/créer la ligne d'alimentation, refixer, rebrancher.",
         "**À eau** — 1. Couper chaudière, fermer les vannes, **vidanger** le radiateur.",
         "2. Déposer radiateur + supports.",
-        "3. **Piquage** (té) sur le réseau et tirer les tubes vers le nouvel emplacement.",
+        "3. **Piquage** (té) sur le réseau et tirer les tubes vers le nouvel emplacement (à faire **avant le sol** si passage encastré).",
         "4. Poser les supports (hauteur ~10-12 cm du sol, idéalement **sous une fenêtre**).",
         "5. Raccorder robinet + coude, remonter le radiateur.",
         "6. **Remettre en eau, PURGER l'air**, vérifier l'étanchéité et la pression."
@@ -288,6 +217,75 @@ const DATA = [
         "Élec : respecter la **ligne dédiée** du radiateur."
       ],
       pro:"**Électrique = DIY accessible.** **Eau / chauffage central** (reprise de réseau, soudure, chaudière sous garantie) → souvent **chauffagiste/plombier**." }
+  ]},
+
+  { titre:"3 · Sol — pose", icone:"🪵", fiches:[
+
+    { id:"pose-parquet", titre:"Pose parquet stratifié flottant", icone:"📐",
+      objectif:"Poser un parquet stratifié flottant clipsable sur le support préparé, avec les joints de dilatation nécessaires.",
+      bref:{diff:"Moyen", duree:"~1 j pour 20-25 m²", budget:"Strat ~10-40 €/m² + sous-couche ~3-6 €/m²"},
+      securite:["Cutter / scie → gants + lunettes.","Genouillères indispensables."],
+      outillage:["Scie sauteuse (lame anti-éclat) ou scie à onglet / circulaire","Mètre, équerre, crayon, règle","**Cales de dilatation** (~8 mm)","**Tire-lame + cale de frappe + maillet blanc**","Cutter"],
+      materiel:["Lames stratifiées **+10 %** (chutes)","Sous-couche (isolante ; **pare-vapeur si dalle/RDC**)","Barres de seuil","Plinthes ou quart-de-rond","Film polyane si pose sur dalle béton"],
+      etapes:[
+        "**Acclimater** les lames 48 h dans la pièce (emballées, à plat).",
+        "Vérifier le support : **propre, sec, plan** (règle 2 m, tolérance ~2-3 mm) → ragréer si besoin.",
+        "Poser le **pare-vapeur** (si dalle) puis la **sous-couche**.",
+        "Sens de pose : lames **parallèles à la lumière** (perpendiculaire à la fenêtre) en général.",
+        "Poser rang par rang avec **cales ~8 mm en périphérie** ; **décaler les joints** de ≥30 cm (démarrer avec la chute du rang précédent).",
+        "Clipser (à l'angle puis à plat), frapper au **tire-lame**.",
+        "Dernier rang recoupé en largeur ; découpes autour des tuyaux ; **scier le bas des huisseries** pour glisser les lames dessous.",
+        "Retirer les cales, poser les **plinthes (fixées au MUR, jamais au sol)** + barres de seuil aux jonctions/portes."
+      ],
+      astuces:[
+        "⚠️ **Toujours un joint de dilatation périphérique** : le flottant « travaille ». Plinthe/quart-de-rond ne doivent **pas bloquer** le parquet.",
+        "Grande longueur (>8 m) → prévoir un **joint de dilatation intermédiaire** (barre).",
+        "⚠️ **Cuisine sur flottant** : ne « coince » pas les lames sous des meubles lourds → pose **autour de l'emprise** de la cuisine, ou laisse le flottant vraiment libre."
+      ],
+      pro:"**DIY accessible** et gratifiant, même pour un débutant soigneux." }
+  ]},
+
+  { titre:"4 · Montages", icone:"🧱", fiches:[
+
+    { id:"montage-cuisine", titre:"Montage de la cuisine (METOD)", icone:"🍳",
+      objectif:"Monter et poser la cuisine IKEA METOD de façon **propre et parfaitement alignée**.",
+      bref:{diff:"Moyen", duree:"1 à 3 j selon taille", budget:"Outillage + accessoires + silicone"},
+      securite:["EPI + genouillères.","Couper eau/élec pour les raccordements.","**Fixation murale sérieuse** (meubles hauts chargés) — cf mémo placo."],
+      outillage:["**Niveau laser** + niveau à bulle","Perceuse-visseuse (+ perforateur si mur dur)","**Serre-joints** ★","Détecteur montants/câbles","Scie sauteuse / **circulaire + rail**, scie cloche","Embouts Pozidriv + hex","Pistolet à mastic"],
+      materiel:["Caissons METOD, **rail de suspension**, pieds réglables","**Chevilles adaptées** (Molly si placo)","Plan de travail, plinthes, joues de finition","Silicone sanitaire"],
+      etapes:[
+        "Relevé + implantation (les **prises** et **réseaux** sont déjà en place — voir phase 2).",
+        "**Ligne de niveau au laser** ; poser le **rail de suspension** (vissé dans les montants + Molly — cf mémo placo).",
+        "Meubles **hauts** sur le rail : alignés, **clampés à fleur**, solidarisés entre eux.",
+        "Meubles **bas** : régler les pieds (**partir du point le plus haut du sol**), aligner, clamper, solidariser.",
+        "**Plan de travail** : mesure, découpe (rail + lame fine + ruban de masquage), découpes évier/plaque (scie cloche/sauteuse), joints.",
+        "Raccords évier / plaque / électroménager.",
+        "Façades, plinthes, joues, **silicone** de finition."
+      ],
+      astuces:[
+        "**Les 4 réflexes** : point haut du sol → rail au laser → clamper à fleur AVANT de solidariser → masquer + couper du bon côté.",
+        "Si tu ne prends que 3 outils : **laser + serre-joints + visseuse**."
+      ],
+      pro:"Montage **DIY**. Les raccordements **eau / élec / gaz** selon ton aisance (sinon plombier/électricien)." },
+
+    { id:"montage-dressing", titre:"Montage du dressing (PAX)", icone:"👕",
+      objectif:"Monter le dressing PAX de niveau, fixé au mur, et **anticiper l'affaissement des tablettes**.",
+      bref:{diff:"Facile → Moyen", duree:"½ à 1 j", budget:"Caissons + accessoires (+ renforts éventuels)"},
+      securite:["⚠️ **Fixation anti-bascule au mur OBLIGATOIRE**.","EPI, surface propre pour assembler."],
+      outillage:["Perceuse-visseuse","Niveau à bulle, mètre","Détecteur montants","Serre-joints (si plusieurs caissons)","Clé Allen / embout hex","(Défonceuse si renfort/LED)"],
+      materiel:["Caissons PAX + KOMPLEMENT (tablettes / **tiroirs**)","Fixation murale + **chevilles adaptées** (Molly en placo)","Renforts éventuels (barre acier / tasseau)","Profilé LED (option)"],
+      etapes:[
+        "Assembler les caissons **au sol** sur surface propre.",
+        "Redresser, mettre **de niveau** (pieds/cales), aligner, **clamper à fleur** si plusieurs caissons.",
+        "**Fixer au mur** (anti-bascule) — dans les montants / Molly.",
+        "Poser tablettes et tiroirs ; **mettre le lourd dans les tiroirs**.",
+        "(Option) renfort anti-affaissement invisible + **LED encastrées** — cf mémos."
+      ],
+      astuces:[
+        "**Anti-affaissement** : caissons **50 cm** > 100 cm, **lourd dans les tiroirs**, renfort du bord avant (ou barre acier encastrée invisible).",
+        "**Bien clipser** les tablettes et **ancrer au mur** : ça limite l'écartement du cadre (ce qui fait sauter les taquets)."
+      ],
+      pro:"**DIY** intégral." }
   ]},
 
   { titre:"Mémos techniques", icone:"📌", fiches:[
@@ -370,8 +368,15 @@ function renderFiche(f){
 }
 function renderHome(){
   var h = "<article class='fiche'><h1>🛠️ Mes travaux</h1>"
-    + "<p class='lead'>Choisis une fiche dans le menu. <strong>Toutes les fiches suivent la même trame</strong> : "
-    + "Objectif · En bref · Sécurité · Outillage · Matériel · Étapes · Astuces · Pro ou DIY.</p>";
+    + "<p class='lead'>Rubriques rangées dans <strong>l'ordre du chantier</strong>. Choisis une fiche dans le menu — "
+    + "<strong>toutes suivent la même trame</strong> : Objectif · En bref · Sécurité · Outillage · Matériel · Étapes · Astuces · Pro ou DIY.</p>"
+    + "<div class='block callout tip'><h2>🗺️ Ordre du chantier conseillé</h2><ol>"
+      + "<li><strong>Dépose</strong> de l'ancien sol.</li>"
+      + "<li><strong>Réseaux</strong> : élec, plomberie, chauffage (saignées, câbles, tubes) — <em>avant</em> le sol.</li>"
+      + "<li><strong>Pose du sol</strong> (parquet).</li>"
+      + "<li><strong>Montages</strong> : cuisine puis dressing.</li>"
+      + "</ol><p style='margin:8px 0 0'>Règle d'or : les <strong>réseaux passent avant le sol fini</strong>, et les <strong>meubles en dernier</strong>. "
+      + "Sur un <strong>parquet flottant</strong>, évite de coincer les lames sous une cuisine lourde (pose autour de l'emprise ou laisse le flottant libre).</p></div>";
   DATA.forEach(function(r){
     h += "<div class='block'><h2>"+(r.icone||"")+" "+fmt(r.titre)+"</h2><ul class='home-list'>";
     r.fiches.forEach(function(f){
@@ -406,7 +411,6 @@ buildNav();
 window.addEventListener("hashchange", route);
 route();
 
-/* mobile */
 document.getElementById("burger").addEventListener("click", function(){ document.body.classList.toggle("nav-open"); });
 document.getElementById("scrim").addEventListener("click", function(){ document.body.classList.remove("nav-open"); });
 </script>
