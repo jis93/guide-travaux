@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guide travaux — Cuisine IKEA, PAX, placo & LED</title>
+<style>
+  :root{
+    --bg:#ffffff; --fg:#1c2024; --muted:#5b636b; --line:#e6e8eb;
+    --accent:#0f7a6c; --accent-soft:#e6f4f1; --card:#f7f9fa;
+    --warn-bg:#fff4e5; --warn-line:#f0b429; --tip-bg:#e9f6ee; --tip-line:#2f9e5f;
+    --star:#0f7a6c;
+    --maxw:820px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#14171a; --fg:#e7eaed; --muted:#9aa4ad; --line:#2a2f35;
+      --accent:#39c0ad; --accent-soft:#12332e; --card:#1b1f23;
+      --warn-bg:#2e2410; --warn-line:#c99a1e; --tip-bg:#122a1c; --tip-line:#2f9e5f;
+      --star:#39c0ad;
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:32px 20px 80px}
+  header.hero{
+    border-bottom:2px solid var(--accent); padding-bottom:20px; margin-bottom:8px;
+  }
+  header.hero h1{font-size:1.9rem; line-height:1.2; margin:0 0 6px}
+  header.hero p{color:var(--muted); margin:4px 0 0}
+  .badge{display:inline-block; background:var(--accent-soft); color:var(--accent);
+    font-size:.75rem; font-weight:600; padding:3px 9px; border-radius:999px; margin-top:10px}
+  nav.toc{
+    background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:16px 20px; margin:24px 0 8px;
+  }
+  nav.toc h2{font-size:.8rem; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--muted); margin:0 0 10px}
+  nav.toc ol{margin:0; padding-left:20px}
+  nav.toc li{margin:5px 0}
+  nav.toc a{color:var(--fg); text-decoration:none}
+  nav.toc a:hover{color:var(--accent); text-decoration:underline}
+  section{margin-top:40px; scroll-margin-top:20px}
+  h2.sec{font-size:1.35rem; border-left:4px solid var(--accent); padding-left:12px; margin:0 0 14px}
+  h3{font-size:1.05rem; margin:22px 0 8px}
+  p{margin:10px 0}
+  ul,ol{padding-left:22px}
+  li{margin:5px 0}
+  code{background:var(--card); border:1px solid var(--line); border-radius:5px;
+    padding:1px 5px; font-size:.9em}
+  table{border-collapse:collapse; width:100%; margin:14px 0; font-size:.95rem}
+  th,td{border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top}
+  th{background:var(--card); font-weight:600}
+  .callout{border-radius:10px; padding:12px 16px; margin:16px 0; border:1px solid}
+  .warn{background:var(--warn-bg); border-color:var(--warn-line)}
+  .tip{background:var(--tip-bg); border-color:var(--tip-line)}
+  .callout strong{display:block; margin-bottom:2px}
+  .star{color:var(--star); font-weight:700}
+  .check{list-style:none; padding-left:4px}
+  .check li{position:relative; padding-left:28px; margin:7px 0}
+  .check li::before{content:"☐"; position:absolute; left:0; top:-1px; font-size:1.15em; color:var(--accent)}
+  .lead{font-size:1.05rem; color:var(--muted)}
+  footer{margin-top:56px; padding-top:18px; border-top:1px solid var(--line);
+    color:var(--muted); font-size:.85rem}
+  a{color:var(--accent)}
+  @media print{
+    nav.toc{break-inside:avoid}
+    section{break-inside:avoid-page}
+    .callout,table{break-inside:avoid}
+    body{font-size:12px}
+    a{color:inherit; text-decoration:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>🛠️ Guide travaux</h1>
+  <p>Cuisine IKEA · Rail dans le placo · Étagères PAX anti-affaissement · LED encastrées</p>
+  <span class="badge">Mémo perso — à imprimer ou garder sous la main</span>
+</header>
+
+<nav class="toc">
+  <h2>Sommaire</h2>
+  <ol>
+    <li><a href="#cuisine">Monter une cuisine IKEA proprement</a></li>
+    <li><a href="#placo">Fixer le rail de suspension dans du placo</a></li>
+    <li><a href="#pax">Étagères PAX / KOMPLEMENT : anti-affaissement</a></li>
+    <li><a href="#led">LED encastrées &amp; câbles cachés (défonceuse)</a></li>
+    <li><a href="#outillage">Checklist outillage — acheter vs louer</a></li>
+  </ol>
+</nav>
+
+<!-- 1 -->
+<section id="cuisine">
+  <h2 class="sec">1. Monter une cuisine IKEA (METOD) proprement &amp; alignée</h2>
+  <p class="lead">L'enjeu n°1 : le <strong>niveau et l'alignement</strong> (rail de suspension pour les meubles hauts, pieds réglables pour les bas).</p>
+
+  <h3>Niveau &amp; alignement <span class="star">★ le plus important</span></h3>
+  <table>
+    <tr><th>Outil</th><th>Pourquoi</th></tr>
+    <tr><td><strong>Niveau laser à lignes croisées</strong> (auto-nivelant)</td><td>Trace une ligne horizontale parfaite tout autour de la pièce pour le rail et le haut des meubles bas. Le garant de l'alignement.</td></tr>
+    <tr><td><strong>Niveau à bulle</strong> (long 60–120 cm + torpedo)</td><td>Vérifier chaque meuble, l'aplomb, les petits espaces.</td></tr>
+    <tr><td><strong>Détecteur montants / métaux / câbles</strong></td><td>Trouver les montants et éviter câbles/tuyaux avant de percer.</td></tr>
+    <tr><td><strong>Mètre ruban + équerre de combinaison</strong></td><td>Mesures et angles droits.</td></tr>
+  </table>
+
+  <h3>Perçage / vissage / fixation</h3>
+  <ul>
+    <li><strong>Perceuse-visseuse sans fil</strong> (bon couple) — indispensable.</li>
+    <li><strong>Perforateur (SDS)</strong> si murs béton/brique. Placo → pas nécessaire.</li>
+    <li><strong>Forets</strong> bois + béton, au bon diamètre.</li>
+    <li><strong>Chevilles adaptées au mur</strong> (souvent à upgrader vs celles d'IKEA).</li>
+    <li><strong>Embouts Pozidriv + hex/Allen</strong> (IKEA = Pozidriv + clé Allen). Visseuse à chocs = option confort.</li>
+  </ul>
+
+  <h3>Assemblage aligné — le secret du « propre »</h3>
+  <ul>
+    <li><strong>Serre-joints</strong> <span class="star">★</span> : on clampe deux caissons <em>bord à bord, à fleur</em>, <strong>avant</strong> de les visser ensemble.</li>
+    <li><strong>Cales / shims plastique</strong> : rattraper un mur ou sol pas droit.</li>
+  </ul>
+
+  <h3>Découpe propre (plan de travail, plinthes, joues)</h3>
+  <ul>
+    <li><strong>Scie sauteuse</strong> + lame anti-éclat / coupe inversée (down-cut).</li>
+    <li><strong>Scie circulaire + rail de guidage</strong> (ou plongeante) — plus propre pour les coupes droites du plan de travail.</li>
+    <li><strong>Scie cloche</strong> — trous robinet/tuyaux.</li>
+    <li><strong>Défonceuse + gabarit</strong> — joint pro (onglet maçonné) — avancé.</li>
+    <li><strong>Ruban de masquage</strong> sur la ligne de coupe → zéro éclat sur le stratifié.</li>
+  </ul>
+
+  <h3>Finitions &amp; sécurité</h3>
+  <ul>
+    <li>Pistolet à mastic/silicone + lisseur de joint + ruban de masquage.</li>
+    <li>Lunettes, masque anti-poussière, <strong>genouillères</strong>, gants, aspirateur.</li>
+  </ul>
+
+  <div class="callout tip">
+    <strong>🎯 Si tu ne prends que 3 choses</strong>
+    Niveau laser + serre-joints + bonne perceuse-visseuse.
+  </div>
+
+  <div class="callout tip">
+    <strong>4 réflexes « propre &amp; aligné »</strong>
+    <ol style="margin:6px 0 0">
+      <li>Pars du <strong>point le plus haut du sol</strong> pour régler les pieds des meubles bas.</li>
+      <li><strong>Cale le rail de suspension au laser</strong> → les meubles hauts s'alignent seuls.</li>
+      <li><strong>Clampe à fleur AVANT</strong> de solidariser les caissons.</li>
+      <li><strong>Masque + coupe</strong> le stratifié du bon côté pour un chant net.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- 2 -->
+<section id="placo">
+  <h2 class="sec">2. Fixer le rail de suspension dans du placo</h2>
+
+  <div class="callout tip">
+    <strong>Le point clé qui rassure</strong>
+    Le rail est <strong>horizontal</strong> ; les montants du placo sont <strong>verticaux et pleine hauteur</strong>. Donc à <em>n'importe quelle hauteur</em>, le rail <strong>croise les montants</strong>. Monter haut ne te fait pas perdre la structure.
+  </div>
+
+  <h3>Étape 1 — Identifier le mur</h3>
+  <table>
+    <tr><th>Type</th><th>Fixation</th></tr>
+    <tr><td><strong>Cloison creuse</strong> (placo + ossature métal + vide)</td><td>Vis dans les <strong>montants</strong> + chevilles Molly entre.</td></tr>
+    <tr><td><strong>Doublage collé</strong> (placo collé sur maçonnerie)</td><td>Vis longues traversant jusqu'à la <strong>maçonnerie</strong> = très solide.</td></tr>
+  </table>
+  <p>Pour savoir : <strong>taper le mur</strong> (creux/plein), détecteur, ou petit trou test.</p>
+
+  <h3>Étape 2 — Les montants</h3>
+  <ul>
+    <li><strong>Entraxe : 60 cm</strong> standard, <strong>40 cm</strong> si renforcé.</li>
+    <li>Sur 3 m : ~5–6 montants (60 cm) ou ~7–8 (40 cm).</li>
+    <li><strong>Doublés</strong> aux angles et autour des portes ; rails horizontaux en haut/bas.</li>
+    <li>Largeur d'un montant ≈ <strong>48 mm</strong>, tôle fine (~0,6 mm) → viser le <strong>centre</strong>.</li>
+  </ul>
+
+  <h3>Les repérer</h3>
+  <ol>
+    <li><strong>Détecteur</strong> (mode métal).</li>
+    <li><strong>Astuce aimant</strong> 🧲 : un aimant puissant accroche les vis du placo, alignées verticalement <em>sur les montants</em>.</li>
+    <li>Regarder les <strong>lignes de vis</strong> du placo.</li>
+  </ol>
+
+  <h3>La méthode</h3>
+  <ul>
+    <li><strong>Cloison creuse :</strong> vis dans <strong>chaque montant croisé</strong> (vis à métaux) + <strong>Molly métal</strong> entre les montants + multiplier les points.</li>
+    <li><strong>Doublage collé :</strong> vis longues + chevilles atteignant la maçonnerie derrière.</li>
+  </ul>
+
+  <div class="callout warn">
+    <strong>⚠️ Pourquoi c'est sérieux</strong>
+    Un meuble haut plein de vaisselle <strong>tire vers l'extérieur en haut</strong> (arrachement) — le pire cas pour du placo. Toujours <strong>taper dans les montants</strong> ; jamais des chevilles plastique basiques seules.
+  </div>
+</section>
+
+<!-- 3 -->
+<section id="pax">
+  <h2 class="sec">3. Étagères PAX / KOMPLEMENT : anti-affaissement</h2>
+
+  <h3>Pourquoi ça s'affaisse</h3>
+  <p>Tablettes en <strong>aggloméré mélaminé</strong> qui <strong>flue</strong> (déformation permanente) sous charge constante. Pire avec : largeur <strong>100 cm</strong> (vs 50), charge lourde, humidité.</p>
+
+  <h3>Prévention</h3>
+  <ul>
+    <li><strong>Caissons 50 cm</strong> plutôt que 100.</li>
+    <li><strong>Le lourd dans les tiroirs</strong>, pas sur tablettes ouvertes.</li>
+    <li>Plus de tablettes rapprochées ; respecter la charge max ; bien clipser ; ancrer au mur.</li>
+  </ul>
+
+  <h3>Renforcer — rendu INVISIBLE</h3>
+  <table>
+    <tr><th>Solution</th><th>Détail</th></tr>
+    <tr><td><strong>Barre acier encastrée à fleur</strong> <span class="star">★</span></td><td>Rainure à la défonceuse sous la tablette + méplat/tube acier collé époxy, affleurant. Invisible &amp; très rigide.</td></tr>
+    <tr><td><strong>Renfort bord arrière</strong></td><td>Tasseau/cornière sous l'arrière, caché de face (moins fort mais discret).</td></tr>
+    <tr><td><strong>Tablette « lookalike » plus rigide</strong></td><td>Contreplaqué épais / bois massif / caisson-torsion peint blanc.</td></tr>
+    <tr><td><strong>Support central caché</strong></td><td>Entretoise verticale au fond-milieu → coupe la portée.</td></tr>
+  </table>
+
+  <h3>Solutions communauté (visibles mais éprouvées)</h3>
+  <ul>
+    <li><strong>Croisillons OBSERVATÖR</strong> (IKEA) → rigidifient le cadre, empêchent l'écartement.</li>
+    <li><strong>Taquets métal</strong> en remplacement des plastiques (qui sautent quand le cadre s'écarte).</li>
+    <li><strong>Tasseau</strong> (1,5–2 cm) ou <strong>cornière alu</strong> sous le bord.</li>
+  </ul>
+</section>
+
+<!-- 4 -->
+<section id="led">
+  <h2 class="sec">4. LED encastrées &amp; câbles cachés (défonceuse)</h2>
+
+  <h3>Le principe</h3>
+  <ol>
+    <li>Choisir le <strong>profilé alu encastrable + diffuseur</strong> AVANT de rainurer → rainure <strong>aux cotes exactes</strong> pour affleurer. Le diffuseur dépoli <strong>masque les points LED</strong>.</li>
+    <li>Rainurer la LED sous le bord avant d'une tablette ou dans un montant.</li>
+    <li><strong>Câbles :</strong> 2ᵉ rainure peu profonde + <strong>trou de passage</strong> discret ; remonter les fils dans un angle au fond.</li>
+    <li><strong>Driver 12/24 V</strong> caché sur le dessus du meuble ; interrupteur ou détecteur de mouvement.</li>
+  </ol>
+
+  <div class="callout warn">
+    <strong>⚠️ Attention</strong>
+    Vérifier l'<strong>épaisseur</strong> : ne pas traverser une tablette fine → rainurer plutôt un élément épais. <strong>Test à blanc</strong> du profilé + <strong>ébavurer</strong>.
+  </div>
+
+  <div class="callout tip">
+    <strong>💡 Bonus malin</strong>
+    Une seule passe de défonceuse peut loger <strong>la barre acier anti-affaissement ET le profilé LED</strong> — deux problèmes réglés d'un coup.
+  </div>
+</section>
+
+<!-- 5 -->
+<section id="outillage">
+  <h2 class="sec">5. Checklist outillage — acheter vs louer</h2>
+
+  <h3>À acheter</h3>
+  <ul class="check">
+    <li>Perceuse-visseuse sans fil</li>
+    <li>Niveau à bulle (long + torpedo)</li>
+    <li>Mètre ruban + équerre de combinaison</li>
+    <li>Détecteur montants / câbles</li>
+    <li>Serre-joints (×2 minimum)</li>
+    <li>Embouts Pozidriv + jeu hex/Allen</li>
+    <li>Chevilles Molly métal + pince à expansion</li>
+    <li>Forets bois + béton + métal</li>
+    <li>Pistolet à mastic + lisseur</li>
+    <li>EPI : lunettes, masque, genouillères, gants</li>
+  </ul>
+
+  <h3>À louer (cher / usage ponctuel)</h3>
+  <ul class="check">
+    <li>Niveau laser à lignes croisées</li>
+    <li>Scie circulaire + rail de guidage (ou plongeante)</li>
+    <li>Perforateur SDS (si murs durs)</li>
+    <li>Défonceuse (si pas déjà possédée)</li>
+  </ul>
+
+  <div class="callout tip">
+    <strong>Le trio décisif</strong>
+    Niveau laser · serre-joints · perceuse-visseuse. Le reste s'adapte au chantier.
+  </div>
+</section>
+
+<footer>
+  <p>Guide perso — récapitulatif de travaux. Vérifie toujours le type de mur et les charges avant de percer. Les fixations doivent être dimensionnées pour le poids réel (vaisselle comprise).</p>
+</footer>
+
+</div>
+</body>
+</html>
