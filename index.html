@@ -10,6 +10,7 @@
     --accent:#0f7a6c; --accent-soft:#e6f4f1; --card:#f7f9fa;
     --warn-bg:#fff4e5; --warn-line:#f0b429; --tip-bg:#e9f6ee; --tip-line:#2f9e5f;
     --side:#f4f6f7; --sidew:290px;
+    --mix-line:#b8860b; --pro-bg:#fde8e8; --pro-line:#c0392b;
   }
   @media (prefers-color-scheme: dark){
     :root{
@@ -17,6 +18,7 @@
       --accent:#39c0ad; --accent-soft:#12332e; --card:#1b1f23;
       --warn-bg:#2e2410; --warn-line:#c99a1e; --tip-bg:#122a1c; --tip-line:#2f9e5f;
       --side:#101316;
+      --mix-line:#e0b34d; --pro-bg:#3a1f1f; --pro-line:#ef9a9a;
     }
   }
   *{box-sizing:border-box}
@@ -86,6 +88,10 @@
   .home-list a{font-weight:600; text-decoration:none}
   .home-list a:hover{text-decoration:underline}
   .tag{font-size:.72rem; background:var(--accent-soft); color:var(--accent); padding:2px 8px; border-radius:999px; white-space:nowrap}
+  .mode{display:inline-block; font-weight:700; font-size:.78rem; padding:4px 12px; border-radius:999px; margin:0 0 14px}
+  .mode-diy{background:var(--tip-bg); color:var(--tip-line); border:1px solid var(--tip-line)}
+  .mode-mix{background:var(--warn-bg); color:var(--mix-line); border:1px solid var(--warn-line)}
+  .mode-pro{background:var(--pro-bg); color:var(--pro-line); border:1px solid var(--pro-line)}
   footer{margin-top:50px; padding-top:16px; border-top:1px solid var(--line); color:var(--muted); font-size:.82rem}
 
   @media (max-width:820px){
@@ -300,6 +306,21 @@ const DATA = [
   ]}
 ];
 
+const MODE = {
+  "depose-sol":{m:"DIY", eco:"Dépose pro ~15-30 €/m² → **économie DIY quasi totale**"},
+  "pose-parquet":{m:"DIY", eco:"Pose pro ~25-45 €/m² → **~25-45 €/m² économisés**"},
+  "prises-cuisine":{m:"Mixte", eco:"Électricien ~40-60 €/h ou ~50-90 €/point — **prépare, fais raccorder**"},
+  "wc-lave-linge":{m:"Mixte", eco:"Plombier ~50-70 €/h + élec pour la prise — **DIY dépose / mur / évac**"},
+  "deplacement-radiateur":{m:"Mixte", eco:"Élec = DIY. **Eau = chauffagiste ~50-70 €/h** (~150-400 €)"},
+  "montage-cuisine":{m:"DIY", eco:"Pose pro **800-2000 €+** → grosse économie (soigne le plan de travail)"},
+  "montage-dressing":{m:"DIY", eco:"Montage pro ~100-300 € → **économie DIY totale**"},
+  "memo-placo":{m:"DIY", eco:"—"},
+  "memo-affaissement":{m:"DIY", eco:"—"},
+  "memo-led":{m:"DIY", eco:"—"}
+};
+function modeClass(m){ m=(m||"").toLowerCase(); if(m.indexOf("pro")===0) return "pro"; if(m.indexOf("mixte")===0) return "mix"; return "diy"; }
+function modeBadge(m){ var c=modeClass(m); var dot=c==="diy"?"🟢 ":c==="mix"?"🟠 ":"🔴 "; return "<span class='mode mode-"+c+"'>"+dot+fmt(m)+"</span>"; }
+
 /* ---------- rendu ---------- */
 function fmt(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>"); }
 function list(items){ return "<ul>"+items.map(function(i){return "<li>"+fmt(i)+"</li>";}).join("")+"</ul>"; }
@@ -321,8 +342,9 @@ function renderSteps(steps, fid){
 function renderFiche(f){
   return "<article class='fiche'>"
    + "<h1>"+(f.icone||"")+" "+fmt(f.titre)+"</h1>"
+   + modeBadge((MODE[f.id]||{}).m||"DIY")
    + "<div class='block'><h2>🎯 Objectif</h2><p class='lead'>"+fmt(f.objectif)+"</p></div>"
-   + "<div class='bref'><span><b>Difficulté</b>"+fmt(f.bref.diff)+"</span><span><b>Durée totale</b>"+fmt(f.bref.duree)+"</span><span><b>Budget</b>"+fmt(f.bref.budget)+"</span></div>"
+   + "<div class='bref'><span><b>Difficulté</b>"+fmt(f.bref.diff)+"</span><span><b>Durée totale</b>"+fmt(f.bref.duree)+"</span><span><b>Budget</b>"+fmt(f.bref.budget)+"</span><span><b>💶 Coût pro / éco</b>"+fmt((MODE[f.id]||{}).eco||"—")+"</span></div>"
    + "<div class='block callout warn'><h2>⚠️ Sécurité &amp; vigilance</h2>"+list(f.securite)+"</div>"
    + "<div class='block'><h2>🧰 Outillage (récap)</h2>"+list(f.outillage)+"</div>"
    + "<div class='block'><h2>📦 Matériel / fournitures</h2>"+list(f.materiel)+"</div>"
@@ -348,8 +370,28 @@ function renderHome(){
   h += "<footer>Mémo perso — vérifie toujours le type de mur, les charges et les réseaux (eau/élec/gaz) avant d'intervenir. Doute élec / plomberie sous pression / gaz : fais appel à un pro. Les temps sont indicatifs (bricoleur soigneux).</footer></article>";
   return h;
 }
+function renderRecap(){
+  var rows = "";
+  DATA.forEach(function(r){
+    r.fiches.forEach(function(f){
+      var md = MODE[f.id]||{}; if(md.eco===undefined || md.eco==="—") return;
+      rows += "<tr><td><a href='#"+f.id+"'>"+fmt(f.titre)+"</a></td><td>"+modeBadge(md.m||"DIY")+"</td><td>"+fmt(md.eco)+"</td></tr>";
+    });
+  });
+  return "<article class='fiche'><h1>📊 Récap DIY / Pro</h1>"
+    + "<p class='lead'>Qui fait quoi, avec l'économie ou le tarif pro indicatif (ordres de grandeur, marché français).</p>"
+    + "<table><tr><th>Tâche</th><th>Mode</th><th>Coût pro / économie</th></tr>"+rows+"</table>"
+    + "<div class='block callout tip'><h2>💡 Maximiser le gain</h2><ul>"
+      + "<li>DIY tout le <strong>physique + montage</strong> (dépose, sol, meubles, placo).</li>"
+      + "<li><strong>Un seul passage d'électricien</strong> pour tous les circuits (cuisine + lave-linge + radiateur) : tu prépares (saignées/gaines/boîtes), il raccorde au tableau.</li>"
+      + "<li>Pro pour l'<strong>eau / chauffage central</strong> et le <strong>tableau élec</strong> (conformité + assurance).</li>"
+      + "</ul></div>"
+    + "<div class='block callout warn'><h2>⚠️ Assurance</h2><p>Une élec/plomberie <strong>non conforme</strong> peut poser problème en cas de sinistre. Sur ces postes, préfère <strong>préparer soi-même / faire raccorder par un pro</strong>.</p></div>"
+    + "</article>";
+}
 function buildNav(){
-  document.getElementById("nav").innerHTML = DATA.map(function(r){
+  var recap = "<div class='group'><div class='group-title'>📊 Synthèse</div><a href='#recap'>Récap DIY / Pro</a></div>";
+  document.getElementById("nav").innerHTML = recap + DATA.map(function(r){
     return "<div class='group'><div class='group-title'>"+(r.icone||"")+" "+fmt(r.titre)+"</div>"
       + r.fiches.map(function(f){ return "<a href='#"+f.id+"'>"+fmt(f.titre)+"</a>"; }).join("")+"</div>";
   }).join("");
@@ -357,7 +399,7 @@ function buildNav(){
 function route(){
   var id = location.hash.replace(/^#/,""), fiche=null;
   DATA.forEach(function(r){ r.fiches.forEach(function(f){ if(f.id===id) fiche=f; }); });
-  document.getElementById("content").innerHTML = fiche ? renderFiche(fiche) : renderHome();
+  document.getElementById("content").innerHTML = id==="recap" ? renderRecap() : (fiche ? renderFiche(fiche) : renderHome());
   Array.prototype.forEach.call(document.querySelectorAll(".nav a"), function(a){ a.classList.toggle("active", a.getAttribute("href")==="#"+id); });
   if(fiche) wireSteps(fiche);
   document.body.classList.remove("nav-open"); window.scrollTo(0,0);
