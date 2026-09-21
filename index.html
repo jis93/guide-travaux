@@ -74,6 +74,12 @@
   .chip{font-size:.73rem; background:var(--accent-soft); color:var(--accent); border-radius:6px; padding:2px 8px}
   .step ul{margin:8px 0 0; padding-left:20px}
   .step li{margin:4px 0}
+  .step-check{width:18px; height:18px; flex:0 0 18px; accent-color:var(--accent); cursor:pointer; margin:0}
+  .step.done{opacity:.55}
+  .step.done .step-title{text-decoration:line-through}
+  .progress{font-size:.8rem; font-weight:400; color:var(--muted)}
+  .reset{margin-top:8px; background:none; border:1px solid var(--line); color:var(--muted); border-radius:8px; padding:5px 12px; cursor:pointer; font-size:.82rem}
+  .reset:hover{color:var(--accent); border-color:var(--accent)}
 
   .home-list{list-style:none; padding-left:0}
   .home-list li{display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px dashed var(--line)}
@@ -90,7 +96,7 @@
     .inner{padding:22px 18px 80px}
   }
   @media print{
-    .sidebar,.topbar{display:none!important}
+    .sidebar,.topbar,.reset{display:none!important}
     .content{display:block}
     .inner{max-width:none; padding:0}
     .callout,.block,.bref span,.step{break-inside:avoid}
@@ -162,14 +168,14 @@ const DATA = [
       bref:{diff:"Moyen → Difficile (bâti + reprise mur)", duree:"~1 j (+ reprise mur & élec)", budget:"Robinet MAL + siphon + placo/habillage ~60-120 €"},
       securite:["Couper l'eau via le **robinet d'arrêt derrière la plaque de commande** + couper l'élec (VAT).","**Boucher l'évacuation** dès l'ouverture (odeurs d'égout).","Mur carrelé → **poussière + reprise d'habillage** à prévoir.","Prise en pièce humide → **volumes NF C 15-100** ; lave-linge **de niveau**."],
       outillage:["Clés / pince multiprise, clé pour goujons","Scie plaque / scie cloche (ou meuleuse + burineur si carrelage)","Coupe-tube, scie","Niveau, mètre, perceuse + forets, VAT","Téflon/filasse, silicone"],
-      materiel:["**Robinet de machine à laver** (20x27)","**Siphon de machine à laver** (encastrable) + **réduction Ø90/100→Ø40**","Bouchon/tampon d'évacuation","**Plaques de placo (hydro) + ossature** pour refermer le mur, enduit","(Si besoin) prise dédiée 20 A — cf fiche prises"],
+      materiel:["**Robinet de machine à laver** (20x27)","**Siphon de machine à laver** (encastrable) + **réduction Ø90/100→Ø40**","Bouchon/tampon d'évacuation","**Plaques de placo (hydro) + ossature** pour refermer le mur, enduit","**Prise + ligne dédiée 20 A** (câble 2,5 mm², disjoncteur 20 A) — cf fiche prises"],
       etapes:[
         { t:"Couper eau & élec", d:"~15 min", o:["VAT","Clés"], sub:["**Retirer la plaque de commande** → accès à la trappe technique.","Fermer le **robinet d'arrêt** (situé derrière la plaque).","Couper l'élec de la zone + **VAT** ; tirer la chasse pour vider le réservoir."] },
         { t:"Déposer la cuvette suspendue", d:"~20-30 min", o:["Clés","Pince multiprise"], sub:["Dévisser les **caches + écrous des 2 goujons** qui tiennent la cuvette.","Déboîter la cuvette (pipe + manchette de chasse), la retirer.","Récupérer le mécanisme si besoin."] },
         { t:"Ouvrir l'habillage & accéder au bâti", d:"~30-60 min", o:["Scie plaque","Scie cloche","(Meuleuse si carrelage)"], sub:["Découper/déposer le **coffrage placo** (ou carrelage) devant le bâti-support.","Dégager l'accès à l'évacuation **Ø90/100** et à l'arrivée d'eau.","Bâcher / protéger (poussière)."] },
         { t:"Déposer le bâti-support", d:"~30-45 min", o:["Clés","Perceuse"], sub:["Débrancher l'arrivée d'eau du réservoir encastré.","**Déboulonner le bâti** de ses fixations sol + mur.","Retirer le bâti-support ; **boucher aussitôt l'évacuation**."] },
         { t:"Adapter évacuation & eau", d:"~45-60 min", o:["Scie","Coupe-tube","Colle PVC","Téflon/filasse"], sub:["Poser une **réduction Ø90/100→Ø40** + **siphon de machine à laver** (garde d'eau ; version **encastrable** = rendu propre).","Crosse d'évac à **~60-90 cm** (notice machine).","Sur l'eau froide : **robinet de machine à laver** (20x27), boucher ce qui ne sert plus."] },
-        { t:"Prévoir la prise électrique", d:"variable", o:["VAT"], sub:["Prise accessible (idéalement **circuit dédié 20 A**) — sinon voir fiche **Déplacement des prises**.","Respecter les **volumes** en pièce humide."] },
+        { t:"Créer la prise du lave-linge", d:"~1-2 h", o:["VAT","Perceuse","Scie cloche","Rainureuse"], sub:["Un emplacement WC n'a **pas de prise** → il faut **en ajouter une**.","Idéalement une **ligne dédiée 20 A** (câble 2,5 mm², disjoncteur 20 A + différentiel 30 mA) depuis le tableau — voir fiche **Déplacement des prises**.","Prise **hors des volumes de sécurité** en pièce humide (à distance des points d'eau).","Hauteur pratique ~25-30 cm du sol, accessible une fois la machine en place."] },
         { t:"Refermer le mur & mise en place", d:"~1-2 h + séchage", o:["Visseuse","Niveau","Enduit","Silicone"], sub:["**Refermer le mur à plat** (ossature + placo hydro), laisser sortir robinet + siphon.","Enduire/finir (peinture/carrelage plus tard).","Glisser le lave-linge **de niveau**, raccorder eau/évac/prise, **cycle test** (fuite ? évac ? vibrations ?)."] }
       ],
       astuces:["Le **robinet d'arrêt** d'un WC suspendu est **derrière la plaque de commande** : commence par là.","Profite que tout est déjà dans le mur pour poser un **siphon de machine à laver encastré** (très propre).","Mur carrelé → anticipe la **reprise d'habillage** (chute de carreaux, re-carrelage ou placo hydro)."],
@@ -297,12 +303,18 @@ const DATA = [
 /* ---------- rendu ---------- */
 function fmt(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>"); }
 function list(items){ return "<ul>"+items.map(function(i){return "<li>"+fmt(i)+"</li>";}).join("")+"</ul>"; }
-function renderSteps(steps){
+function loadState(fid){ try{ return JSON.parse(localStorage.getItem("gt:"+fid))||{}; }catch(e){ return {}; } }
+function saveState(fid,st){ try{ localStorage.setItem("gt:"+fid, JSON.stringify(st)); }catch(e){} }
+function renderSteps(steps, fid){
+  var st = loadState(fid);
   return steps.map(function(s,i){
     var tools = (s.o&&s.o.length&&!(s.o.length===1&&s.o[0]==="—")) ? "<div class='step-tools'>"+s.o.map(function(t){return "<span class='chip'>🧰 "+fmt(t)+"</span>";}).join("")+"</div>" : "";
     var subs  = (s.sub&&s.sub.length) ? "<ul>"+s.sub.map(function(x){return "<li>"+fmt(x)+"</li>";}).join("")+"</ul>" : "";
     var time  = s.d ? "<span class='step-time'>⏱ "+fmt(s.d)+"</span>" : "";
-    return "<div class='step'><div class='step-head'><span class='step-num'>"+(i+1)+"</span>"
+    var done  = st[i] ? " done" : "", chk = st[i] ? " checked" : "";
+    return "<div class='step"+done+"'><div class='step-head'>"
+      + "<input type='checkbox' class='step-check' data-i='"+i+"'"+chk+" aria-label='fait'>"
+      + "<span class='step-num'>"+(i+1)+"</span>"
       + "<span class='step-title'>"+fmt(s.t)+"</span>"+time+"</div>"+tools+subs+"</div>";
   }).join("");
 }
@@ -314,7 +326,7 @@ function renderFiche(f){
    + "<div class='block callout warn'><h2>⚠️ Sécurité &amp; vigilance</h2>"+list(f.securite)+"</div>"
    + "<div class='block'><h2>🧰 Outillage (récap)</h2>"+list(f.outillage)+"</div>"
    + "<div class='block'><h2>📦 Matériel / fournitures</h2>"+list(f.materiel)+"</div>"
-   + "<div class='block'><h2>🔧 Étapes pas à pas</h2>"+renderSteps(f.etapes)+"</div>"
+   + "<div class='block'><h2>🔧 Étapes pas à pas <span class='progress' id='progress'></span></h2><div class='steps-wrap'>"+renderSteps(f.etapes,f.id)+"</div><button class='reset' id='reset-steps'>↺ Réinitialiser les cases</button></div>"
    + "<div class='block callout tip'><h2>💡 Astuces &amp; pièges</h2>"+list(f.astuces)+"</div>"
    + "<div class='block'><h2>👷 Pro ou DIY ?</h2><p>"+fmt(f.pro)+"</p></div>"
    + "</article>";
@@ -347,7 +359,28 @@ function route(){
   DATA.forEach(function(r){ r.fiches.forEach(function(f){ if(f.id===id) fiche=f; }); });
   document.getElementById("content").innerHTML = fiche ? renderFiche(fiche) : renderHome();
   Array.prototype.forEach.call(document.querySelectorAll(".nav a"), function(a){ a.classList.toggle("active", a.getAttribute("href")==="#"+id); });
+  if(fiche) wireSteps(fiche);
   document.body.classList.remove("nav-open"); window.scrollTo(0,0);
+}
+function wireSteps(f){
+  var wrap = document.querySelector(".steps-wrap");
+  if(wrap){
+    wrap.addEventListener("change", function(e){
+      if(!e.target.classList.contains("step-check")) return;
+      var st = loadState(f.id); st[e.target.getAttribute("data-i")] = e.target.checked; saveState(f.id, st);
+      e.target.closest(".step").classList.toggle("done", e.target.checked);
+      updateProgress(f);
+    });
+  }
+  var rb = document.getElementById("reset-steps");
+  if(rb) rb.addEventListener("click", function(){ saveState(f.id, {}); route(); });
+  updateProgress(f);
+}
+function updateProgress(f){
+  var st = loadState(f.id), done=0;
+  f.etapes.forEach(function(_,i){ if(st[i]) done++; });
+  var el = document.getElementById("progress");
+  if(el) el.textContent = "· "+done+"/"+f.etapes.length+" fait";
 }
 buildNav(); window.addEventListener("hashchange", route); route();
 document.getElementById("burger").addEventListener("click", function(){ document.body.classList.toggle("nav-open"); });
