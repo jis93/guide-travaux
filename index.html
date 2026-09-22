@@ -152,22 +152,20 @@ const DATA = [
   { titre:"2 · Réseaux — élec · plomberie · chauffage", icone:"🔌", fiches:[
 
     { id:"prises-cuisine", titre:"Déplacement des prises (cuisine)", icone:"🔌",
-      objectif:"Déplacer / ajouter les prises pour la nouvelle implantation de cuisine, en respectant la norme.",
-      bref:{diff:"Moyen (électricité)", duree:"½ à 1 j", budget:"Câble, boîtes, prises, rebouchage"},
-      securite:["⚠️ **COUPER le disjoncteur + VAT** avant tout. Jamais sous tension.","**NF C 15-100** : circuits **dédiés** (plaque 32 A/6 mm², prises PdT 20 A/2,5 mm²).","**Terre obligatoire** ; pas de prise au-dessus évier/plaques."],
-      outillage:["VAT / multimètre + testeur de prise","Tournevis isolés, pince à dénuder/coupante","Rainureuse ou burineur","Perforateur + scie cloche"],
-      materiel:["Câble H07V-U (2,5 mm² / 6 mm²)","Gaine ICTA","Boîtes d'encastrement + prises","Bornes Wago, MAP/plâtre"],
+      objectif:"Adapter les prises pour la cuisine en L (dont la prise plaque/four à déplacer du bout du mur 3 m vers le bout du mur 2 m). Chez toi, l'électricité est confiée à un électricien (obligation copro).",
+      bref:{diff:"Coordination (élec = pro)", duree:"2 passages électricien", budget:"Électricien ~60-95 €/h TTC (IDF)"},
+      securite:["⚠️ **Obligation copro** : « tous les travaux touchant à l'électricité… exclusivement par un électricien professionnel et signalés au syndic ».","**NF C 15-100** : circuits **dédiés** (plaque 32 A/6 mm², four 20 A/2,5 mm², prises PdT 20 A/2,5 mm²).","**Plaque = câble 6 mm² continu, sans domino/jonction** ; toute connexion dans une **boîte accessible**."],
+      outillage:["(Ta part) au plus rebouchage/peinture après","(Pro) rainureuse, matériel élec, testeurs"],
+      materiel:["Fourni/posé par l'électricien : câble bonne section, gaine, boîtes, prises","(Ta part) enduit + peinture si tu fais les finitions"],
       etapes:[
-        { t:"Couper & sécuriser", d:"~10 min", o:["VAT"], sub:["Couper le disjoncteur du circuit au tableau.","**Vérifier l'absence de tension (VAT)** à la boîte.","Condamner/signaler le disjoncteur."] },
-        { t:"Concevoir l'implantation", d:"~30 min", o:["Mètre","Crayon"], sub:["Prises plan de travail **~10-12 cm** au-dessus du plan fini.","Prévoir les circuits **dédiés** (plaque / prises PdT).","Marquer boîtes + tracé des saignées ; vérifier l'accès derrière l'électroménager."] },
-        { t:"Réaliser les saignées", d:"~1-2 h", o:["Rainureuse","Burineur","Scie cloche","Aspirateur"], sub:["Tracer (verticales/horizontales, **jamais en diagonale**).","Rainurer puis buriner ; percer les logements de boîtes.","Aspirer/dépoussiérer."] },
-        { t:"Tirer les câbles", d:"~30-60 min", o:["Gaine ICTA","Aiguille"], sub:["Passer la gaine ICTA dans les saignées.","Tirer le câble depuis la boîte de dérivation / circuit dédié.","Laisser ~15-20 cm de mou à chaque boîte."] },
-        { t:"Poser boîtes & raccorder", d:"~45 min", o:["MAP","Tournevis","Pince à dénuder","Wago"], sub:["Sceller les boîtes au nu du placo.","Raccorder **phase / neutre / terre** (respecter les couleurs).","Wago pour les dérivations."] },
-        { t:"Reboucher & finir", d:"~30 min (+ séchage)", o:["Enduit","Spatule"], sub:["Reboucher les saignées, lisser.","Poncer après séchage (peinture plus tard)."] },
-        { t:"Remettre en service & tester", d:"~10 min", o:["Testeur de prise"], sub:["Réenclencher le disjoncteur.","Tester chaque prise (phase/neutre/terre OK).","Vérifier l'absence de déclenchement."] }
+        { t:"Déclarer au syndic + devis", d:"admin", o:["—"], sub:["Signaler les travaux élec au syndic (obligation).","2-3 devis électriciens ; demande un **devis détaillé** (saignées / fourniture / raccordement)."] },
+        { t:"Définir l'implantation avec l'électricien", d:"~30 min", o:["Mètre","Plan cuisine"], sub:["La **prise plaque/four** passe du bout du mur 3 m au bout du mur 2 m.","Valider positions + hauteurs (prises PdT ~10-12 cm au-dessus du plan).","Vérifier **combien de circuits** (plaque seule ? plaque + four ?)."] },
+        { t:"L'électricien réalise les travaux", d:"~½ j", o:["(Pro)"], sub:["Saignées + **câble continu de bonne section** + boîtes.","Raccordement plaque/four/prises, **tests**.","Pour ce chantier, le DIY des saignées **ne rentabilise pas** (~100-300 €) → laisse-lui faire."] },
+        { t:"(Option) Rebouchage & peinture", d:"~1 h + séchage", o:["Enduit","Cale à poncer"], sub:["Une fois l'élec **testée**, tu peux reboucher les saignées + poncer + repeindre.","C'est de la maçonnerie/finition → **autorisé en DIY** (gain marginal)."] },
+        { t:"Attestation → syndic", d:"admin", o:["—"], sub:["Récupère l'**attestation/facture** de l'électricien.","**Conserve-la** (conformité + assurance)."] }
       ],
-      astuces:["⚠️ Cuisine = circuits **dédiés**, ne pas repiquer n'importe où.","Fais ces passages **avant le sol et avant les meubles**.","Note/photographie le repérage au tableau."],
-      pro:"Déplacer une prise sur circuit existant = DIY si conforme. **Ajout de ligne / modif tableau / doute → électricien**." },
+      astuces:["**Concentre ton DIY ailleurs** (dépose, sol, meubles) : c'est là que tu économises vraiment.","Demande un devis **ligne par ligne** pour voir ce que tu peux éventuellement déduire.","Plaque = **6 mm² d'un seul tenant**, jamais de domino enterré."],
+      pro:"**Électricien obligatoire (règlement copro) + déclaration syndic.** Tu peux au mieux reboucher/repeindre après ses tests." },
 
     { id:"wc-lave-linge", titre:"Dépose WC suspendu → emplacement lave-linge", icone:"🚽",
       objectif:"Déposer un WC suspendu (bâti-support + plomberie encastrée derrière le mur) et aménager l'emplacement pour un lave-linge, avec un mur refermé à plat.",
@@ -181,7 +179,7 @@ const DATA = [
         { t:"Ouvrir l'habillage & accéder au bâti", d:"~30-60 min", o:["Scie plaque","Scie cloche","(Meuleuse si carrelage)"], sub:["Découper/déposer le **coffrage placo** (ou carrelage) devant le bâti-support.","Dégager l'accès à l'évacuation **Ø90/100** et à l'arrivée d'eau.","Bâcher / protéger (poussière)."] },
         { t:"Déposer le bâti-support", d:"~30-45 min", o:["Clés","Perceuse"], sub:["Débrancher l'arrivée d'eau du réservoir encastré.","**Déboulonner le bâti** de ses fixations sol + mur.","Retirer le bâti-support ; **boucher aussitôt l'évacuation**."] },
         { t:"Adapter évacuation & eau", d:"~45-60 min", o:["Scie","Coupe-tube","Colle PVC","Téflon/filasse"], sub:["Poser une **réduction Ø90/100→Ø40** + **siphon de machine à laver** (garde d'eau ; version **encastrable** = rendu propre).","Crosse d'évac à **~60-90 cm** (notice machine).","Sur l'eau froide : **robinet de machine à laver** (20x27), boucher ce qui ne sert plus."] },
-        { t:"Créer la prise du lave-linge", d:"~1-2 h", o:["VAT","Perceuse","Scie cloche","Rainureuse"], sub:["Un emplacement WC n'a **pas de prise** → il faut **en ajouter une**.","Idéalement une **ligne dédiée 20 A** (câble 2,5 mm², disjoncteur 20 A + différentiel 30 mA) depuis le tableau — voir fiche **Déplacement des prises**.","Prise **hors des volumes de sécurité** en pièce humide (à distance des points d'eau).","Hauteur pratique ~25-30 cm du sol, accessible une fois la machine en place."] },
+        { t:"Créer la prise du lave-linge (électricien)", d:"pro", o:["(Électricien)"], sub:["Un emplacement WC n'a **pas de prise** → il faut **en ajouter une**.","⚠️ **Électricien obligatoire (règlement copro)** : ligne **dédiée 20 A** (2,5 mm², disj. 20 A + différentiel 30 mA) depuis le tableau.","Prise **hors des volumes de sécurité** (pièce humide), hauteur ~25-30 cm.","Tu peux préparer le support + rebouchage ; **raccordement par le pro**."] },
         { t:"Refermer le mur & mise en place", d:"~1-2 h + séchage", o:["Visseuse","Niveau","Enduit","Silicone"], sub:["**Refermer le mur à plat** (ossature + placo hydro), laisser sortir robinet + siphon.","Enduire/finir (peinture/carrelage plus tard).","Glisser le lave-linge **de niveau**, raccorder eau/évac/prise, **cycle test** (fuite ? évac ? vibrations ?)."] }
       ],
       astuces:["Le **robinet d'arrêt** d'un WC suspendu est **derrière la plaque de commande** : commence par là.","Profite que tout est déjà dans le mur pour poser un **siphon de machine à laver encastré** (très propre).","Mur carrelé → anticipe la **reprise d'habillage** (chute de carreaux, re-carrelage ou placo hydro)."],
@@ -190,7 +188,7 @@ const DATA = [
     { id:"deplacement-radiateur", titre:"Déplacement d'un radiateur", icone:"♨️",
       objectif:"Déplacer un radiateur — **électrique** (simple) ou **à eau / chauffage central** (plus technique).",
       bref:{diff:"Facile (élec) → Moyen-difficile (eau)", duree:"½ à 1 j", budget:"Faible (élec) → Moyen (tubes)"},
-      securite:["**Élec** : couper au tableau + VAT.","**Eau** : couper chaudière/circulateur, fermer les vannes, vidanger — risque de fuite."],
+      securite:["⚠️ **Chauffage collectif** (immeuble) : déplacer un radiateur à eau = intervention sur réseau commun → **autorisation syndic + chauffagiste**.","**Élec** (convecteur/alim) : **électricien obligatoire (copro)** + VAT.","**Eau** : couper chaudière/circulateur, fermer les vannes, vidanger — risque de fuite."],
       outillage:["Élec : VAT, tournevis isolés, outillage saignée","Eau : coupe-tube, sertisseuse/raccords, clé à purgeur, seau, clés"],
       materiel:["Élec : câble, boîte, support","Eau : tubes multicouche/PER + raccords, robinet thermostatique + coude, té de piquage, supports"],
       etapes:[
@@ -201,7 +199,7 @@ const DATA = [
         { t:"Mise en service", d:"~20 min", o:["Clé à purgeur","Manomètre"], sub:["(Eau) Rouvrir les vannes, remettre en eau, **PURGER l'air**.","Contrôler la pression (~1-1,5 bar), refaire l'appoint.","Vérifier l'étanchéité ; (élec) tester la chauffe."] }
       ],
       astuces:["⚠️ **Bien purger** sinon le radiateur ne chauffe pas.","Emplacement **sous fenêtre** = meilleure diffusion.","Élec : respecter la **ligne dédiée**."],
-      pro:"**Élec = DIY accessible.** **Eau / chauffage central** (reprise réseau, soudure, chaudière sous garantie) → **chauffagiste/plombier**." }
+      pro:"Chez toi (**chauffage collectif**) : **chauffagiste + autorisation syndic**. La partie électrique éventuelle → **électricien obligatoire (copro)**." }
   ]},
 
   { titre:"3 · Sol — pose", icone:"🪵", fiches:[
@@ -309,9 +307,9 @@ const DATA = [
 const MODE = {
   "depose-sol":{m:"DIY", eco:"Dépose pro ~15-30 €/m² → **économie DIY quasi totale**"},
   "pose-parquet":{m:"DIY", eco:"Pose pro ~25-45 €/m² → **~25-45 €/m² économisés**"},
-  "prises-cuisine":{m:"Mixte", eco:"Électricien ~40-60 €/h ou ~50-90 €/point — **prépare, fais raccorder**"},
-  "wc-lave-linge":{m:"Mixte", eco:"Plombier ~50-70 €/h + élec pour la prise — **DIY dépose / mur / évac**"},
-  "deplacement-radiateur":{m:"Mixte", eco:"Élec = DIY. **Eau = chauffagiste ~50-70 €/h** (~150-400 €)"},
+  "prises-cuisine":{m:"Pro (copro)", eco:"**Électricien obligatoire** (règlement copro). DIY des saignées peu rentable (~100-300 €) → laisse-lui saignées + raccordement"},
+  "wc-lave-linge":{m:"Mixte", eco:"DIY : dépose / mur / évac. **Prise = électricien obligatoire** (copro)"},
+  "deplacement-radiateur":{m:"Pro (copro)", eco:"**Chauffage collectif → chauffagiste + autorisation syndic** ; partie élec = électricien"},
   "montage-cuisine":{m:"DIY", eco:"Pose pro **800-2000 €+** → grosse économie (soigne le plan de travail)"},
   "montage-dressing":{m:"DIY", eco:"Montage pro ~100-300 € → **économie DIY totale**"},
   "memo-placo":{m:"DIY", eco:"—"},
@@ -386,7 +384,13 @@ function renderRecap(){
       + "<li><strong>Un seul passage d'électricien</strong> pour tous les circuits (cuisine + lave-linge + radiateur) : tu prépares (saignées/gaines/boîtes), il raccorde au tableau.</li>"
       + "<li>Pro pour l'<strong>eau / chauffage central</strong> et le <strong>tableau élec</strong> (conformité + assurance).</li>"
       + "</ul></div>"
-    + "<div class='block callout warn'><h2>⚠️ Assurance</h2><p>Une élec/plomberie <strong>non conforme</strong> peut poser problème en cas de sinistre. Sur ces postes, préfère <strong>préparer soi-même / faire raccorder par un pro</strong>.</p></div>"
+    + "<div class='block callout warn'><h2>⚠️ Obligations copropriété (Copro.pdf)</h2><ul>"
+      + "<li><strong>Électricité</strong> : « exclusivement par un électricien professionnel et signalés au syndic » → prises cuisine, prise lave-linge, raccords = <strong>pro obligatoire</strong>.</li>"
+      + "<li><strong>Sol</strong> : respecter l'<strong>isolement acoustique + thermique</strong> réglementaire (sous-couche adaptée).</li>"
+      + "<li><strong>Parties communes</strong> (chute/colonne, <strong>chauffage collectif</strong>) : pas de modification sans <strong>autorisation syndic / AG</strong>.</li>"
+      + "</ul></div>"
+    + "<div class='block callout tip'><h2>🎯 Où mettre ton énergie DIY</h2><p>Le vrai gain est sur le <strong>physique + montage</strong> : dépose, pose du sol, montage cuisine/dressing, placo. L'<strong>élec</strong> (pro obligatoire) et le <strong>chauffage collectif</strong> → laisse au pro de A à Z ; la prépa DIY des saignées <strong>ne rentabilise pas</strong> sur un petit chantier.</p></div>"
+    + "<div class='block callout warn'><h2>⚠️ Assurance</h2><p>Une élec/plomberie <strong>non conforme</strong> peut poser problème en cas de sinistre → sur ces postes, <strong>fais faire/raccorder par un pro</strong>.</p></div>"
     + "</article>";
 }
 function buildNav(){
