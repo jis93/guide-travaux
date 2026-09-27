@@ -154,7 +154,7 @@ const DATA = [
     { id:"prises-cuisine", titre:"Déplacement des prises (cuisine)", icone:"🔌",
       objectif:"Adapter les prises pour la cuisine en L (dont la prise plaque/four à déplacer du bout du mur 3 m vers le bout du mur 2 m). Chez toi, l'électricité est confiée à un électricien (obligation copro).",
       bref:{diff:"Coordination (élec = pro)", duree:"2 passages électricien", budget:"Électricien ~60-95 €/h TTC (IDF)"},
-      securite:["⚠️ **Obligation copro** : « tous les travaux touchant à l'électricité… exclusivement par un électricien professionnel et signalés au syndic ».","**NF C 15-100** : circuits **dédiés** (plaque 32 A/6 mm², four 20 A/2,5 mm², prises PdT 20 A/2,5 mm²).","**Plaque = câble 6 mm² continu, sans domino/jonction** ; toute connexion dans une **boîte accessible**."],
+      securite:["⚠️ **Obligation copro** : « tous les travaux touchant à l'électricité… exclusivement par un électricien professionnel et signalés au syndic ».","**NF C 15-100** : circuits **dédiés** (plaque 32 A/6 mm², four 20 A/2,5 mm², prises PdT 20 A/2,5 mm²).","Prise de chaque gros appareil (four, plaque, LV, frigo) = **derrière l'appareil**, sur son circuit dédié — la NF C 15-100 impose le circuit, **pas** l'emplacement.","**Plaque = câble 6 mm² continu, sans domino/jonction** ; toute connexion dans une **boîte accessible**."],
       outillage:["(Ta part) au plus rebouchage/peinture après","(Pro) rainureuse, matériel élec, testeurs"],
       materiel:["Fourni/posé par l'électricien : câble bonne section, gaine, boîtes, prises","(Ta part) enduit + peinture si tu fais les finitions"],
       etapes:[
@@ -360,6 +360,7 @@ function renderHome(){
       + "<li><strong>Pose du sol</strong> (parquet).</li>"
       + "<li><strong>Montages</strong> : cuisine puis dressing.</li>"
       + "</ol></div>";
+  h += "<div class='block'><h2>📐 Plan de la cuisine</h2><p>Vue de dessus + élévations Mur 1 / Mur 2 (échelle 1,5 px/cm — version avec armoire garde-manger). Touche l'image pour l'ouvrir en grand.</p><a href='cuisine-plans.svg' target='_blank'><img src='cuisine-plans.svg' alt='Plans de la cuisine — vue de dessus et élévations Mur 1 / Mur 2' style='width:100%;max-width:760px;height:auto;display:block;margin:0 auto;border:1px solid #e2e8f0;border-radius:8px;background:#fff'/></a></div>";
   DATA.forEach(function(r){
     h += "<div class='block'><h2>"+(r.icone||"")+" "+fmt(r.titre)+"</h2><ul class='home-list'>";
     r.fiches.forEach(function(f){ h += "<li><a href='#"+f.id+"'>"+(f.icone||"")+" "+fmt(f.titre)+"</a><span class='tag'>"+fmt(f.bref.duree)+"</span></li>"; });
