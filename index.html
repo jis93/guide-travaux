@@ -361,6 +361,7 @@ function renderHome(){
       + "<li><strong>Montages</strong> : cuisine puis dressing.</li>"
       + "</ol></div>";
   h += "<div class='block'><h2>📐 Plan de la cuisine</h2><p>Vue de dessus + élévations Mur 1 / Mur 2 (échelle 1,5 px/cm — version avec armoire garde-manger). Touche l'image pour l'ouvrir en grand.</p><a href='cuisine-plans.svg' target='_blank'><img src='cuisine-plans.svg' alt='Plans de la cuisine — vue de dessus et élévations Mur 1 / Mur 2' style='width:100%;max-width:760px;height:auto;display:block;margin:0 auto;border:1px solid #e2e8f0;border-radius:8px;background:#fff'/></a></div>";
+  h += "<div class='block'><h2>📐 Plan — variante colonne four (+ MO)</h2><p>Armoire remplacée par une colonne four + micro-ondes : four à mi-hauteur, MO sorti du meuble au-dessus de l'évier (robinet libre), ~20 cm de plan en moins. Touche pour agrandir.</p><a href='cuisine-plans-variante.svg' target='_blank'><img src='cuisine-plans-variante.svg' alt='Variante colonne four — vue de dessus et élévations' style='width:100%;max-width:760px;height:auto;display:block;margin:0 auto;border:1px solid #e2e8f0;border-radius:8px;background:#fff'/></a></div>";
   DATA.forEach(function(r){
     h += "<div class='block'><h2>"+(r.icone||"")+" "+fmt(r.titre)+"</h2><ul class='home-list'>";
     r.fiches.forEach(function(f){ h += "<li><a href='#"+f.id+"'>"+(f.icone||"")+" "+fmt(f.titre)+"</a><span class='tag'>"+fmt(f.bref.duree)+"</span></li>"; });
