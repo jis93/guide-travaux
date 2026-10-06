@@ -258,6 +258,50 @@ const DATA = [
       pro:"**DIY** intégral." }
   ]},
 
+  { titre:"5 · Copropriété — box · clim · borne", icone:"🏢", fiches:[
+    { id:"copro-box-parking", titre:"Box sur une place de parking", icone:"🅿️",
+      objectif:"Clore un de mes emplacements de parking en sous-sol (lot 519 / place 223, ou lot 521 / place 225) pour le transformer en box. Autorisé par le règlement, sous conditions.",
+      bref:{diff:"Démarche copro (vote AG)", duree:"1 AG + travaux", budget:"Porte imposée (menuisier/serrurier) + honoraires architecte"},
+      securite:["**Vote AG obligatoire — majorité de l'article 25** (ou passerelle 25-1).","**Sous-sol uniquement** — OK, lots 519 et 521 au sous-sol, et **aucun des deux n'est dans la liste des lots exclus** par le règlement.","**Faisabilité validée au cas par cas par le syndic + hommes de l'art** (dégagements, poteaux, désenfumage).","Travaux **sous surveillance de l'architecte** de la copro (honoraires à ma charge).","**Porte imposée par le syndic** (type, ouverture, coloris) — non-respect = enlèvement à mes frais."],
+      outillage:["(Réalisé par une entreprise / serrurier)"],
+      materiel:["Porte de box conforme aux prescriptions du syndic","Cloisonnement selon la validation technique"],
+      etapes:[
+        { t:"Demander la faisabilité au syndic", d:"après livraison", o:["—"], sub:["Écrire à LA COPRO pour la place visée (223 ou 225).","Le syndic + hommes de l'art confirment si c'est techniquement réalisable."] },
+        { t:"Obtenir un devis", d:"—", o:["—"], sub:["Devis selon le type de porte imposé.","Prévoir les honoraires de l'architecte de la copro."] },
+        { t:"Faire voter en AG", d:"1 AG", o:["—"], sub:["Inscrire la résolution (devis + descriptif) à l'ordre du jour, par RAR au syndic avant l'envoi des convocations.","Vote à la **majorité de l'article 25**."] },
+        { t:"Réaliser les travaux", d:"—", o:["(Pro)"], sub:["Sous surveillance de l'architecte.","Porte conforme aux prescriptions du syndic."] }
+      ],
+      astuces:["Charges : un box a un coefficient plus élevé (0,40-0,45 vs ~0,30-0,35) → quote-part parking un peu plus haute.","Garder la trace écrite de l'accord de faisabilité du syndic."],
+      pro:"Démarche copro (vote AG art. 25) + entreprise sous contrôle de l'architecte. Pas de DIY sur la structure/porte." },
+    { id:"copro-clim", titre:"Climatisation (unité extérieure)", icone:"❄️",
+      objectif:"Installer une clim. Dès qu'il y a une unité extérieure, ça touche l'aspect extérieur → encadré par le règlement.",
+      bref:{diff:"Vote AG si unité extérieure", duree:"1 AG + pose", budget:"Devis frigoriste certifié"},
+      securite:["**UE sur façade = proscrite** : le règlement (Art. 7.3) interdit de fixer des éléments sur les façades.","**UE sur le toit-terrasse = possible mais : vote AG (art. 25) + ne doit pas rompre l'harmonie extérieure** (Art. 7.3).","**Ne jamais percer l'étanchéité** de la terrasse (partie commune, décennale) → pose **sur plots lestés**.","**Clim mobile/monobloc** (gaine par fenêtre ouvrante, sans UE fixe) = modif intérieure → **pas d'AG**. Perçage de façade pour une grille fixe → AG."],
+      outillage:["(Réalisé par un frigoriste certifié)"],
+      materiel:["Split avec UE sur plots lestés (terrasse)","ou clim monobloc/mobile (sans UE fixe)"],
+      etapes:[
+        { t:"Choisir le type", d:"—", o:["—"], sub:["Split UE sur terrasse (performant, mais AG) OU monobloc/mobile (sans AG, moins performant)."] },
+        { t:"Devis frigoriste", d:"après livraison", o:["—"], sub:["Faisabilité d'une pose sur plots sans percer l'étanchéité ; discrétion visuelle."] },
+        { t:"Vote AG (si UE fixe)", d:"1 AG", o:["—"], sub:["Résolution + devis/plan, **majorité art. 25**.","Vérifier l'absence d'atteinte à l'harmonie extérieure."] },
+        { t:"Pose", d:"—", o:["(Pro)"], sub:["Sur plots lestés, **sans perçage de la membrane d'étanchéité**."] }
+      ],
+      astuces:["En RE2020 le logement surchauffe peu, mais une terrasse de 33 m² plein ciel peut chauffer.","Le monobloc/mobile = solution sans AG en attendant."],
+      pro:"UE fixe = vote AG art. 25 + frigoriste. Monobloc mobile = pas d'AG." },
+    { id:"copro-borne", titre:"Borne de recharge VE (droit à la prise)", icone:"⚡",
+      objectif:"Installer une borne sur ma place privative (lot 519/521). Régime du « droit à la prise » : notification au syndic, SANS vote d'AG.",
+      bref:{diff:"Notification (pas de vote)", duree:"Notif + 3 mois max", budget:"Installateur IRVE ; crédit d'impôt borne"},
+      securite:["**Pas de vote d'AG** : droit légal (Code constr. art. R.113-8 et s.). Notification au **syndic par recommandé AR**.","Inscrit à la **prochaine AG pour information seulement** (pas de vote possible).","Le syndic a **3 mois** pour s'opposer, **uniquement pour motif sérieux et légitime** (impossibilité technique / installation collective existante ou projetée) et **via le tribunal**. Sans opposition → acquis.","**Installateur IRVE qualifié** + **comptage individuel** (ne payer que ma conso)."],
+      outillage:["(Réalisé par un installateur IRVE qualifié)"],
+      materiel:["Borne (wallbox)","Raccordement sur l'infra collective (pré-équipement IRVE) + compteur individuel"],
+      etapes:[
+        { t:"Devis installateur IRVE", d:"après livraison", o:["—"], sub:["Dossier technique : schéma, puissance, point de raccordement, comptage.","Vérifier le pré-équipement IRVE du sous-sol (colonne collective)."] },
+        { t:"Notifier le syndic (RAR)", d:"—", o:["—"], sub:["Recommandé AR avec le descriptif/plan de l'installateur."] },
+        { t:"Délai d'opposition", d:"3 mois", o:["—"], sub:["Le syndic l'inscrit à l'AG pour info.","Sans opposition motivée (via tribunal) sous 3 mois → j'installe."] },
+        { t:"Pose + mise en service", d:"—", o:["(Pro)"], sub:["Borne + comptage individuel, conforme NF C 15-100."] }
+      ],
+      astuces:["**Le plus simple des 3 projets** : pas de vote d'AG.","Crédit d'impôt borne (75 %, plafond ~500 €).","Immeuble neuf normalement pré-équipé IRVE (loi LOM) → raccordement simplifié."],
+      pro:"Notification au syndic (pas de vote) + installateur IRVE. Opposition du syndic seulement via tribunal pour motif légitime." }
+  ]},
   { titre:"Mémos techniques", icone:"📌", fiches:[
 
     { id:"memo-placo", titre:"Fixer dans le placo (rail, meubles hauts)", icone:"🔩",
