@@ -101,8 +101,8 @@
     <line x1="150" y1="168" x2="390" y2="168" stroke="#f59e0b" stroke-width="3"/>
     <text x="270" y="182" font-size="9" text-anchor="middle" fill="#b45309">LED sous meubles hauts</text>
     <rect x="99" y="46" width="12" height="12" fill="#fed7aa" stroke="#ea580c"/><text x="116" y="56" font-size="8" fill="#7c2d12">16A hotte</text>
-    <rect x="173" y="212" width="14" height="14" fill="#fed7aa" stroke="#ea580c"/><text x="180" y="209" font-size="8" text-anchor="middle" fill="#7c2d12">2×16A (B)</text>
-    <rect x="338" y="212" width="14" height="14" fill="#fed7aa" stroke="#ea580c"/><text x="345" y="209" font-size="8" text-anchor="middle" fill="#7c2d12">coin 4×16A (A)</text>
+    <rect x="211" y="212" width="14" height="14" fill="#fed7aa" stroke="#ea580c"/><text x="218" y="209" font-size="8" text-anchor="middle" fill="#7c2d12">2×16A (C)</text>
+    <rect x="338" y="212" width="14" height="14" fill="#fed7aa" stroke="#ea580c"/><text x="345" y="209" font-size="8" text-anchor="middle" fill="#7c2d12">coin 3×16A (A)</text>
     <rect x="98" y="328" width="14" height="14" fill="#e0e7ff" stroke="#4338ca"/><text x="105" y="324" font-size="8" text-anchor="middle" fill="#3730a3">32A+20A</text>
     <text x="195" y="405" font-size="12" text-anchor="middle" fill="#0f172a">260 cm — hauts calés à 220 (ligne uniforme sous coffrage)</text>
   </g>
@@ -159,8 +159,8 @@
     <!-- LED + prises -->
     <line x1="0" y1="168" x2="300" y2="168" stroke="#f59e0b" stroke-width="3"/>
     <text x="150" y="182" font-size="9" text-anchor="middle" fill="#b45309">LED sous meubles hauts</text>
-    <rect x="38" y="212" width="14" height="14" fill="#fed7aa" stroke="#ea580c"/><text x="45" y="209" font-size="8" text-anchor="middle" fill="#7c2d12">coin 2×16A (A)</text>
-    <rect x="128" y="212" width="14" height="14" fill="#fed7aa" stroke="#ea580c"/><text x="135" y="209" font-size="8" text-anchor="middle" fill="#7c2d12">LV 2×16A (B)</text>
+    <rect x="38" y="212" width="14" height="14" fill="#fed7aa" stroke="#ea580c"/><text x="45" y="209" font-size="8" text-anchor="middle" fill="#7c2d12">coin 3×16A (B)</text>
+    <rect x="128" y="212" width="14" height="14" fill="#fed7aa" stroke="#ea580c"/><text x="135" y="209" font-size="8" text-anchor="middle" fill="#7c2d12">2×16A (C)</text>
     <rect x="240" y="120" width="14" height="14" fill="#e0e7ff" stroke="#4338ca"/><text x="247" y="117" font-size="8" text-anchor="middle" fill="#3730a3">16A MO</text>
     <rect x="128" y="328" width="14" height="14" fill="#e0e7ff" stroke="#4338ca"/><text x="135" y="324" font-size="8" text-anchor="middle" fill="#3730a3">20A LV</text>
     <rect x="360" y="328" width="14" height="14" fill="#e0e7ff" stroke="#4338ca"/><text x="367" y="324" font-size="8" text-anchor="middle" fill="#3730a3">16A frigo</text>
@@ -177,6 +177,6 @@
     <rect x="0" y="22" width="16" height="12" fill="#fed7aa" stroke="#ea580c"/><text x="22" y="32" font-size="10" fill="#0f172a">prise 16A (plan)</text>
     <rect x="150" y="22" width="16" height="12" fill="#e0e7ff" stroke="#4338ca"/><text x="172" y="32" font-size="10" fill="#0f172a">circuit spécialisé</text>
     <line x1="305" y1="28" x2="321" y2="28" stroke="#f59e0b" stroke-width="3"/><text x="327" y="32" font-size="10" fill="#0f172a">LED sous hauts</text>
-    <text x="0" y="54" font-size="10" fill="#0f172a">Prises plan de travail = 2 circuits 20A dédiés : (A) pôle coin (blender/cuiseur/robot) · (B) reste + café/bouilloire</text>
+    <text x="0" y="54" font-size="10" fill="#0f172a">Prises plan de travail = 3 circuits 20A : (A) coin Mur 1 · (B) coin Mur 2 · (C) prépa (2+2) — bouilloire ≠ friteuse</text>
   </g>
 </svg>
