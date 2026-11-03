@@ -404,8 +404,10 @@ function renderHome(){
       + "<li><strong>Pose du sol</strong> (parquet).</li>"
       + "<li><strong>Montages</strong> : cuisine puis dressing.</li>"
       + "</ol></div>";
+  h += "<div class='block callout tip'><h2>🧊 Cuisine en 3D</h2><p>Maquette 3D des 3 variantes : marche dedans, ouvre portes et tiroirs, cotes au sol. <a href='#cuisine-3d'><strong>Voir la rubrique →</strong></a></p></div>";
   h += "<div class='block'><h2>📐 Plan de la cuisine</h2><p>Vue de dessus + élévations Mur 1 / Mur 2 (échelle 1,5 px/cm — version avec armoire garde-manger). Touche l'image pour l'ouvrir en grand.</p><a href='cuisine-plans.svg' target='_blank'><img src='cuisine-plans.svg' alt='Plans de la cuisine — vue de dessus et élévations Mur 1 / Mur 2' style='width:100%;max-width:760px;height:auto;display:block;margin:0 auto;border:1px solid #e2e8f0;border-radius:8px;background:#fff'/></a></div>";
   h += "<div class='block'><h2>📐 Plan — variante colonne four (+ MO)</h2><p>Armoire remplacée par une colonne four + micro-ondes : four à mi-hauteur, MO sorti du meuble au-dessus de l'évier (robinet libre), ~20 cm de plan en moins. Touche pour agrandir.</p><a href='cuisine-plans-variante.svg' target='_blank'><img src='cuisine-plans-variante.svg' alt='Variante colonne four — vue de dessus et élévations' style='width:100%;max-width:760px;height:auto;display:block;margin:0 auto;border:1px solid #e2e8f0;border-radius:8px;background:#fff'/></a></div>";
+  h += "<div class='block'><h2>📐 Plan — variante C : colonne four+MO + colonne 20</h2><p>Comme la variante B, avec une <strong>colonne coulissante 20 cm</strong> (épices, huiles, plaques du four) entre la colonne four et la plaque : la plaque n'est plus collée à la colonne (casseroles et poignées dégagées, côté de la colonne protégé de la chaleur). En échange, les 2 tiroirs 40 deviennent 1 tiroir 60 casseroles : plan de travail 80→200 cm, soit ~20 cm de moins que B (~40 cm de moins que A). Touche pour agrandir.</p><a href='cuisine-plans-variante-c.svg' target='_blank'><img src='cuisine-plans-variante-c.svg' alt='Variante C colonne four + colonne 20 — vue de dessus et élévations' style='width:100%;max-width:760px;height:auto;display:block;margin:0 auto;border:1px solid #e2e8f0;border-radius:8px;background:#fff'/></a></div>";
   DATA.forEach(function(r){
     h += "<div class='block'><h2>"+(r.icone||"")+" "+fmt(r.titre)+"</h2><ul class='home-list'>";
     r.fiches.forEach(function(f){ h += "<li><a href='#"+f.id+"'>"+(f.icone||"")+" "+fmt(f.titre)+"</a><span class='tag'>"+fmt(f.bref.duree)+"</span></li>"; });
@@ -439,8 +441,32 @@ function renderRecap(){
     + "<div class='block callout warn'><h2>⚠️ Assurance</h2><p>Une élec/plomberie <strong>non conforme</strong> peut poser problème en cas de sinistre → sur ces postes, <strong>fais faire/raccorder par un pro</strong>.</p></div>"
     + "</article>";
 }
+function render3D(){
+  var btn = function(v, t, d){ return "<li><a href='cuisine-3d.html?v="+v+"' target='_blank'><strong>"+t+"</strong></a><span>"+d+"</span></li>"; };
+  return "<article class='fiche'><h1>🧊 Cuisine en 3D</h1>"
+    + "<p class='lead'>Maquette 3D de la cuisine en L, à l'échelle (1 unité = 1 cm), pour <strong>comparer les 3 variantes</strong> : marcher dedans, ouvrir portes et tiroirs, lire les cotes au sol.</p>"
+    + "<div class='block'><h2>🚪 Ouvrir la maquette</h2><ul class='home-list'>"
+      + btn("A", "A · Armoire", "armoire garde-manger 40, four sous la plaque, MO au-dessus de l'évier.")
+      + btn("B", "B · Colonne four+MO", "colonne 60 four à mi-hauteur + MO, tiroirs sous la plaque.")
+      + btn("C", "C · + colonne 20", "comme B + colonne coulissante 20 entre colonne four et plaque.")
+      + "<li><a href='cuisine-3d.html?vue=ensemble' target='_blank'><strong>Vue d'ensemble</strong></a><span>vue en orbite autour de la cuisine.</span></li>"
+    + "</ul></div>"
+    + "<div class='block'><a href='cuisine-3d.html' target='_blank'><iframe src='cuisine-3d.html?vue=ensemble' title='Aperçu de la cuisine 3D' loading='lazy' style='width:100%;height:420px;border:1px solid #e2e8f0;border-radius:8px;display:block;pointer-events:none'></iframe></a><p style='font-size:12px;color:#64748b'>Aperçu — touche ou clique un lien ci-dessus pour l'ouvrir en plein écran.</p></div>"
+    + "<div class='block callout tip'><h2>🎮 Commandes</h2><ul>"
+      + "<li><strong>Ordinateur</strong> : clic pour entrer · souris pour regarder · <strong>ZQSD/WASD</strong> ou flèches pour marcher (Maj = plus vite) · <strong>clic</strong> ou <strong>E</strong> pour ouvrir/fermer · <strong>V</strong> change de variante · <strong>C</strong> visite / vue d'ensemble · <strong>O</strong> tout ouvrir · <strong>L</strong> étiquettes et cotes · Échap pour sortir.</li>"
+      + "<li><strong>Téléphone</strong> : glisser à gauche pour marcher, à droite pour regarder, tap sur une porte ou un tiroir pour l'ouvrir.</li>"
+      + "<li>Curseur <strong>hauteur des yeux</strong> pour se mettre à sa taille.</li>"
+    + "</ul></div>"
+    + "<div class='block'><h2>📏 Ce qui est modélisé</h2><ul>"
+      + "<li>Mur 1 = 260 cm (meubles 265 : dépassent de 5 au bout), Mur 2 = 300 cm, profondeur 60, HSP 250, coffrage sous-face 220.</li>"
+      + "<li>Fileurs 5 cm de chaque côté de l'angle (LV et tiroirs ne se touchent pas), joue frigo 5.</li>"
+      + "<li>Évier sur 2 tiroirs, meuble haut avec hotte casquette au-dessus de la plaque.</li>"
+      + "<li>Cotes au sol : largeur de chaque meuble + total par côté.</li>"
+    + "</ul></div>"
+    + "</article>";
+}
 function buildNav(){
-  var recap = "<div class='group'><div class='group-title'>📊 Synthèse</div><a href='#recap'>Récap DIY / Pro</a></div>";
+  var recap = "<div class='group'><div class='group-title'>📊 Synthèse</div><a href='#recap'>Récap DIY / Pro</a><a href='#cuisine-3d'>🧊 Cuisine en 3D</a></div>";
   document.getElementById("nav").innerHTML = recap + DATA.map(function(r){
     return "<div class='group'><div class='group-title'>"+(r.icone||"")+" "+fmt(r.titre)+"</div>"
       + r.fiches.map(function(f){ return "<a href='#"+f.id+"'>"+fmt(f.titre)+"</a>"; }).join("")+"</div>";
@@ -449,7 +475,7 @@ function buildNav(){
 function route(){
   var id = location.hash.replace(/^#/,""), fiche=null;
   DATA.forEach(function(r){ r.fiches.forEach(function(f){ if(f.id===id) fiche=f; }); });
-  document.getElementById("content").innerHTML = id==="recap" ? renderRecap() : (fiche ? renderFiche(fiche) : renderHome());
+  document.getElementById("content").innerHTML = id==="recap" ? renderRecap() : id==="cuisine-3d" ? render3D() : (fiche ? renderFiche(fiche) : renderHome());
   Array.prototype.forEach.call(document.querySelectorAll(".nav a"), function(a){ a.classList.toggle("active", a.getAttribute("href")==="#"+id); });
   if(fiche) wireSteps(fiche);
   document.body.classList.remove("nav-open"); window.scrollTo(0,0);
