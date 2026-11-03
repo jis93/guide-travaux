@@ -199,7 +199,23 @@ const DATA = [
         { t:"Mise en service", d:"~20 min", o:["Clé à purgeur","Manomètre"], sub:["(Eau) Rouvrir les vannes, remettre en eau, **PURGER l'air**.","Contrôler la pression (~1-1,5 bar), refaire l'appoint.","Vérifier l'étanchéité ; (élec) tester la chauffe."] }
       ],
       astuces:["⚠️ **Bien purger** sinon le radiateur ne chauffe pas.","Emplacement **sous fenêtre** = meilleure diffusion.","Élec : respecter la **ligne dédiée**."],
-      pro:"Chez toi (**chauffage collectif**) : **chauffagiste + autorisation syndic**. La partie électrique éventuelle → **électricien obligatoire (copro)**." }
+      pro:"Chez toi (**chauffage collectif**) : **chauffagiste + autorisation syndic**. La partie électrique éventuelle → **électricien obligatoire (copro)**." },
+
+    { id:"vmc-cuisine", titre:"Bouche VMC cuisine (hygroréglable, sous le coffrage)", icone:"🌬️",
+      objectif:"La bouche VMC est sur le **Mur 2, sous le coin du coffrage**, pile à l'emplacement du haut d'angle. La **remonter dans la sous-face du coffrage** et la remplacer par une **hygroréglable avec débit de pointe électrique** (interrupteur temporisé) → haut d'angle complet possible, plus de ficelle.",
+      bref:{diff:"Facile (bouche) → Moyen (déplacement + fil)", duree:"½ j", budget:"Bouche ~40-120 € + petit placo"},
+      securite:["**VMC collective (copro)** : la bouche doit être **compatible avec l'extracteur de l'immeuble** (type hygro A/B, débit cuisine) → vérifier avec le **syndic** avant d'acheter.","**Ne jamais raccorder la hotte sur la VMC** → hotte casquette **en recyclage** (filtre charbon).","Fil 230 V / 12 V jusqu'à la bouche → **électricien (copro)**, à faire **au même passage que les circuits cuisine**.","Ne jamais **enfermer ni découper un meuble** autour de la bouche : elle doit rester dégagée et démontable."],
+      outillage:["Escabeau","Scie cloche / scie à placo","Visseuse","VAT (si fil)"],
+      materiel:["Bouche hygroréglable cuisine **à commande électrique** (ref. compatible caisson)","Gaine souple Ø 125 + colliers / manchon","Manchon de fixation pour placo","Fil + interrupteur (ou minuterie) si commande secteur","Plaque/enduit pour reboucher l'ancien trou"],
+      etapes:[
+        { t:"Identifier le système", d:"~15 min", o:["Escabeau"], sub:["Déclipser la bouche : regarder **la gaine (Ø, longueur dispo)** et si elle passe **dans le coffrage**.","Relever la **référence/le débit** (ex. 10-45/105 ou 135 m³/h) et le type (collective/individuelle).","Copro : valider le modèle de remplacement avec le **syndic**."] },
+        { t:"Choisir la commande du débit de pointe", d:"—", o:[], sub:["**Secteur (retenu)** : interrupteur mural, arrêt auto ~30 min, zéro entretien — fil caché dans le coffrage.","Pile : pas de fil, mais piles à changer **en hauteur** tous les 2-3 ans et bouton hors de portée → seulement un modèle **à détection de présence**.","Ficelle : à éviter (pend devant les meubles)."] },
+        { t:"Déplacer la bouche dans le coffrage", d:"~1-2 h", o:["Scie cloche","Visseuse"], sub:["Découper la **sous-face du coffrage** à 20-40 cm de l'ancienne position, hors emprise du haut d'angle.","Rallonger la gaine souple, poser le manchon de fixation.","Reboucher l'ancien trou du Mur 2 (avant crédence/meubles)."] },
+        { t:"Alimentation électrique (électricien)", d:"~1 h", o:["VAT"], sub:["Tirer le fil dans le coffrage jusqu'à la bouche (230 V ou 12 V + transfo selon le modèle).","Interrupteur près de la plaque ou de l'entrée de la cuisine."] },
+        { t:"Poser la bouche & tester", d:"~15 min", o:["Escabeau"], sub:["Clipser la bouche, vérifier l'aspiration (feuille de papier).","Tester le débit de pointe et l'arrêt temporisé."] }
+      ],
+      astuces:["À faire **avant la pose des meubles hauts** (et avant peinture du coffrage).","Nettoyer la bouche **2-3 fois par an** (eau savonneuse, sans mouiller le capteur) → garder un accès dégagé.","Si la gaine ne passe pas dans le coffrage : haut d'angle bas **60×40** (140→180) sous la bouche."],
+      pro:"Remplacement de bouche = **DIY**. Découpe du coffrage = **DIY** (placo). Fil jusqu'à la bouche = **électricien (copro)**, à grouper avec les circuits cuisine." }
   ]},
 
   { titre:"3 · Sol — pose", icone:"🪵", fiches:[
@@ -353,6 +369,7 @@ const MODE = {
   "pose-parquet":{m:"DIY", eco:"Pose pro ~25-45 €/m² → **~25-45 €/m² économisés**"},
   "prises-cuisine":{m:"Pro (copro)", eco:"**Électricien obligatoire** (règlement copro). DIY des saignées peu rentable (~100-300 €) → laisse-lui saignées + raccordement"},
   "wc-lave-linge":{m:"Mixte", eco:"DIY : dépose / mur / évac. **Prise = électricien obligatoire** (copro)"},
+  "vmc-cuisine":{m:"Mixte", eco:"Bouche + coffrage en DIY ; fil jusqu'à la bouche avec le passage de l'électricien"},
   "deplacement-radiateur":{m:"Pro (copro)", eco:"**Chauffage collectif → chauffagiste + autorisation syndic** ; partie élec = électricien"},
   "montage-cuisine":{m:"DIY", eco:"Pose pro **800-2000 €+** → grosse économie (soigne le plan de travail)"},
   "montage-dressing":{m:"DIY", eco:"Montage pro ~100-300 € → **économie DIY totale**"},
