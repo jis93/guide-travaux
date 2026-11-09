@@ -232,10 +232,6 @@ function hob(p, x0, x1) {
     p.add(c);
   }
 }
-// Étagère ouverte (épaisseur 2, profondeur z0→z1).
-function shelf(p, x0, x1, y, z0, z1) { B(p, x0, x1, y - 2, y, z0, z1, M.worktop); }
-const SHELF_Y = [150, 170, 190]; // la plus haute à 190 : bouche VMC dégagée au-dessus
-const SHELF_D = 28;
 function led(p, x0, x1) { B(p, x0 + 1, x1 - 1, 139.2, 139.8, 28, 31, M.led, false); }
 
 // ---------- cotes au sol ----------
@@ -365,10 +361,11 @@ function buildMur2(p, moAboveSink) {
   door(q, 245, 290, 200, 250, 58, 'R', 'Haut frigo (2)', M.frontUp, 'bottom');
   label(q, 'rare / saisonnier (fêtes)', 245, 225, 64);
   // meubles hauts
-  // angle ouvert : étagères en L (Mur 2 0→85, profondeur 28) — pas de porte.
+  // Angle haut : le Mur 1 entre dans l'angle (angle aveugle). Mur 2 : fileur 37→45 puis meuble bas 40×60 sous la VMC.
   // Bouche VMC relevée sur photo : centre ≈ 63 cm de l'angle, ≈ 217 cm de haut (juste sous le coffrage).
-  for (const y of SHELF_Y) shelf(p, 0, 85, y, 0, SHELF_D);
-  label(p, 'étagères : thés (30)', 42, 180, 34);
+  B(p, 37, 45, 140, 220, 0, 37, M.frontUp);                // fileur (dégagement portes)
+  upper(p, 45, 85, 140, 200, 'Thés (sous VMC)', ['R']);      // 40×60 : dessus à 200, bouche libre au-dessus
+  label(p, 'thés (~30 boîtes)', 65, 170, 40);
   const vmc = new THREE.Mesh(new THREE.CylinderGeometry(9, 9, 2.5, 32), M.carcass);
   vmc.rotation.x = Math.PI / 2; vmc.position.set(63, 217, 1.25); p.add(vmc);
   B(p, 56, 70, 215.5, 218.5, 2.5, 3, M.dark, false);
@@ -396,12 +393,17 @@ function buildMur2(p, moAboveSink) {
 
 // ---------- Mur 1 (repère local : x = distance depuis l'extrémité ouverte, angle à droite) ----------
 // Fileur 5 à 200→205, coin 205→265 : le linéaire dépasse de 5 cm au bout ouvert (mur = 260).
-// Hauts METOD jusqu'à 220, puis angle ouvert (étagères en L, 45 cm sur ce mur).
-function mur1Etageres(p) {
-  for (const y of SHELF_Y) shelf(p, 220, 265 - SHELF_D, y, 0, SHELF_D);
+// Hauts METOD jusqu'à l'angle : dernier = caisson 80 en angle aveugle (porte 40).
+// Haut d'angle aveugle : caisson 80 (185→265), porte 40 côté pièce, moitié côté angle fermée par un panneau.
+function mur1AngleHaut(p, name, text) {
+  B(p, 180, 185, 140, 220, 0, 37, M.frontUp);               // fileur 5
+  shell(p, 185, 265, 140, 220, 0, 35);
+  door(p, 185, 225, 140, 220, 35, 'L', name, M.frontUp, 'bottom');
+  B(p, 225 + G, 265, 140 + G, 220 - G, 35, 36.9, M.frontUp); // panneau aveugle (caché par le Mur 2)
+  label(p, text, 205, 200, 40);
+  label(p, 'partie aveugle', 245, 185, 40);
 }
 function mur1Fileur(p) {
-  mur1Etageres(p);
   B(p, 200, 205, 10, 86, 0, 60, M.front); B(p, 200, 205, 0, 10, 0, 52, M.plinth, false);
   B(p, 198, 205, 86, 90, 0, 62, M.worktop);
 }
@@ -426,9 +428,8 @@ function buildMur1A(p) {
   hoodCab(p, 40, 100);
   upper(p, 100, 180, 140, 220, 'Plats / bols', ['L', 'R']);
   label(p, 'plats / bols', 140, 185, 40);
-  upper(p, 180, 220, 140, 220, 'Réserve', ['R']);
-  label(p, 'réserve', 200, 185, 40);
-  led(p, 100, 220);
+  mur1AngleHaut(p, 'Réserve (angle)', 'réserve');
+  led(p, 100, 225);
   B(p, 165, 265, 220, 250, 0, 45, M.coffrage);
   mur1Fileur(p);
   dims(p, 0, [[40, 'armoire'], [60, 'four+plaque'], [40, 'tiroirs'], [60, 'tiroirs'], [5, 'fileur']], 'Mur 1 = 265 cm (205 + coin 60), dépasse de 5');
@@ -459,9 +460,8 @@ function buildMur1B(p) {
   hoodCab(p, 60, 120);
   upper(p, 120, 180, 140, 220, 'Plats / bols', ['L']);
   label(p, 'plats · bols · saladiers', 150, 185, 40);
-  upper(p, 180, 220, 140, 220, 'Bocaux / farines', ['R']);
-  label(p, 'bocaux · farines', 200, 200, 40);
-  led(p, 120, 220);
+  mur1AngleHaut(p, 'Bocaux / farines (angle)', 'bocaux · farines');
+  led(p, 120, 225);
   B(p, 165, 265, 220, 250, 0, 45, M.coffrage);
   mur1Fileur(p);
   dims(p, 0, [[60, 'colonne four+MO'], [60, 'plaque'], [20, 'huiles'], [60, 'tiroirs'], [5, 'fileur']], 'Mur 1 = 265 cm (205 + coin 60), dépasse de 5');
@@ -494,9 +494,8 @@ function buildMur1C(p) {
   hoodCab(p, 80, 140);
   upper(p, 140, 180, 140, 220, 'Plats / bols', ['L']);
   label(p, 'plats / bols', 160, 185, 40);
-  upper(p, 180, 220, 140, 220, 'Réserve', ['R']);
-  label(p, 'réserve', 200, 200, 40);
-  led(p, 140, 220);
+  mur1AngleHaut(p, 'Réserve (angle)', 'réserve');
+  led(p, 140, 225);
   B(p, 165, 265, 220, 250, 0, 45, M.coffrage);
   mur1Fileur(p);
   dims(p, 0, [[60, 'colonne four+MO'], [20, 'col.'], [60, 'plaque'], [60, 'tiroirs'], [5, 'fileur']], 'Mur 1 = 265 cm (205 + coin 60), dépasse de 5');
@@ -505,7 +504,7 @@ function buildMur1C(p) {
 const VARIANTS = {
   A: { desc: '<b>Plan A</b> — armoire garde-manger 40 en bout, four sous la plaque, micro-ondes dans le haut au-dessus de l\'évier.',
        build: (m1, m2) => { buildMur1A(m1); buildMur2(m2, true); } },
-  B: { desc: '<b>Plan B (retenu)</b> — colonne 60 four à mi-hauteur + MO, plaque 60 (épices / poêles / casseroles), coulissant 20 huiles, 60 (couverts / ustensiles / tupperwares). Hauts METOD 60 + 40, angle haut ouvert (étagères thés, VMC dégagée). Étiquettes = plan de rangement.',
+  B: { desc: '<b>Plan B (retenu)</b> — colonne 60 four à mi-hauteur + MO, plaque 60 (épices / poêles / casseroles), coulissant 20 huiles, 60 (couverts / ustensiles / tupperwares). Hauts METOD : 60 + angle aveugle 80 (bocaux · farines) ; Mur 2 : meuble 40×60 thés sous la VMC. Étiquettes = plan de rangement.',
        build: (m1, m2) => { buildMur1B(m1); buildMur2(m2, false); } },
   C: { desc: '<b>Plan C</b> — comme B + colonne 20 coulissante (épices, huiles, plaques four) entre la colonne four et la plaque : plaque décollée de la colonne. 1 tiroir 60 au lieu de 2×40 ; plan ≈20 cm plus court que B.',
        build: (m1, m2) => { buildMur1C(m1); buildMur2(m2, false); } },

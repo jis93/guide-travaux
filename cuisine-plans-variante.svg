@@ -72,14 +72,14 @@
     <rect x="180" y="45" width="90" height="120" fill="#f8fafc" stroke="#64748b" stroke-dasharray="4 3"/>
     <text x="225" y="102" font-size="9" text-anchor="middle" fill="#0f172a">plats · bols</text>
     <text x="225" y="114" font-size="9" text-anchor="middle" fill="#0f172a">saladiers (60)</text>
-    <rect x="270" y="45" width="60" height="120" fill="#f8fafc" stroke="#64748b" stroke-dasharray="4 3"/>
-    <text x="300" y="102" font-size="9" text-anchor="middle" fill="#0f172a">bocaux</text>
-    <text x="300" y="114" font-size="9" text-anchor="middle" fill="#0f172a">farines (40)</text>
-    <!-- angle ouvert : étagères 150 / 170 / 190 -->
-    <rect x="330" y="90" width="67.5" height="3" fill="#a57c52" stroke="#7c5a36" stroke-width="0.5"/>
-    <rect x="330" y="120" width="67.5" height="3" fill="#a57c52" stroke="#7c5a36" stroke-width="0.5"/>
-    <rect x="330" y="150" width="67.5" height="3" fill="#a57c52" stroke="#7c5a36" stroke-width="0.5"/>
-    <text x="364" y="112" font-size="8" text-anchor="middle" fill="#0f172a">thés (30)</text>
+    <!-- angle aveugle : caisson 80 (porte 40 + panneau 40) -->
+    <rect x="270" y="45" width="7.5" height="120" fill="#fef3c7" stroke="#b45309"/>
+    <rect x="277.5" y="45" width="60" height="120" fill="#f8fafc" stroke="#64748b" stroke-dasharray="4 3"/>
+    <text x="307.5" y="102" font-size="9" text-anchor="middle" fill="#0f172a">bocaux</text>
+    <text x="307.5" y="114" font-size="9" text-anchor="middle" fill="#0f172a">farines</text>
+    <rect x="337.5" y="45" width="60" height="120" fill="#e5e7eb" stroke="#64748b" stroke-dasharray="4 3"/>
+    <text x="367.5" y="102" font-size="8" text-anchor="middle" fill="#374151">partie</text>
+    <text x="367.5" y="113" font-size="8" text-anchor="middle" fill="#374151">aveugle</text>
     <!-- hotte -->
     <rect x="90" y="45" width="90" height="90" fill="#f8fafc" stroke="#64748b" stroke-dasharray="4 3"/>
     <text x="135" y="85" font-size="10" text-anchor="middle" fill="#0f172a">meuble hotte</text>
@@ -127,20 +127,22 @@
     <rect x="338" y="212" width="14" height="14" fill="#fed7aa" stroke="#ea580c"/><text x="345" y="209" font-size="8" text-anchor="middle" fill="#7c2d12">coin 4×16A (A)</text>
     <rect x="38" y="300" width="14" height="14" fill="#e0e7ff" stroke="#4338ca"/><text x="45" y="297" font-size="8" text-anchor="middle" fill="#3730a3">four 20A + MO 16A</text>
     <rect x="98" y="350" width="12" height="12" fill="#e0e7ff" stroke="#4338ca"/><text x="114" y="359" font-size="7" fill="#3730a3">32A plaque</text>
-    <text x="195" y="405" font-size="12" text-anchor="middle" fill="#0f172a">265 cm = 60 + 60 + 20 + 60 + fileur 5 + coin 60 (dépasse le mur de 5) ; hauts 60 + 40 + étagères d'angle</text>
+    <text x="195" y="405" font-size="12" text-anchor="middle" fill="#0f172a">265 cm = 60 + 60 + 20 + 60 + fileur 5 + coin 60 (dépasse le mur de 5) ; hauts 60 + angle aveugle 80 (porte 40)</text>
   </g>
 
   <!-- ===================== MUR 2 ELEVATION ===================== -->
   <text x="30" y="1180" font-size="16" font-weight="bold" fill="#0f172a">3) Élévation Mur 2 — MO parti dans la colonne → au-dessus évier libéré</text>
   <g transform="translate(130,1210)">
-    <!-- angle ouvert : étagères 0→65, bouche VMC dégagée -->
-    <rect x="0" y="90" width="127.5" height="3" fill="#a57c52" stroke="#7c5a36" stroke-width="0.5"/>
-    <rect x="0" y="120" width="127.5" height="3" fill="#a57c52" stroke="#7c5a36" stroke-width="0.5"/>
-    <rect x="0" y="150" width="127.5" height="3" fill="#a57c52" stroke="#7c5a36" stroke-width="0.5"/>
-    <text x="55" y="112" font-size="8" text-anchor="middle" fill="#0f172a">thés (30)</text>
+    <!-- angle : profil du haut d'angle Mur 1, fileur, meuble 40×60 sous la VMC -->
+    <rect x="0" y="45" width="55.5" height="120" fill="#e5e7eb" stroke="#64748b" stroke-dasharray="4 3"/>
+    <text x="27.75" y="108" font-size="7" text-anchor="middle" fill="#374151">angle Mur 1</text>
+    <rect x="55.5" y="45" width="12" height="120" fill="#fef3c7" stroke="#b45309"/>
+    <rect x="67.5" y="75" width="60" height="90" fill="#f8fafc" stroke="#64748b" stroke-dasharray="4 3"/>
+    <text x="97.5" y="118" font-size="9" text-anchor="middle" fill="#0f172a">thés</text>
+    <text x="97.5" y="130" font-size="8" text-anchor="middle" fill="#0f172a">(~30) 40×60</text>
     <circle cx="94.5" cy="49.5" r="13.5" fill="#fff" stroke="#0e7490" stroke-width="1.5"/>
     <text x="94.5" y="52.5" font-size="7" text-anchor="middle" fill="#0e7490">VMC</text>
-    <text x="94.5" y="77" font-size="7" text-anchor="middle" fill="#0e7490">~63 cm · h 217</text>
+    <text x="94.5" y="28" font-size="7" text-anchor="middle" fill="#0e7490">~63 cm · h 217</text>
     <g transform="translate(37.5,0)">
     <rect x="90" y="15" width="90" height="150" fill="#f8fafc" stroke="#64748b" stroke-dasharray="4 3"/>
     <text x="135" y="92" font-size="10" text-anchor="middle" fill="#0f172a">assiettes · verres</text>
@@ -189,7 +191,7 @@
     <rect x="128" y="212" width="14" height="14" fill="#fed7aa" stroke="#ea580c"/><text x="135" y="209" font-size="8" text-anchor="middle" fill="#7c2d12">LV 2×16A (B)</text>
     <rect x="128" y="328" width="14" height="14" fill="#e0e7ff" stroke="#4338ca"/><text x="135" y="324" font-size="8" text-anchor="middle" fill="#3730a3">20A LV</text>
     <rect x="360" y="328" width="14" height="14" fill="#e0e7ff" stroke="#4338ca"/><text x="367" y="324" font-size="8" text-anchor="middle" fill="#3730a3">16A frigo</text>
-    <text x="225" y="405" font-size="12" text-anchor="middle" fill="#0f172a">300 cm — hauts à 240 ; angle ouvert : étagères 150 / 170 / 190 (thés), VMC dégagée</text>
+    <text x="225" y="405" font-size="12" text-anchor="middle" fill="#0f172a">300 cm — hauts à 240 ; meuble 40×60 (dessus à 200) sous la VMC</text>
   </g>
 
   <!-- legend -->
