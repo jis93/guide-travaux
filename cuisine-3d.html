@@ -424,26 +424,27 @@ function buildMur1A(p) {
   door(p, 0, 40, 10, 150, 58, 'L', 'Armoire (bas)', M.front, 'top');
   door(p, 0, 40, 150, 248, 58, 'L', 'Armoire (haut)', M.front, 'bottom');
   label(p, 'armoire 40', 20, 130, 64);
+  // coulissant 20 entre l'armoire et la plaque : huiles
+  baseCarcass(p, 40, 60); drawer(p, 40, 60, 10, 86, 58, 'Coulissant 20 : huiles · vinaigres · planches');
+  label(p, 'coul. 20', 50, 60, 66);
   // four sous plaque 60
-  baseCarcass(p, 40, 100);
-  B(p, 43, 97, 28, 84, 58, 58.2, M.ovenIn, false);
-  flap(p, 40, 100, 27, 86, 58.2, 'down', 'Four (sous plaque)', M.black);
-  drawer(p, 40, 100, 10, 27, 58, 'Tiroir sous four', 45);
-  hob(p, 40, 100);
-  label(p, 'four + plaque', 70, 60, 66);
-  baseCarcass(p, 100, 140); drawers3(p, 100, 140, 'Tiroir 40');
-  label(p, 'tir. 40', 120, 45, 66);
-  baseCarcass(p, 140, 200); drawers3(p, 140, 200, 'Tiroir 60 casseroles');
-  label(p, 'tiroir 60', 170, 45, 66);
+  baseCarcass(p, 60, 120);
+  B(p, 63, 117, 28, 84, 58, 58.2, M.ovenIn, false);
+  flap(p, 60, 120, 27, 86, 58.2, 'down', 'Four (sous plaque)', M.black);
+  drawer(p, 60, 120, 10, 27, 58, 'Tiroir sous four', 45);
+  hob(p, 60, 120);
+  label(p, 'four + plaque', 90, 60, 66);
+  baseCarcass(p, 120, 200); drawers3(p, 120, 200, 'Tiroir 80');
+  label(p, 'tiroirs 80', 160, 45, 66);
   B(p, 40, 198, 86, 90, 0, 62, M.worktop);
-  hoodCab(p, 40, 100);
-  upper(p, 100, 180, 140, 220, 'Plats / bols', ['L', 'R']);
-  label(p, 'plats / bols', 140, 185, 40);
+  hoodCab(p, 60, 120);
+  upper(p, 120, 180, 140, 220, 'Plats / bols', ['L']);
+  label(p, 'plats / bols', 150, 185, 40);
   mur1AngleHaut(p, 'Réserve (angle)', 'réserve');
-  led(p, 100, 225);
+  led(p, 120, 225);
   B(p, 165, 265, 220, 250, 0, 45, M.coffrage);
   mur1Fileur(p);
-  dims(p, 0, [[40, 'armoire'], [60, 'four+plaque'], [40, 'tiroirs'], [60, 'tiroirs'], [5, 'fileur']], 'Mur 1 = 265 cm (205 + coin 60), dépasse de 5');
+  dims(p, 0, [[40, 'armoire'], [20, 'coul.'], [60, 'four+plaque'], [80, 'tiroirs'], [5, 'fileur']], 'Mur 1 = 265 cm (205 + coin 60), dépasse de 5');
 }
 function buildMur1B(p, angle = 'aveugle') {
   // colonne four + MO 60 — tiroirs dessous = électroménager sorti ponctuellement
@@ -520,7 +521,7 @@ function buildMur1C(p) {
 }
 
 const VARIANTS = {
-  A: { desc: '<b>Plan A</b> — armoire garde-manger 40 en bout, four sous la plaque, micro-ondes dans le haut au-dessus de l\'évier.',
+  A: { desc: '<b>Plan A</b> — armoire garde-manger 40 en bout, coulissant 20, four sous la plaque, tiroirs 80, hauts 60 + angle aveugle, micro-ondes dans le haut au-dessus de l\'évier.',
        build: (m1, m2) => { buildMur1A(m1); buildMur2(m2, true); } },
   B: { desc: '<b>Plan B (retenu)</b> — colonne 60 four à mi-hauteur + MO, plaque 60 (épices / poêles / casseroles), coulissant 20 huiles, 60 (couverts / ustensiles / tupperwares). Hauts METOD : 60 + angle aveugle 80 (bocaux · farines) ; Mur 2 : meuble 40×60 thés sous la VMC. Étiquettes = plan de rangement.',
        build: (m1, m2) => { buildMur1B(m1); buildMur2(m2, false); } },
