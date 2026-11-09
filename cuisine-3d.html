@@ -41,6 +41,7 @@
     <div class="row">
       <button id="vA" class="on">A · Armoire</button>
       <button id="vB">B · Colonne four+MO</button>
+      <button id="vB2">B' · étagères d'angle</button>
       <button id="vC">C · + colonne 20</button>
     </div>
     <div id="desc"></div>
@@ -232,6 +233,10 @@ function hob(p, x0, x1) {
     p.add(c);
   }
 }
+// Étagère ouverte (épaisseur 2, profondeur z0→z1) — variante B' (angle en étagères).
+function shelf(p, x0, x1, y, z0, z1) { B(p, x0, x1, y - 2, y, z0, z1, M.worktop); }
+const SHELF_Y = [150, 170, 190]; // la plus haute à 190 : bouche VMC dégagée au-dessus
+const SHELF_D = 28;
 function led(p, x0, x1) { B(p, x0 + 1, x1 - 1, 139.2, 139.8, 28, 31, M.led, false); }
 
 // ---------- cotes au sol ----------
@@ -319,7 +324,7 @@ ceiling.rotation.x = Math.PI / 2; ceiling.position.set(250, 250, 250);
 scene.add(ceiling);
 
 // ---------- Mur 2 (angle à gauche → frigo à droite), commun aux variantes ----------
-function buildMur2(p, moAboveSink) {
+function buildMur2(p, moAboveSink, angle = 'aveugle') {
   // coin mort partagé 60×60
   B(p, 0, 60, 10, 86, 0, 60, M.corner); B(p, 0, 60, 0, 10, 0, 52, M.plinth, false);
   label(p, 'coin (mort)', 30, 70, 64);
@@ -363,9 +368,15 @@ function buildMur2(p, moAboveSink) {
   // meubles hauts
   // Angle haut : le Mur 1 entre dans l'angle (angle aveugle). Mur 2 : fileur 37→45 puis meuble bas 40×60 sous la VMC.
   // Bouche VMC relevée sur photo : centre ≈ 63 cm de l'angle, ≈ 217 cm de haut (juste sous le coffrage).
-  B(p, 37, 45, 140, 220, 0, 37, M.frontUp);                // fileur (dégagement portes)
-  upper(p, 45, 85, 140, 200, 'Thés (sous VMC)', ['R']);      // 40×60 : dessus à 200, bouche libre au-dessus
-  label(p, 'thés (~30 boîtes)', 65, 170, 40);
+  if (angle === 'etageres') {
+    // variante B' : angle ouvert, étagères 0→85 (profondeur 28) sous la VMC
+    for (const y of SHELF_Y) shelf(p, 0, 85, y, 0, SHELF_D);
+    label(p, 'étagères thés (~30 boîtes)', 42, 180, 34);
+  } else {
+    B(p, 37, 45, 140, 220, 0, 37, M.frontUp);                // fileur (dégagement portes)
+    upper(p, 45, 85, 140, 200, 'Thés (sous VMC)', ['R']);      // 40×60 : dessus à 200, bouche libre au-dessus
+    label(p, 'thés (~30 boîtes)', 65, 170, 40);
+  }
   const vmc = new THREE.Mesh(new THREE.CylinderGeometry(9, 9, 2.5, 32), M.carcass);
   vmc.rotation.x = Math.PI / 2; vmc.position.set(63, 217, 1.25); p.add(vmc);
   B(p, 56, 70, 215.5, 218.5, 2.5, 3, M.dark, false);
@@ -434,7 +445,7 @@ function buildMur1A(p) {
   mur1Fileur(p);
   dims(p, 0, [[40, 'armoire'], [60, 'four+plaque'], [40, 'tiroirs'], [60, 'tiroirs'], [5, 'fileur']], 'Mur 1 = 265 cm (205 + coin 60), dépasse de 5');
 }
-function buildMur1B(p) {
+function buildMur1B(p, angle = 'aveugle') {
   // colonne four + MO 60 — tiroirs dessous = électroménager sorti ponctuellement
   shell(p, 0, 60, 10, 248, 0, 58); B(p, 0, 60, 0, 10, 0, 52, M.plinth, false);
   drawer(p, 0, 60, 10, 50, 58, 'Électroménager (lourd : robot, blender)');
@@ -460,8 +471,15 @@ function buildMur1B(p) {
   hoodCab(p, 60, 120);
   upper(p, 120, 180, 140, 220, 'Plats / bols', ['L']);
   label(p, 'plats · bols · saladiers', 150, 185, 40);
-  mur1AngleHaut(p, 'Bocaux / farines (angle)', 'bocaux · farines');
-  led(p, 120, 225);
+  if (angle === 'etageres') {
+    upper(p, 180, 220, 140, 220, 'Bocaux / farines', ['R']);
+    label(p, 'bocaux · farines', 200, 200, 40);
+    for (const y of SHELF_Y) shelf(p, 220, 265 - SHELF_D, y, 0, SHELF_D); // retour d'étagère (45 cm)
+    led(p, 120, 220);
+  } else {
+    mur1AngleHaut(p, 'Bocaux / farines (angle)', 'bocaux · farines');
+    led(p, 120, 225);
+  }
   B(p, 165, 265, 220, 250, 0, 45, M.coffrage);
   mur1Fileur(p);
   dims(p, 0, [[60, 'colonne four+MO'], [60, 'plaque'], [20, 'huiles'], [60, 'tiroirs'], [5, 'fileur']], 'Mur 1 = 265 cm (205 + coin 60), dépasse de 5');
@@ -506,6 +524,8 @@ const VARIANTS = {
        build: (m1, m2) => { buildMur1A(m1); buildMur2(m2, true); } },
   B: { desc: '<b>Plan B (retenu)</b> — colonne 60 four à mi-hauteur + MO, plaque 60 (épices / poêles / casseroles), coulissant 20 huiles, 60 (couverts / ustensiles / tupperwares). Hauts METOD : 60 + angle aveugle 80 (bocaux · farines) ; Mur 2 : meuble 40×60 thés sous la VMC. Étiquettes = plan de rangement.',
        build: (m1, m2) => { buildMur1B(m1); buildMur2(m2, false); } },
+  B2: { desc: '<b>Plan B\' (comparaison)</b> — identique à B, mais <b>angle haut ouvert en étagères</b> : étagères 150 / 170 / 190 sur 85 cm (Mur 2) + retour 45 cm (Mur 1), thés dessus, VMC dégagée. Hauts Mur 1 : 60 + 40 jusqu\'à 220.',
+       build: (m1, m2) => { buildMur1B(m1, 'etageres'); buildMur2(m2, false, 'etageres'); } },
   C: { desc: '<b>Plan C</b> — comme B + colonne 20 coulissante (épices, huiles, plaques four) entre la colonne four et la plaque : plaque décollée de la colonne. 1 tiroir 60 au lieu de 2×40 ; plan ≈20 cm plus court que B.',
        build: (m1, m2) => { buildMur1C(m1); buildMur2(m2, false); } },
 };
@@ -529,9 +549,7 @@ function setVariant(v) {
   VARIANTS[v].build(m1, m2);
   scene.add(world);
   if (allOpen) openables.forEach(o => { o.target = o.t = 1; applyOp(o); });
-  document.getElementById('vA').classList.toggle('on', v === 'A');
-  document.getElementById('vB').classList.toggle('on', v === 'B');
-  document.getElementById('vC').classList.toggle('on', v === 'C');
+  for (const k of Object.keys(VARIANTS)) document.getElementById('v' + k).classList.toggle('on', v === k);
   document.getElementById('desc').innerHTML = VARIANTS[v].desc;
 }
 
@@ -564,7 +582,7 @@ let mode = 'visit';
 addEventListener('keydown', e => {
   if (e.target.tagName === 'INPUT') return;
   keys[e.code] = true;
-  if (e.code === 'KeyV') setVariant({ A: 'B', B: 'C', C: 'A' }[variant]);
+  if (e.code === 'KeyV') setVariant({ A: 'B', B: 'B2', B2: 'C', C: 'A' }[variant]);
   if (e.code === 'KeyC') setMode(mode === 'visit' ? 'orbit' : 'visit');
   if (e.code === 'KeyO') toggleAll();
   if (e.code === 'KeyL') toggleLabels();
@@ -685,6 +703,7 @@ function toggleLabels() {
 const $ = id => document.getElementById(id);
 $('vA').onclick = () => setVariant('A');
 $('vB').onclick = () => setVariant('B');
+$('vB2').onclick = () => setVariant('B2');
 $('vC').onclick = () => setVariant('C');
 $('mVisit').onclick = () => setMode('visit');
 $('mOrbit').onclick = () => setMode('orbit');
