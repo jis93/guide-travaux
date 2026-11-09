@@ -365,31 +365,32 @@ function buildMur2(p, moAboveSink) {
   door(q, 245, 290, 200, 250, 58, 'R', 'Haut frigo (2)', M.frontUp, 'bottom');
   label(q, 'rare / saisonnier (fêtes)', 245, 225, 64);
   // meubles hauts
-  // angle ouvert : étagères en L (Mur 2 0→65, profondeur 28) — pas de porte, VMC dégagée
-  for (const y of SHELF_Y) shelf(p, 0, 65, y, 0, SHELF_D);
-  label(p, 'étagères : thés (30)', 32, 180, 34);
-  const vmc = new THREE.Mesh(new THREE.CylinderGeometry(8, 8, 2.5, 32), M.carcass);
-  vmc.rotation.x = Math.PI / 2; vmc.position.set(55, 208, 1.25); p.add(vmc);
-  B(p, 49, 61, 206.5, 209.5, 2.5, 3, M.dark, false);
-  label(p, 'bouche VMC (position approx.)', 55, 226, 20);
-  upper(q, 60, 120, 140, 240, 'Vaisselle', ['L']);
-  label(q, 'assiettes · verres', 90, 200, 40);
+  // angle ouvert : étagères en L (Mur 2 0→85, profondeur 28) — pas de porte.
+  // Bouche VMC relevée sur photo : centre ≈ 63 cm de l'angle, ≈ 217 cm de haut (juste sous le coffrage).
+  for (const y of SHELF_Y) shelf(p, 0, 85, y, 0, SHELF_D);
+  label(p, 'étagères : thés (30)', 42, 180, 34);
+  const vmc = new THREE.Mesh(new THREE.CylinderGeometry(9, 9, 2.5, 32), M.carcass);
+  vmc.rotation.x = Math.PI / 2; vmc.position.set(63, 217, 1.25); p.add(vmc);
+  B(p, 56, 70, 215.5, 218.5, 2.5, 3, M.dark, false);
+  label(p, 'bouche VMC (~63 cm, h 217)', 63, 232, 20);
+  // hauts décalés de 20 cm vers le frigo pour dégager la bouche : 85→145 vaisselle, 145→205 tasses
+  const u = new THREE.Group(); u.position.x = 20; q.add(u);
+  upper(u, 60, 120, 140, 240, 'Vaisselle', ['L']);
+  label(u, 'assiettes · verres', 90, 200, 40);
   if (moAboveSink) {
     // café/tasses avec niche micro-ondes en bas (140→178)
-    shell(q, 120, 180, 178, 240, 0, 35);
-    door(q, 120, 180, 178, 240, 35, 'R', 'Café / tasses', M.frontUp, 'bottom');
-    B(q, 120, 121.8, 140, 178, 0, 35, M.carcass); B(q, 178.2, 180, 140, 178, 0, 35, M.carcass);
-    B(q, 120, 180, 140, 141.8, 0, 35, M.carcass); B(q, 120, 180, 140, 178, 0, 1, M.carcass, false);
-    B(q, 124, 176, 141.8, 170, 0, 36, M.dark); B(q, 126, 162, 144, 168, 36, 36.3, M.ovenIn, false);
-    door(q, 124, 164, 141.8, 170, 36.3, 'L', 'Micro-ondes', M.black, 'mid');
-    label(q, 'café + MO', 150, 205, 40);
+    shell(u, 120, 180, 178, 240, 0, 35);
+    door(u, 120, 180, 178, 240, 35, 'R', 'Café / tasses', M.frontUp, 'bottom');
+    B(u, 120, 121.8, 140, 178, 0, 35, M.carcass); B(u, 178.2, 180, 140, 178, 0, 35, M.carcass);
+    B(u, 120, 180, 140, 141.8, 0, 35, M.carcass); B(u, 120, 180, 140, 178, 0, 1, M.carcass, false);
+    B(u, 124, 176, 141.8, 170, 0, 36, M.dark); B(u, 126, 162, 144, 168, 36, 36.3, M.ovenIn, false);
+    door(u, 124, 164, 141.8, 170, 36.3, 'L', 'Micro-ondes', M.black, 'mid');
+    label(u, 'café + MO', 150, 205, 40);
   } else {
-    upper(q, 120, 180, 140, 240, 'Café / tasses', ['R']);
-    label(q, 'tasses · café', 150, 200, 40);
+    upper(u, 120, 180, 140, 240, 'Café / tasses', ['R']);
+    label(u, 'tasses · café', 150, 200, 40);
   }
-  upper(q, 180, 200, 140, 240, 'Haut 20', ['R']);
-  label(q, 'plateaux · sachets', 190, 170, 40);
-  led(q, 0, 200);
+  led(u, 60, 180);
   dims(p, 60, [[5, 'fileur'], [60, 'LV'], [60, 'évier'], [20, 'coul.'], [90, 'frigo'], [5, 'joue']], 'Mur 2 = 300 cm (240 + coin 60)');
 }
 
