@@ -363,8 +363,8 @@ function buildMur2(p, moAboveSink, angle = 'aveugle', evierFrigo = false) {
   B(p, 0, 5, 86, 90, 0, 62, M.worktop);
   // tout ce qui suit est décalé de 5 cm (fileur)
   const q = new THREE.Group(); q.position.x = 5; p.add(q);
-  // ordre standard : LV 60 | évier 60 | coulissant 20 ; evierFrigo : coulissant 20 | LV 60 | évier 60 (évier contre le frigo)
-  const lx = evierFrigo ? 80 : 60, sx = lx + 60, cx = evierFrigo ? 60 : 180;
+  // ordre standard : LV 60 | évier 60 | coulissant 20 ; evierFrigo : LV 60 | coulissant 20 | évier 60 (évier contre le frigo)
+  const lx = 60, cx = evierFrigo ? 120 : 180, sx = evierFrigo ? 140 : 120;
   // lave-vaisselle intégré
   B(q, lx, lx + 60, 10, 86, 0, 56, M.dark); B(q, lx + 2, lx + 58, 12, 84, 56, 57.6, M.dwIn, false);
   B(q, lx, lx + 60, 0, 10, 0, 52, M.plinth, false);
@@ -433,7 +433,7 @@ function buildMur2(p, moAboveSink, angle = 'aveugle', evierFrigo = false) {
   }
   led(u, 60, 180);
   dims(p, 60, evierFrigo
-    ? [[5, 'fileur'], [20, 'coul.'], [60, 'LV'], [60, 'évier'], [90, 'frigo'], [5, 'joue']]
+    ? [[5, 'fileur'], [60, 'LV'], [20, 'coul.'], [60, 'évier'], [90, 'frigo'], [5, 'joue']]
     : [[5, 'fileur'], [60, 'LV'], [60, 'évier'], [20, 'coul.'], [90, 'frigo'], [5, 'joue']], 'Mur 2 = 300 cm (240 + coin 60)');
 }
 
@@ -590,7 +590,7 @@ function buildMur1C(p) {
 const VARIANTS = {
   A: { desc: '<b>Plan A</b> — armoire garde-manger 40 en bout, coulissant 20, four sous la plaque, tiroirs 80, hauts 20 épices + 60 + angle aveugle, micro-ondes dans le haut au-dessus de l\'évier.',
        build: (m1, m2) => { buildMur1A(m1); buildMur2(m2, true); } },
-  A2: { desc: '<b>Plan A\'</b> — comme A, mais <b>plaque entre deux meubles bas</b> : armoire 40 | tiroirs 40 | four + plaque 60 | tiroirs 60. Mur 2 : <b>évier collé au frigo</b> (coulissant 20 | LV | évier) → plan de travail libre côté angle.',
+  A2: { desc: '<b>Plan A\'</b> — comme A, mais <b>plaque entre deux meubles bas</b> : armoire 40 | tiroirs 40 | four + plaque 60 | tiroirs 60. Mur 2 : <b>évier collé au frigo</b> (LV | coulissant 20 | évier) → plan de travail libre côté angle.',
        build: (m1, m2) => { buildMur1A2(m1); buildMur2(m2, true, 'aveugle', true); } },
   B: { desc: '<b>Plan B (retenu)</b> — colonne 60 four à mi-hauteur + MO, plaque 60 (épices / poêles / casseroles), coulissant 20 huiles, 60 (couverts / ustensiles / tupperwares). Hauts METOD : 60 + angle aveugle 80 (bocaux · farines) ; Mur 2 : meuble 40×60 thés sous la VMC. Étiquettes = plan de rangement.',
        build: (m1, m2) => { buildMur1B(m1); buildMur2(m2, false); } },
