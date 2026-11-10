@@ -71,7 +71,7 @@
     <!-- angle aveugle : caisson 80 (porte 40 + panneau 40) -->
     <rect x="270" y="45" width="7.5" height="120" fill="#fef3c7" stroke="#b45309"/>
     <rect x="277.5" y="45" width="60" height="120" fill="#f8fafc" stroke="#64748b" stroke-dasharray="4 3"/>
-    <text x="307.5" y="102" font-size="9" text-anchor="middle" fill="#0f172a">réserve</text>
+    <text x="307.5" y="102" font-size="8" text-anchor="middle" fill="#0f172a">tupperwares</text>
     <rect x="337.5" y="45" width="60" height="120" fill="#e5e7eb" stroke="#64748b" stroke-dasharray="4 3"/>
     <text x="367.5" y="102" font-size="8" text-anchor="middle" fill="#374151">partie</text>
     <text x="367.5" y="113" font-size="8" text-anchor="middle" fill="#374151">aveugle</text>

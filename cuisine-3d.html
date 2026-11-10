@@ -24,6 +24,14 @@
   #cross:before{left:7px;top:0;width:2px;height:16px}
   #cross:after{top:7px;left:0;height:2px;width:16px}
   #tip{position:fixed;left:50%;top:calc(50% + 20px);transform:translateX(-50%);background:rgba(15,23,42,.8);color:#fff;font-size:12px;padding:3px 8px;border-radius:5px;pointer-events:none;display:none;white-space:nowrap}
+  #inv{position:fixed;left:10px;bottom:10px;background:rgba(255,255,255,.94);border-radius:10px;padding:8px 12px;box-shadow:0 2px 12px rgba(0,0,0,.18);font-size:12px;width:250px;max-width:calc(100vw - 44px);max-height:45vh;overflow:auto}
+  #inv h2{font-size:13px;margin:0 0 5px}
+  #inv ul{margin:0;padding-left:16px}
+  #inv li{margin:2px 0}
+  #inv .miss{color:#b91c1c;font-weight:600}
+  #inv .ok{color:#166534}
+  #inv details{margin-top:6px;color:#334155}
+  #inv summary{cursor:pointer}
   #start{position:fixed;right:14px;bottom:14px;pointer-events:none}
   #start div{background:rgba(15,23,42,.72);color:#fff;padding:10px 16px;border-radius:8px;font-size:14px}
 </style>
@@ -40,6 +48,7 @@
   <div class="body">
     <div class="row">
       <button id="vA" class="on">A · Armoire</button>
+      <button id="vA2">A' · plaque centrée</button>
       <button id="vB">B · Colonne four+MO</button>
       <button id="vB2">B' · étagères d'angle</button>
       <button id="vC">C · + colonne 20</button>
@@ -58,6 +67,7 @@
     <div id="help"></div>
   </div>
 </div>
+<div id="inv"></div>
 <div id="cross"></div>
 <div id="tip"></div>
 <div id="start"><div>Clique pour entrer dans la cuisine</div></div>
@@ -113,6 +123,20 @@ const EDGE = new THREE.LineBasicMaterial({ color: 0x7c838c, transparent: true, o
 // ---------- helpers ----------
 let world, openables = [], pickables = [], labels = [];
 let showLabels = true;
+// Inventaire de ce qu'il y a à ranger : chaque variante place ses objets via tag(id) ; le reste apparaît dans « Pas encore placé ».
+const INV = {
+  electro: 'petit électroménager',
+  casseroles: 'casseroles · marmite',
+  poeles: 'poêles · couvercles',
+  couverts: 'couverts',
+  ustensiles: 'ustensiles',
+  patisserie: 'pâtisserie · balance',
+  tupperwares: 'tupperwares',
+  epices: 'épices',
+  thes: 'thés (~30 boîtes)',
+  bocaux: 'bocaux · farines',
+};
+let placed = new Map(); // id -> emplacement
 
 function B(parent, x0, x1, y0, y1, z0, z1, mat, edges = true) {
   const m = new THREE.Mesh(new THREE.BoxGeometry(x1 - x0, y1 - y0, z1 - z0), mat);
@@ -198,11 +222,11 @@ function drawers3(p, x0, x1, name) {
   drawer(p, x0, x1, 10, 30, 58, name + ' (bas)');
 }
 // 3 tiroirs façades 20/20/40 (haut, milieu, bas profond) ; noms = contenu
-function drawersRanges(p, x0, x1, [hi, mid, lo]) {
-  const xc = (x0 + x1) / 2;
-  drawer(p, x0, x1, 67, 86, 58, hi);  label(p, hi, xc, 80, 66);
-  drawer(p, x0, x1, 48, 67, 58, mid); label(p, mid, xc, 60, 66);
-  drawer(p, x0, x1, 10, 48, 58, lo);  label(p, lo, xc, 32, 66);
+function drawersRanges(p, x0, x1, [hi, mid, lo], where = 'tiroirs') {
+  const xc = (x0 + x1) / 2, t = id => INV[id] || id;
+  drawer(p, x0, x1, 67, 86, 58, t(hi));  tag(p, hi, xc, 80, 66, where + ' (haut)');
+  drawer(p, x0, x1, 48, 67, 58, t(mid)); tag(p, mid, xc, 60, 66, where + ' (milieu)');
+  drawer(p, x0, x1, 10, 48, 58, t(lo));  tag(p, lo, xc, 32, 66, where + ' (bas, profond)');
 }
 function upper(p, x0, x1, y0, y1, name, hinges) {
   shell(p, x0, x1, y0, y1, 0, 35);
@@ -285,7 +309,7 @@ function dims(p, x0, segs, total) {
   }
   floorText(p, total, (x0 + x) / 2, zT, 9);
 }
-function label(p, text, x, y, z) {
+function label(p, text, x, y, z, bg = 'rgba(15,23,42,.78)') {
   const fs = 44, pad = 14;
   const c = document.createElement('canvas');
   let ctx = c.getContext('2d');
@@ -294,7 +318,7 @@ function label(p, text, x, y, z) {
   c.height = fs + 18;
   ctx = c.getContext('2d');
   ctx.font = `600 ${fs}px system-ui,Arial`;
-  ctx.fillStyle = 'rgba(15,23,42,.78)';
+  ctx.fillStyle = bg;
   ctx.beginPath(); ctx.roundRect(0, 0, c.width, c.height, 14); ctx.fill();
   ctx.fillStyle = '#fff'; ctx.textBaseline = 'middle';
   ctx.fillText(text, pad, c.height / 2 + 2);
@@ -308,6 +332,12 @@ function label(p, text, x, y, z) {
   s.visible = showLabels;
   p.add(s);
   labels.push(s);
+}
+// Étiquette d'un objet de l'inventaire (vert) ; texte libre sinon. where = emplacement affiché dans la liste.
+function tag(p, id, x, y, z, where) {
+  if (!(id in INV)) return label(p, id, x, y, z);
+  label(p, '📦 ' + INV[id], x, y, z, 'rgba(22,101,52,.9)');
+  placed.set(id, where || '');
 }
 
 // ---------- pièce (commune) ----------
@@ -324,7 +354,7 @@ ceiling.rotation.x = Math.PI / 2; ceiling.position.set(250, 250, 250);
 scene.add(ceiling);
 
 // ---------- Mur 2 (angle à gauche → frigo à droite), commun aux variantes ----------
-function buildMur2(p, moAboveSink, angle = 'aveugle') {
+function buildMur2(p, moAboveSink, angle = 'aveugle', evierFrigo = false) {
   // coin mort partagé 60×60
   B(p, 0, 60, 10, 86, 0, 60, M.corner); B(p, 0, 60, 0, 10, 0, 52, M.plinth, false);
   label(p, 'coin (mort)', 30, 70, 64);
@@ -333,27 +363,30 @@ function buildMur2(p, moAboveSink, angle = 'aveugle') {
   B(p, 0, 5, 86, 90, 0, 62, M.worktop);
   // tout ce qui suit est décalé de 5 cm (fileur)
   const q = new THREE.Group(); q.position.x = 5; p.add(q);
+  // ordre standard : LV 60 | évier 60 | coulissant 20 ; evierFrigo : coulissant 20 | LV 60 | évier 60 (évier contre le frigo)
+  const lx = evierFrigo ? 80 : 60, sx = lx + 60, cx = evierFrigo ? 60 : 180;
   // lave-vaisselle intégré
-  B(q, 60, 120, 10, 86, 0, 56, M.dark); B(q, 62, 118, 12, 84, 56, 57.6, M.dwIn, false);
-  B(q, 60, 120, 0, 10, 0, 52, M.plinth, false);
-  flap(q, 60, 120, 10, 86, 57.8, 'down', 'Lave-vaisselle', M.front);
-  label(q, 'LV 60', 90, 70, 64);
+  B(q, lx, lx + 60, 10, 86, 0, 56, M.dark); B(q, lx + 2, lx + 58, 12, 84, 56, 57.6, M.dwIn, false);
+  B(q, lx, lx + 60, 0, 10, 0, 52, M.plinth, false);
+  flap(q, lx, lx + 60, 10, 86, 57.8, 'down', 'Lave-vaisselle', M.front);
+  label(q, 'LV 60', lx + 30, 70, 64);
   // évier
-  baseCarcass(q, 120, 180);
-  drawer(q, 120, 180, 48, 86, 58, 'Évier : produits ménagers', 30); label(q, 'produits ménagers', 150, 70, 64);
-  drawer(q, 120, 180, 10, 48, 58, 'Évier : poubelles tri', 45); label(q, 'poubelles tri', 150, 32, 64);
+  baseCarcass(q, sx, sx + 60);
+  drawer(q, sx, sx + 60, 48, 86, 58, 'Évier : produits ménagers', 30); label(q, 'produits ménagers', sx + 30, 70, 64);
+  drawer(q, sx, sx + 60, 10, 48, 58, 'Évier : poubelles tri', 45); label(q, 'poubelles tri', sx + 30, 32, 64);
   // coulissant 20
-  baseCarcass(q, 180, 200);
-  drawer(q, 180, 200, 10, 86, 58, 'Coulissant 20 : torchons · films · sacs'); label(q, 'torchons · films', 190, 50, 64);
-  // plan de travail 0→200 avec découpe évier
-  B(q, 0, 128, 86, 90, 0, 62, M.worktop); B(q, 172, 200, 86, 90, 0, 62, M.worktop);
-  B(q, 128, 172, 86, 90, 0, 10, M.worktop); B(q, 128, 172, 86, 90, 50, 62, M.worktop);
-  B(q, 128, 172, 72, 73, 10, 50, M.sink, false);
-  B(q, 128, 172, 73, 90, 48.8, 50, M.sink, false); B(q, 128, 172, 73, 90, 10, 11.2, M.sink, false);
-  B(q, 128, 129.2, 73, 90, 10, 50, M.sink, false); B(q, 170.8, 172, 73, 90, 10, 50, M.sink, false);
+  baseCarcass(q, cx, cx + 20);
+  drawer(q, cx, cx + 20, 10, 86, 58, 'Coulissant 20 : torchons · films · sacs'); label(q, 'torchons · films', cx + 10, 50, 64);
+  // plan de travail 0→200 avec découpe évier (bac 44 cm centré sur le meuble évier)
+  const k0 = sx + 8, k1 = sx + 52, kc = sx + 30;
+  B(q, 0, k0, 86, 90, 0, 62, M.worktop); if (k1 < 200) B(q, k1, 200, 86, 90, 0, 62, M.worktop);
+  B(q, k0, k1, 86, 90, 0, 10, M.worktop); B(q, k0, k1, 86, 90, 50, 62, M.worktop);
+  B(q, k0, k1, 72, 73, 10, 50, M.sink, false);
+  B(q, k0, k1, 73, 90, 48.8, 50, M.sink, false); B(q, k0, k1, 73, 90, 10, 11.2, M.sink, false);
+  B(q, k0, k0 + 1.2, 73, 90, 10, 50, M.sink, false); B(q, k1 - 1.2, k1, 73, 90, 10, 50, M.sink, false);
   const tap = new THREE.Mesh(new THREE.CylinderGeometry(1.6, 1.6, 30, 16), M.steel);
-  tap.position.set(150, 105, 5.5); tap.castShadow = true; q.add(tap);
-  B(q, 148.8, 151.2, 117, 119.5, 4, 22, M.steel, false);
+  tap.position.set(kc, 105, 5.5); tap.castShadow = true; q.add(tap);
+  B(q, kc - 1.2, kc + 1.2, 117, 119.5, 4, 22, M.steel, false);
   // frigo 90 (2 portes) + joue
   B(q, 200, 290, 0, 200, 0, 58, M.fridge); B(q, 203, 287, 3, 197, 58, 58.3, M.fridgeIn, false);
   door(q, 200, 245, 0, 200, 58.3, 'L', 'Frigo (porte gauche)', M.fridge, 'mid');
@@ -371,11 +404,11 @@ function buildMur2(p, moAboveSink, angle = 'aveugle') {
   if (angle === 'etageres') {
     // variante B' : angle ouvert, étagères 0→85 (profondeur 28) sous la VMC
     for (const y of SHELF_Y) shelf(p, 0, 85, y, 0, SHELF_D);
-    label(p, 'étagères thés (~30 boîtes)', 42, 180, 34);
+    tag(p, 'thes', 42, 180, 34, 'étagères d\'angle (Mur 2)');
   } else {
     B(p, 37, 45, 140, 220, 0, 37, M.frontUp);                // fileur (dégagement portes)
     upper(p, 45, 85, 140, 200, 'Thés (sous VMC)', ['R']);      // 40×60 : dessus à 200, bouche libre au-dessus
-    label(p, 'thés (~30 boîtes)', 65, 170, 40);
+    tag(p, 'thes', 65, 170, 40, 'meuble 40×60 sous la VMC');
   }
   const vmc = new THREE.Mesh(new THREE.CylinderGeometry(9, 9, 2.5, 32), M.carcass);
   vmc.rotation.x = Math.PI / 2; vmc.position.set(63, 217, 1.25); p.add(vmc);
@@ -399,19 +432,21 @@ function buildMur2(p, moAboveSink, angle = 'aveugle') {
     label(u, 'tasses · café', 150, 200, 40);
   }
   led(u, 60, 180);
-  dims(p, 60, [[5, 'fileur'], [60, 'LV'], [60, 'évier'], [20, 'coul.'], [90, 'frigo'], [5, 'joue']], 'Mur 2 = 300 cm (240 + coin 60)');
+  dims(p, 60, evierFrigo
+    ? [[5, 'fileur'], [20, 'coul.'], [60, 'LV'], [60, 'évier'], [90, 'frigo'], [5, 'joue']]
+    : [[5, 'fileur'], [60, 'LV'], [60, 'évier'], [20, 'coul.'], [90, 'frigo'], [5, 'joue']], 'Mur 2 = 300 cm (240 + coin 60)');
 }
 
 // ---------- Mur 1 (repère local : x = distance depuis l'extrémité ouverte, angle à droite) ----------
 // Fileur 5 à 200→205, coin 205→265 : le linéaire dépasse de 5 cm au bout ouvert (mur = 260).
 // Hauts METOD jusqu'à l'angle : dernier = caisson 80 en angle aveugle (porte 40).
 // Haut d'angle aveugle : caisson 80 (185→265), porte 40 côté pièce, moitié côté angle fermée par un panneau.
-function mur1AngleHaut(p, name, text) {
+function mur1AngleHaut(p, name, id) {
   B(p, 180, 185, 140, 220, 0, 37, M.frontUp);               // fileur 5
   shell(p, 185, 265, 140, 220, 0, 35);
   door(p, 185, 225, 140, 220, 35, 'L', name, M.frontUp, 'bottom');
   B(p, 225 + G, 265, 140 + G, 220 - G, 35, 36.9, M.frontUp); // panneau aveugle (caché par le Mur 2)
-  label(p, text, 205, 200, 40);
+  tag(p, id, 205, 200, 40, 'haut d\'angle aveugle 80');
   label(p, 'partie aveugle', 245, 185, 40);
 }
 function mur1Fileur(p) {
@@ -421,9 +456,11 @@ function mur1Fileur(p) {
 function buildMur1A(p) {
   // armoire garde-manger 40
   shell(p, 0, 40, 10, 248, 0, 58); B(p, 0, 40, 0, 10, 0, 52, M.plinth, false);
-  door(p, 0, 40, 10, 150, 58, 'L', 'Armoire (bas)', M.front, 'top');
-  door(p, 0, 40, 150, 248, 58, 'L', 'Armoire (haut)', M.front, 'bottom');
-  label(p, 'armoire 40', 20, 130, 64);
+  door(p, 0, 40, 10, 150, 58, 'L', 'Armoire (bas) : petit électroménager', M.front, 'top');
+  door(p, 0, 40, 150, 248, 58, 'L', 'Armoire (haut) : bocaux · farines', M.front, 'bottom');
+  label(p, 'armoire 40', 20, 140, 64);
+  tag(p, 'bocaux', 20, 200, 64, 'armoire 40 (haut)');
+  tag(p, 'electro', 20, 80, 64, 'armoire 40 (bas)');
   // coulissant 20 entre l'armoire et la plaque : huiles
   baseCarcass(p, 40, 60); drawer(p, 40, 60, 10, 86, 58, 'Coulissant 20 : huiles · vinaigres · planches');
   label(p, 'coul. 20', 50, 60, 66);
@@ -431,29 +468,57 @@ function buildMur1A(p) {
   baseCarcass(p, 60, 120);
   B(p, 63, 117, 28, 84, 58, 58.2, M.ovenIn, false);
   flap(p, 60, 120, 27, 86, 58.2, 'down', 'Four (sous plaque)', M.black);
-  drawer(p, 60, 120, 10, 27, 58, 'Tiroir sous four', 45);
+  drawer(p, 60, 120, 10, 27, 58, 'Tiroir sous four : pâtisserie · balance', 45);
+  tag(p, 'patisserie', 90, 18, 66, 'tiroir sous le four');
   hob(p, 60, 120);
   label(p, 'four + plaque', 90, 60, 66);
-  baseCarcass(p, 120, 200); drawers3(p, 120, 200, 'Tiroir 80');
-  label(p, 'tiroirs 80', 160, 45, 66);
+  baseCarcass(p, 120, 200); drawersRanges(p, 120, 200, ['couverts', 'ustensiles', 'casseroles'], 'tiroirs 80');
   B(p, 40, 198, 86, 90, 0, 62, M.worktop);
   upper(p, 40, 60, 140, 220, 'Haut 20 : épices', ['L']);
-  label(p, 'épices 20', 50, 185, 40);
+  tag(p, 'epices', 50, 185, 40, 'haut 20 épices');
   hoodCab(p, 60, 120);
   upper(p, 120, 180, 140, 220, 'Plats / bols', ['L']);
   label(p, 'plats / bols', 150, 185, 40);
-  mur1AngleHaut(p, 'Réserve (angle)', 'réserve');
+  mur1AngleHaut(p, 'Angle : tupperwares', 'tupperwares');
   led(p, 40, 60); led(p, 120, 225);
   B(p, 165, 265, 220, 250, 0, 45, M.coffrage);
   mur1Fileur(p);
   dims(p, 0, [[40, 'armoire'], [20, 'coul.'], [60, 'four+plaque'], [80, 'tiroirs'], [5, 'fileur']], 'Mur 1 = 265 cm (205 + coin 60), dépasse de 5');
+}
+// A' : armoire 40 | tiroirs 40 | four + plaque 60 | tiroirs 60 — plaque entre deux meubles bas.
+function buildMur1A2(p) {
+  shell(p, 0, 40, 10, 248, 0, 58); B(p, 0, 40, 0, 10, 0, 52, M.plinth, false);
+  door(p, 0, 40, 10, 150, 58, 'L', 'Armoire (bas) : petit électroménager', M.front, 'top');
+  door(p, 0, 40, 150, 248, 58, 'L', 'Armoire (haut) : bocaux · farines', M.front, 'bottom');
+  label(p, 'armoire 40', 20, 140, 64);
+  tag(p, 'bocaux', 20, 200, 64, 'armoire 40 (haut)');
+  tag(p, 'electro', 20, 80, 64, 'armoire 40 (bas)');
+  baseCarcass(p, 40, 80); drawersRanges(p, 40, 80, ['epices', 'patisserie', 'poeles'], 'tiroirs 40');
+  baseCarcass(p, 80, 140);
+  B(p, 83, 137, 28, 84, 58, 58.2, M.ovenIn, false);
+  flap(p, 80, 140, 27, 86, 58.2, 'down', 'Four (sous plaque)', M.black);
+  drawer(p, 80, 140, 10, 27, 58, 'Tiroir sous four : plaques · grilles', 45);
+  hob(p, 80, 140);
+  label(p, 'four + plaque', 110, 60, 66);
+  baseCarcass(p, 140, 200); drawersRanges(p, 140, 200, ['couverts', 'ustensiles', 'casseroles'], 'tiroirs 60');
+  B(p, 40, 198, 86, 90, 0, 62, M.worktop);
+  upper(p, 40, 80, 140, 220, 'Haut 40', ['L']);
+  label(p, 'haut 40 (libre)', 60, 185, 40);
+  hoodCab(p, 80, 140);
+  upper(p, 140, 180, 140, 220, 'Plats / bols', ['R']);
+  label(p, 'plats / bols', 160, 185, 40);
+  mur1AngleHaut(p, 'Angle : tupperwares', 'tupperwares');
+  led(p, 40, 80); led(p, 140, 225);
+  B(p, 165, 265, 220, 250, 0, 45, M.coffrage);
+  mur1Fileur(p);
+  dims(p, 0, [[40, 'armoire'], [40, 'tiroirs'], [60, 'four+plaque'], [60, 'tiroirs'], [5, 'fileur']], 'Mur 1 = 265 cm (205 + coin 60), dépasse de 5');
 }
 function buildMur1B(p, angle = 'aveugle') {
   // colonne four + MO 60 — tiroirs dessous = électroménager sorti ponctuellement
   shell(p, 0, 60, 10, 248, 0, 58); B(p, 0, 60, 0, 10, 0, 52, M.plinth, false);
   drawer(p, 0, 60, 10, 50, 58, 'Électroménager (lourd : robot, blender)');
   drawer(p, 0, 60, 50, 93, 58, 'Pâtisserie · balance');
-  label(p, 'électroménager lourd', 30, 32, 66); label(p, 'pâtisserie · balance', 30, 72, 66);
+  tag(p, 'electro', 30, 32, 66, 'colonne : tiroir bas'); tag(p, 'patisserie', 30, 72, 66, 'colonne : tiroir');
   B(p, 3, 57, 94, 149, 58, 58.2, M.ovenIn, false);
   flap(p, 0, 60, 93, 150, 58.2, 'down', 'Four (mi-hauteur)', M.black);
   B(p, 0.3, 59.7, 150.3, 156.7, 58, 59.9, M.front);
@@ -463,24 +528,24 @@ function buildMur1B(p, angle = 'aveugle') {
   door(p, 0, 60, 187, 248, 58, 'L', 'Colonne haut : électro léger · rare', M.front, 'bottom');
   label(p, 'MO', 30, 172, 66); label(p, 'FOUR', 30, 122, 66); label(p, 'électro léger · grands moules', 30, 215, 66);
   // plaque 60 : cuisson
-  baseCarcass(p, 60, 120); drawersRanges(p, 60, 120, ['épices', 'poêles · couvercles', 'casseroles · marmite']);
+  baseCarcass(p, 60, 120); drawersRanges(p, 60, 120, ['epices', 'poeles', 'casseroles'], 'sous plaque');
   hob(p, 60, 120);
   // 80 à droite : prépa
   // coulissant 20 contre la plaque : huiles
   baseCarcass(p, 120, 140); drawer(p, 120, 140, 10, 86, 58, 'Coulissant 20 : huiles · vinaigres · planches');
   label(p, 'huiles', 130, 60, 66);
-  baseCarcass(p, 140, 200); drawersRanges(p, 140, 200, ['couverts', 'ustensiles', 'tupperwares']);
+  baseCarcass(p, 140, 200); drawersRanges(p, 140, 200, ['couverts', 'ustensiles', 'tupperwares'], 'tiroirs 60');
   B(p, 60, 198, 86, 90, 0, 62, M.worktop);
   hoodCab(p, 60, 120);
   upper(p, 120, 180, 140, 220, 'Plats / bols', ['L']);
   label(p, 'plats · bols · saladiers', 150, 185, 40);
   if (angle === 'etageres') {
     upper(p, 180, 220, 140, 220, 'Bocaux / farines', ['R']);
-    label(p, 'bocaux · farines', 200, 200, 40);
+    tag(p, 'bocaux', 200, 200, 40, 'haut 40');
     for (const y of SHELF_Y) shelf(p, 220, 265 - SHELF_D, y, 0, SHELF_D); // retour d'étagère (45 cm)
     led(p, 120, 220);
   } else {
-    mur1AngleHaut(p, 'Bocaux / farines (angle)', 'bocaux · farines');
+    mur1AngleHaut(p, 'Bocaux / farines (angle)', 'bocaux');
     led(p, 120, 225);
   }
   B(p, 165, 265, 220, 250, 0, 45, M.coffrage);
@@ -491,8 +556,9 @@ function buildMur1B(p, angle = 'aveugle') {
 function buildMur1C(p) {
   // colonne four + MO 60 (identique à B)
   shell(p, 0, 60, 10, 248, 0, 58); B(p, 0, 60, 0, 10, 0, 52, M.plinth, false);
-  drawer(p, 0, 60, 10, 50, 58, 'Colonne : tiroir bas');
-  drawer(p, 0, 60, 50, 93, 58, 'Colonne : tiroir');
+  drawer(p, 0, 60, 10, 50, 58, 'Colonne : petit électroménager');
+  drawer(p, 0, 60, 50, 93, 58, 'Colonne : pâtisserie · balance');
+  tag(p, 'electro', 30, 32, 66, 'colonne : tiroir bas'); tag(p, 'patisserie', 30, 72, 66, 'colonne : tiroir');
   B(p, 3, 57, 94, 149, 58, 58.2, M.ovenIn, false);
   flap(p, 0, 60, 93, 150, 58.2, 'down', 'Four (mi-hauteur)', M.black);
   B(p, 0.3, 59.7, 150.3, 156.7, 58, 59.9, M.front);
@@ -505,17 +571,16 @@ function buildMur1C(p) {
   shell(p, 60, 80, 10, 248, 0, 58); B(p, 60, 80, 0, 10, 0, 52, M.plinth, false);
   drawer(p, 60, 80, 10, 248, 58, 'Colonne 20 coulissante', 52);
   label(p, 'colonne 20', 70, 200, 66);
+  tag(p, 'epices', 70, 140, 66, 'colonne 20 coulissante');
   // plaque avec tiroirs dessous
-  baseCarcass(p, 80, 140); drawers3(p, 80, 140, 'Tiroir sous plaque');
+  baseCarcass(p, 80, 140); drawersRanges(p, 80, 140, ['couverts', 'poeles', 'casseroles'], 'sous plaque');
   hob(p, 80, 140);
-  label(p, 'plaque + tiroirs', 110, 45, 66);
-  baseCarcass(p, 140, 200); drawers3(p, 140, 200, 'Tiroir 60 casseroles');
-  label(p, 'tiroir 60', 170, 45, 66);
+  baseCarcass(p, 140, 200); drawersRanges(p, 140, 200, ['libre', 'ustensiles', 'tupperwares'], 'tiroirs 60');
   B(p, 80, 198, 86, 90, 0, 62, M.worktop);
   hoodCab(p, 80, 140);
   upper(p, 140, 180, 140, 220, 'Plats / bols', ['L']);
   label(p, 'plats / bols', 160, 185, 40);
-  mur1AngleHaut(p, 'Réserve (angle)', 'réserve');
+  mur1AngleHaut(p, 'Bocaux / farines (angle)', 'bocaux');
   led(p, 140, 225);
   B(p, 165, 265, 220, 250, 0, 45, M.coffrage);
   mur1Fileur(p);
@@ -525,6 +590,8 @@ function buildMur1C(p) {
 const VARIANTS = {
   A: { desc: '<b>Plan A</b> — armoire garde-manger 40 en bout, coulissant 20, four sous la plaque, tiroirs 80, hauts 20 épices + 60 + angle aveugle, micro-ondes dans le haut au-dessus de l\'évier.',
        build: (m1, m2) => { buildMur1A(m1); buildMur2(m2, true); } },
+  A2: { desc: '<b>Plan A\'</b> — comme A, mais <b>plaque entre deux meubles bas</b> : armoire 40 | tiroirs 40 | four + plaque 60 | tiroirs 60. Mur 2 : <b>évier collé au frigo</b> (coulissant 20 | LV | évier) → plan de travail libre côté angle.',
+       build: (m1, m2) => { buildMur1A2(m1); buildMur2(m2, true, 'aveugle', true); } },
   B: { desc: '<b>Plan B (retenu)</b> — colonne 60 four à mi-hauteur + MO, plaque 60 (épices / poêles / casseroles), coulissant 20 huiles, 60 (couverts / ustensiles / tupperwares). Hauts METOD : 60 + angle aveugle 80 (bocaux · farines) ; Mur 2 : meuble 40×60 thés sous la VMC. Étiquettes = plan de rangement.',
        build: (m1, m2) => { buildMur1B(m1); buildMur2(m2, false); } },
   B2: { desc: '<b>Plan B\' (comparaison)</b> — identique à B, mais <b>angle haut ouvert en étagères</b> : étagères 150 / 170 / 190 sur 85 cm (Mur 2) + retour 45 cm (Mur 1), thés dessus, VMC dégagée. Hauts Mur 1 : 60 + 40 jusqu\'à 220.',
@@ -543,7 +610,7 @@ function disposeTree(o) {
 function setVariant(v) {
   variant = v;
   if (world) { scene.remove(world); disposeTree(world); }
-  openables = []; pickables = []; labels = [];
+  openables = []; pickables = []; labels = []; placed = new Map();
   world = new THREE.Group();
   const m2 = new THREE.Group();
   const m1 = new THREE.Group();
@@ -554,6 +621,17 @@ function setVariant(v) {
   if (allOpen) openables.forEach(o => { o.target = o.t = 1; applyOp(o); });
   for (const k of Object.keys(VARIANTS)) document.getElementById('v' + k).classList.toggle('on', v === k);
   document.getElementById('desc').innerHTML = VARIANTS[v].desc;
+  renderInv();
+}
+function renderInv() {
+  const ids = Object.keys(INV), miss = ids.filter(id => !placed.has(id));
+  let h = `<h2>📦 À ranger — ${ids.length - miss.length}/${ids.length} placés</h2>`;
+  h += miss.length
+    ? '<div class="miss">Pas encore placé :</div><ul>' + miss.map(id => `<li class="miss">${INV[id]}</li>`).join('') + '</ul>'
+    : '<div class="ok">✓ Tout est placé</div>';
+  h += '<details><summary>Voir où est rangé le reste</summary><ul>'
+    + ids.filter(id => placed.has(id)).map(id => `<li class="ok">${INV[id]} → ${placed.get(id)}</li>`).join('') + '</ul></details>';
+  document.getElementById('inv').innerHTML = h;
 }
 
 // ---------- avatar (vue d'ensemble) ----------
@@ -585,7 +663,7 @@ let mode = 'visit';
 addEventListener('keydown', e => {
   if (e.target.tagName === 'INPUT') return;
   keys[e.code] = true;
-  if (e.code === 'KeyV') setVariant({ A: 'B', B: 'B2', B2: 'C', C: 'A' }[variant]);
+  if (e.code === 'KeyV') setVariant({ A: 'A2', A2: 'B', B: 'B2', B2: 'C', C: 'A' }[variant]);
   if (e.code === 'KeyC') setMode(mode === 'visit' ? 'orbit' : 'visit');
   if (e.code === 'KeyO') toggleAll();
   if (e.code === 'KeyL') toggleLabels();
@@ -705,6 +783,7 @@ function toggleLabels() {
 // UI
 const $ = id => document.getElementById(id);
 $('vA').onclick = () => setVariant('A');
+$('vA2').onclick = () => setVariant('A2');
 $('vB').onclick = () => setVariant('B');
 $('vB2').onclick = () => setVariant('B2');
 $('vC').onclick = () => setVariant('C');
